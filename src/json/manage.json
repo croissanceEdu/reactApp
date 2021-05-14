@@ -1,0 +1,13 @@
+[
+    {
+        "language":"English",
+        "tabWindows":[
+            {"name":"allocateTab","content":"Course Allocation","availableFor":["admin"]},
+            {"name":"allocationAddTab","content":"New","availableFor":["admin"]}
+        ],
+        "editContent":"Edit",
+        "saveContent":"Save",
+        "deleteContent":"Delete",
+        "cancelContent":"Cancel"
+    }
+]

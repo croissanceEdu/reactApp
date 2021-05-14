@@ -1,0 +1,20 @@
+[
+    {
+        "language":"English",      
+        "tabWindows":[
+            {"name":"joinClassTab","content":"Join Class","availableFor":["teacher","student"]}
+        ],
+        "titleContent":"Profile",
+        "nameContent":"Name",
+        "emailContent":"Email Address",
+        "saveContent":"Save",
+        "editContent":"Edit",
+        "cancelContent":"Cancel",
+        "changeContent":"Change",
+        "viewContent":"View",
+        "removeContent":"Remove",
+        "addYourImageContent":"Add your Image"
+        
+
+    }
+]

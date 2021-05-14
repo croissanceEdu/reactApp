@@ -1,0 +1,16 @@
+[
+    {
+        "language":"English",      
+
+        "titleContent":"Please Register",
+        "nameContent":"Name",
+        "emailContent":"Email Address",
+        "passwordContent":"Password",
+        "confirmPasswordContent":"Confirm Password",
+        "instructionContent":"Already have an account?",
+        "clickHereContent":"Click here to login.",
+        "registerAsStudentContent":"Register as Student",
+        "registerAsTeacherContent":"Register as Teacher"
+
+    }
+]

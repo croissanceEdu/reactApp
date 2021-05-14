@@ -1,0 +1,13 @@
+[
+    {
+        "language":"English",
+        "navLinks":[
+            {"name":"homePage","content":"Home","availableFor":["admin","teacher","student"]},
+            {"name":"syllabusPage","content":"Syllabus","availableFor":["admin","teacher","student"]},
+            {"name":"feedbackPage","content":"Feedback","availableFor":["teacher","student"]},
+            {"name":"joinClassPage","content":"Join Class","availableFor":["teacher","student"]},
+            {"name":"managePage","content":"Manage","availableFor":["admin"]},
+            {"name":"activateAccountPage","content":"Activate Account","availableFor":["admin"]}
+        ]
+    }
+]

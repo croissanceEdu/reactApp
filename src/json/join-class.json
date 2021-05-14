@@ -1,0 +1,13 @@
+[
+    {
+        "language":"English",
+        "tabWindows":[
+            {"name":"joinClassTab","content":"Join Class","availableFor":["teacher","student"]}
+        ],
+        "copyContent":"Copy",
+        "gotoContent":"Goto",
+        "editContent":"Edit",
+        "saveContent":"Save",
+        "cancelContent":"Cancel"
+    }
+]

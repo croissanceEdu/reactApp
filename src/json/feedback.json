@@ -1,0 +1,11 @@
+[
+    {
+        "language":"English",
+        "tabWindows":[
+            {"name":"historyTab","content":"History","availableFor":["teacher","student"]},
+            {"name":"receivedTab","content":"Received","availableFor":["teacher","student"]},
+            {"name":"sentTab","content":"Sent","availableFor":["teacher","student"]},
+            {"name":"newFeedbackTab","content":"New","availableFor":["teacher","student"]}
+        ]
+    }
+]
