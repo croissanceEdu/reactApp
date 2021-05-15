@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavUserBlock = () => {
+const NavUserBlock = (props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -73,6 +73,17 @@ const NavUserBlock = () => {
   return (
     <div className={classes.root}>
       <div>
+        <img
+          src={
+            props.profilePicture
+              ? props.profilePicture
+              : process.env.REACT_APP_DEFAULT_PROFILE_PIC
+          }
+          alt="img"
+          onClick={handleToggle}
+          style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+        />
+
         <Button
           ref={anchorRef}
           aria-controls={open ? "menu-list-grow" : undefined}

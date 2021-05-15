@@ -10,7 +10,11 @@ const ProfilePage = (props) => {
   }, [props]);
   if (isAuth())
     return (
-      <ProfileSection profileContent={getProfileContent(props.language)} />
+      <ProfileSection
+        profileContent={getProfileContent(props.language)}
+        profilePicture={props.profilePicture}
+        setProfilePicture={props.setProfilePicture}
+      />
     );
   else return <Redirect to={props.urlPathContent.loginPage} />;
 };

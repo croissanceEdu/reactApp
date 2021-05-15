@@ -33,7 +33,7 @@ function App() {
 
   const urlPathContent = Api.getUrlPathContent();
   const [selectedPage, setselectedPage] = useState("")
-
+  const [profilePicture, setProfilePicture] = useState(null)
 
   return (
     <Router>
@@ -49,7 +49,7 @@ function App() {
           urlPathContent.managePage
         ]}
         exact
-        render={(props) => <NavbarSection {...props} language={language} setLanguage={setLanguage} selectedPage={selectedPage} />}
+        render={(props) => <NavbarSection {...props} language={language} setLanguage={setLanguage} selectedPage={selectedPage} profilePicture={profilePicture} setProfilePicture={setProfilePicture} />}
       />
 
       <Switch>
@@ -88,7 +88,7 @@ function App() {
         <Route
           path={urlPathContent.profilePage}
           exact
-          render={(props) => <ProfilePage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage} />}
+          render={(props) => <ProfilePage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} profilePicture={profilePicture} setProfilePicture={setProfilePicture} setselectedPage={setselectedPage} />}
         />
         <Route
           path={urlPathContent.activateAccountPage}

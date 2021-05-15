@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Cropper from "react-easy-crop";
 
@@ -33,10 +33,13 @@ const useStyles = makeStyles({
 const CropperSegment = (props) => {
   const classes = useStyles();
   const inputRef = useRef();
-
+  useEffect(() => {
+    if (!image) triggerFileSelectPopup();
+  }, []);
   const triggerFileSelectPopup = () => inputRef.current.click();
 
   const [image, setImage] = useState(null);
+
   const [croppedArea, setCroppedArea] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -47,6 +50,7 @@ const CropperSegment = (props) => {
 
   const onSelectFile = (event) => {
     if (event.target.files && event.target.files.length > 0) {
+      //console.log(event.target.files[0]);
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.addEventListener("load", () => {
@@ -62,22 +66,25 @@ const CropperSegment = (props) => {
       const canvas = await getCroppedImg(image, croppedArea);
       const canvasDataUrl = canvas.toDataURL("image/jpeg");
       const convertedFile = dataURLtoFile(canvasDataUrl, "cropped-image.jpeg");
+      //console.log(convertedFile);
+      // //console.log(image);
 
       const formData = new FormData();
       formData.append("croppedImage", convertedFile, convertedFile.name);
 
       if (formData) {
         axios
-          .put(
+          .post(
             `${process.env.REACT_APP_SERVER_URL}/user/updatepic/` +
               isAuth()._id,
-            {
-              file: convertedFile,
-            }
+            formData
           )
           .then((response) => {
             toast.success(response.data.message);
-            console.log(response.data);
+            props.setProfilePicture(
+              `${process.env.REACT_APP_SERVER_URL}/${response.data.imagePath}`
+            );
+            props.handleCropper();
           })
           .catch((err) => {
             if (err.response) toast.error(err.response.data.error);
@@ -102,6 +109,7 @@ const CropperSegment = (props) => {
         >
           <CancelIcon className={classes.cancelIcon} />
         </IconButton>
+
         <div className="container-cropper">
           {image ? (
             <>

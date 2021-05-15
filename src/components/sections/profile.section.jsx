@@ -4,7 +4,11 @@ const ProfileSection = (props) => {
   return (
     <section className="profile-section">
       <h2>{props.profileContent.titleContent}</h2>
-      <ProfileBasicBlock profileContent={props.profileContent} />
+      <ProfileBasicBlock
+        profileContent={props.profileContent}
+        profilePicture={props.profilePicture}
+        setProfilePicture={props.setProfilePicture}
+      />
     </section>
   );
 };
