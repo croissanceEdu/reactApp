@@ -7,6 +7,12 @@ const CourseAllocationAddBlock = (props) => {
   const [classUrl, setClassUrl] = useState("");
   const [teacherDetails, setTeacherDetails] = useState({});
   const [studentDetails, setStudentDetails] = useState({});
+  const [formData, setFormData] = useState({
+    courseName: "",
+    feesAmount: 0,
+    feesCurrency: "$",
+    paidAmount: 0,
+  });
   const handleTeacherSelect = (user) => {
     setTeacherDetails(user);
   };
@@ -16,6 +22,11 @@ const CourseAllocationAddBlock = (props) => {
   const handleClassLinkChange = (e) => {
     setClassUrl(e.target.value);
   };
+
+  const handleFormdataChange = (text) => (e) => {
+    setFormData({ ...formData, [text]: e.target.value });
+  };
+
   //submit to backend
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +37,10 @@ const CourseAllocationAddBlock = (props) => {
           studentID: studentDetails._id,
           teacherID: teacherDetails._id,
           classLink: classUrl,
+          courseName: formData.courseName,
+          feesAmount: formData.feesAmount,
+          feesCurrency: formData.feesCurrency,
+          paidAmount: formData.paidAmount,
         })
         .then((response) => {
           toast.success(response.data.message);
@@ -55,6 +70,63 @@ const CourseAllocationAddBlock = (props) => {
           handleUserSelect={handleStudentSelect}
         />
       </div>
+
+      <div className="form-group container">
+        <input
+          type="text"
+          className="form-control"
+          name="inputCourse"
+          id="inputCourse"
+          aria-describedby="helpId"
+          placeholder="Course Name"
+          required
+          onChange={handleFormdataChange("courseName")}
+          value={formData.courseName}
+        />
+      </div>
+      <div className="form-group container ">
+        <label htmlFor="inputCourse">Fee</label>
+        <input
+          type="text"
+          className="form-control  container"
+          name="inputFee"
+          id="inputFee"
+          aria-describedby="helpId"
+          placeholder="Fee"
+          required
+          onChange={handleFormdataChange("feesAmount")}
+          value={formData.feesAmount}
+        />
+      </div>
+      <div className="form-group container ">
+        <input
+          type="text"
+          className="form-control "
+          name="inputCurrency"
+          id="inputCurrency"
+          aria-describedby="helpId"
+          placeholder="Currency"
+          required
+          onChange={handleFormdataChange("feesCurrency")}
+          value={formData.feesCurrency}
+        />
+      </div>
+
+      <div className="form-group container ">
+        <label htmlFor="inputCourse">Paid Ammount</label>
+        <input
+          type="text"
+          className="form-control  container"
+          name="inputPaid"
+          id="inputPaid"
+          aria-describedby="helpId"
+          placeholder="Paid Ammount"
+          required
+          onChange={handleFormdataChange("paidAmount")}
+          value={formData.paidAmount}
+        />
+      </div>
+
       <div className="form-group container">
         <textarea
           placeholder="class Link"
@@ -66,7 +138,6 @@ const CourseAllocationAddBlock = (props) => {
           value={classUrl}
         ></textarea>
       </div>
-
       <div className="form-group row">
         <div className="offset-sm-2 col-sm-10">
           <button type="submit" className="btn btn-primary float-right">

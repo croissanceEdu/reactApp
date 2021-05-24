@@ -2,7 +2,7 @@ import SyllabusAddBlock from "../blocks/syllabus-add.block";
 
 const SyllabusEditTab = (props) => {
   return (
-    <div>
+    <div className="tab-window">
       <ol>{props.bindSyllabuses(true)}</ol>
       <SyllabusAddBlock
         handleAddNewSyllabus={props.handleAddNewSyllabus}

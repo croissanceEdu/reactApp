@@ -16,7 +16,7 @@ const JoinClassSection = (props) => {
       .then((res) => {
         if (res.data.classlinks.length) {
           setclassLinks(res.data.classlinks);
-        } else toast.error("No class are available now");
+        } else console.log("No classes are available now");
       })
       .catch((err) => {
         // toast.error(err.response.data.error);
@@ -24,6 +24,7 @@ const JoinClassSection = (props) => {
       });
   };
   const bindClasses = () => {
+    if (!classLinks.length) return <p className="empty-p">Empty</p>;
     return classLinks.map((item) => {
       return (
         <JoinClassItem
@@ -39,7 +40,7 @@ const JoinClassSection = (props) => {
     loadClasses();
   }, []);
   return (
-    <section>
+    <section className="join-class-section container">
       <ul>{bindClasses()}</ul>
     </section>
   );

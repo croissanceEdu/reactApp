@@ -8,7 +8,7 @@ const TabSelectorBlock = (props) => {
       if (item.availableFor.includes(isAuth().role)) {
         let itemClassName = "";
         if (props.selectedTab === item.name) {
-          itemClassName = "text-danger";
+          itemClassName = "selected-tab";
         }
         return (
           <TabSelectorItem
@@ -21,7 +21,9 @@ const TabSelectorBlock = (props) => {
       } else return null;
     });
   };
-  return <ul>{bindTabSelector()}</ul>;
+  if (props.isAvailable)
+    return <ul className="tab-selector-block">{bindTabSelector()}</ul>;
+  else return <p className="empty-p">{props.unAvailableMessage}</p>;
 };
 
 export default TabSelectorBlock;

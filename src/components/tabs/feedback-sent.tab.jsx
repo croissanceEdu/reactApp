@@ -1,6 +1,6 @@
 const FeedbackSentTab = (props) => {
   return (
-    <div>
+    <div className="tab-window">
       <ul>{props.bindSent()}</ul>
     </div>
   );

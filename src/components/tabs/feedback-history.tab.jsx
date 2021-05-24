@@ -1,6 +1,6 @@
 const FeedbackHistoryTab = (props) => {
   return (
-    <div>
+    <div className="tab-window">
       <ul>{props.bindHistory()}</ul>
     </div>
   );

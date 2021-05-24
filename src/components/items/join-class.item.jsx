@@ -1,8 +1,19 @@
+import {
+  Cancel,
+  CancelOutlined,
+  CancelPresentation,
+  ControlPointDuplicate,
+  CopyrightOutlined,
+  Edit,
+  Link,
+  Save,
+} from "@material-ui/icons";
 import axios from "axios";
 import { useState } from "react";
 
 import { toast } from "react-toastify";
 import { isAuth } from "../../helpers/auth";
+import UserSelectorItem from "./user-selector.item";
 
 const JoinClassItem = (props) => {
   const [editMode, setEditMode] = useState(false);
@@ -48,17 +59,35 @@ const JoinClassItem = (props) => {
       toast.error("please fill all fields");
     }
   };
-  return (
-    <li>
-      <h2>{props.classlink.oppDetails.name}</h2>
 
+  return (
+    <li className="join-class-item container">
+      <div className="avatar-name">
+        <div className="user-avatar">
+          <div
+            className="avatar-img"
+            style={{
+              backgroundImage: `url(${process.env.REACT_APP_SERVER_URL}/${
+                props.classlink.oppDetails.imagePath
+                  ? props.classlink.oppDetails.imagePath
+                  : process.env.REACT_APP_DEFAULT_PROFILE_PIC
+              })`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              height: "100%",
+              width: "100%",
+              backgroundPosition: "center",
+            }}
+          ></div>
+        </div>
+        <h3>{props.classlink.oppDetails.name}</h3>
+      </div>
       {classUrl ? (
         <div>
           <button onClick={handleopyLink}>
             {props.joinClassContent.copyContent}
           </button>
           <button onClick={handleGoto}>
-            {" "}
             {props.joinClassContent.gotoContent}
           </button>
         </div>
@@ -75,14 +104,14 @@ const JoinClassItem = (props) => {
       ></textarea>
       {isAuth().role === "teacher" && editMode ? (
         <button onClick={handleSubmit}>
-          {props.joinClassContent.saveContent}
+          {/* {props.joinClassContent.saveContent} */}
+          <Save />
         </button>
       ) : null}
       {isAuth().role === "teacher" ? (
         <button onClick={handleToggleEditMode}>
-          {editMode
-            ? props.joinClassContent.cancelContent
-            : props.joinClassContent.editContent}
+          {/* {editMode ? props.joinClassContent.cancelContent: props.joinClassContent.editContent} */}
+          {editMode ? <Cancel /> : <Edit />}
         </button>
       ) : null}
     </li>

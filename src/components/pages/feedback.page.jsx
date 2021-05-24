@@ -14,7 +14,11 @@ const FeedbackPage = (props) => {
     props.hasPageAccess("feedbackPage", isAuth().role, props.language)
   )
     return (
-      <FeedbackSection feedbackContent={getFeedbackContent(props.language)} />
+      <FeedbackSection
+        feedbackContent={getFeedbackContent(props.language)}
+        notifications={props.notifications}
+        notify={props.notify}
+      />
     );
   else return <Redirect to={props.urlPathContent.loginPage} />;
 };

@@ -1,15 +1,25 @@
-import { isAuth } from "../../helpers/auth";
 import AvatarMenuSegment from "./avatar-menu.segment";
 
 const ProfileAvatarSegment = (props) => {
   return (
     <div className="avatar-container">
       <div className="avatar">
-        <img src={props.profilePicture} alt="avatar" className="avatar-img" />
+        <div
+          className="avatar-img"
+          style={{
+            backgroundImage: "url(" + props.profilePicture + ")",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        ></div>
       </div>
       <AvatarMenuSegment
         profileContent={props.profileContent}
         handleCropper={props.handleCropper}
+        handleRemoveImage={props.handleRemoveImage}
+        setProfilePicture={props.setProfilePicture}
+        profilePicture={props.profilePicture}
       />
     </div>
   );

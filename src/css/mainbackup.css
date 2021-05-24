@@ -1,0 +1,225 @@
+:root {
+  --body-bg-color: #ffffff;
+  --navbar-bg-color: #161616;
+  --navbar-text-color: #cecdff;
+  --logo-text: #f5f5f5;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  background: var(--body-bg-color);
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
+}
+
+ul li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #f5f5f5;
+  border-radius: 2px;
+}
+
+a :hover {
+  text-decoration: none;
+}
+
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+#screen-overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: rgba(36, 2, 63, 0.288);
+  z-index: 500;
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+  display: none;
+}
+
+#screen-overlay.overlay-visible {
+  display: block;
+}
+
+.navbar.nav-visible {
+  z-index: 1000;
+}
+
+.navbar.nav-visible nav.nav-visible {
+  display: block;
+  position: fixed;
+  z-index: 10;
+  background-color: var(--navbar-bg-color);
+  padding-left: auto;
+  padding-right: auto;
+  padding-top: 50px;
+}
+
+.navbar.nav-visible .navbar-brand {
+  z-index: 20;
+}
+
+.navbar.nav-visible .nav-menu-icon {
+  z-index: 30;
+}
+
+.navbar {
+  height: 50px;
+  margin-top: 0;
+  position: fixed;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  z-index: 100;
+  background: var(--navbar-bg-color);
+  color: var(--navbar-text-color);
+  width: 100%;
+}
+
+.navbar .navbar-brand {
+  height: inherit;
+  padding: auto 0.5em auto 0.5em;
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--logo-text);
+  font-size: var(--logo-fontsize);
+}
+
+.navbar .navbar-brand img {
+  height: 20px;
+}
+
+.navbar .navbar-brand a {
+  margin-top: auto;
+  margin-bottom: auto;
+  text-decoration: none;
+  color: var(--logo-text);
+}
+
+.navbar .navbar-brand .nav-menu-icon {
+  height: 100%;
+}
+
+.navbar .navbar-brand .nav-menu-icon .MuiSvgIcon-root {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.navbar .container-element {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+}
+
+.navbar .container-element nav {
+  display: none;
+}
+
+.navbar .container-element nav .nav-user-block .nav-user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.navbar .container-element nav .nav-user-block .hidden-menu {
+  display: none;
+}
+
+.navbar .container-element nav .nav-user-block .shown-menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+section.section {
+  margin-top: 0;
+}
+
+.profile-popup {
+  position: static;
+  height: 80vh;
+  width: 90vh;
+  max-height: 80vw;
+  max-width: 90vw;
+  margin: auto auto 15% auto;
+}
+
+.profile-popup .container {
+  height: 100%;
+  width: 100%;
+}
+
+.profile-popup .container-cropper {
+  height: 100%;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+
+.profile-popup .cropper {
+  height: 80%;
+  position: relative;
+}
+
+.profile-popup .slider {
+  height: 10%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
+  width: 60%;
+}
+
+.profile-popup .container-buttons {
+  border: 1px solid #fff5ff;
+  height: 10%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: -10%;
+}
+
+.profile-section .avatar-container {
+  margin: auto;
+  width: 50vw;
+  height: 50vw;
+  max-width: 500px;
+  max-height: 500px;
+  position: relative;
+}
+
+.profile-section .avatar-container .avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.profile-section .avatar-container .avatar .avatar-img {
+  width: 100%;
+  height: 100%;
+}
+/*# sourceMappingURL=mainbackup.css.map */

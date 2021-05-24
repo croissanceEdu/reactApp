@@ -51,9 +51,12 @@ const ChangePasswordSection = () => {
     }
   };
   return (
-    <section>
-      <div>Change Password </div>
-      <form className="form-signin text-center col-6  " onSubmit={handleSubmit}>
+    <section className="change-password-section container">
+      <h2>Change Password </h2>
+      <form
+        className="form-signin text-center container "
+        onSubmit={handleSubmit}
+      >
         <div className="form-group">
           <input
             type="password"

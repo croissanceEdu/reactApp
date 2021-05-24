@@ -3,10 +3,14 @@ import { useEffect, useRef, useState } from "react";
 import Cropper from "react-easy-crop";
 
 import Slider from "@material-ui/core/Slider";
-import Button from "@material-ui/core/Button";
-import { IconButton } from "@material-ui/core";
-import { Cancel as CancelIcon } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core/styles";
+
+import {
+  Close as CancelIcon,
+  // Cancel as CancelIcon,
+  CloudUpload,
+  Edit,
+  Save,
+} from "@material-ui/icons";
 
 import getCroppedImg from "../../utils/cropImage";
 import dataURLtoFile from "../../utils/dataURLtoFile";
@@ -14,31 +18,17 @@ import dataURLtoFile from "../../utils/dataURLtoFile";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { isAuth } from "../../helpers/auth";
+import Api from "../../helpers/content-api";
 
-const useStyles = makeStyles({
-  IconButton: {
-    position: "absolute",
-    top: "20px",
-    right: "20px",
-    zIndex: "100",
-  },
-  cancelIcon: {
-    color: "#00a3c8",
-    fontSize: "50px",
-    "&:hover": {
-      color: "#f5a3c8",
-    },
-  },
-});
 const CropperSegment = (props) => {
-  const classes = useStyles();
   const inputRef = useRef();
+  const [image, setImage] = useState(null);
   useEffect(() => {
     if (!image) triggerFileSelectPopup();
-  }, []);
-  const triggerFileSelectPopup = () => inputRef.current.click();
-
-  const [image, setImage] = useState(null);
+  }, [image]);
+  const triggerFileSelectPopup = () => {
+    inputRef.current.click();
+  };
 
   const [croppedArea, setCroppedArea] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -85,6 +75,7 @@ const CropperSegment = (props) => {
               `${process.env.REACT_APP_SERVER_URL}/${response.data.imagePath}`
             );
             props.handleCropper();
+            window.location = Api.getNavLinkPath("profilePage");
           })
           .catch((err) => {
             if (err.response) toast.error(err.response.data.error);
@@ -101,14 +92,14 @@ const CropperSegment = (props) => {
   return (
     <div className="profile-popup">
       <div className="container">
-        <IconButton
-          className={classes.IconButton}
+        <button
+          className="cancel-button"
           onClick={() => {
             props.handleCropper();
           }}
         >
-          <CancelIcon className={classes.cancelIcon} />
-        </IconButton>
+          <CancelIcon />
+        </button>
 
         <div className="container-cropper">
           {image ? (
@@ -146,26 +137,18 @@ const CropperSegment = (props) => {
             onChange={onSelectFile}
             style={{ display: "none" }}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleClear}
-            style={{ marginRight: "10px" }}
-          >
-            Clear
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
+
+          <button
+            className="edit-button"
             onClick={triggerFileSelectPopup}
             style={{ marginRight: "10px" }}
           >
-            Choose
-          </Button>
+            <Edit />
+          </button>
 
-          <Button variant="contained" color="secondary" onClick={handleUpload}>
-            Upload
-          </Button>
+          <button className="save-button" onClick={handleUpload}>
+            <Save />
+          </button>
         </div>
       </div>
     </div>

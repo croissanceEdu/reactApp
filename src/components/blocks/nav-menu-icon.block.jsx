@@ -1,13 +1,19 @@
 import { Menu as MenuIcon, Close as CloseIcon } from "@material-ui/icons";
-import { useState } from "react";
 
-const NavMenuIconBlock = () => {
-  const [menu, setMenu] = useState(false);
+const NavMenuIconBlock = (props) => {
   const handleClick = () => {
-    setMenu((prev) => !prev);
+    props.setNavVisible(!props.navStyles.isNavMenuOpen);
   };
   return (
-    <div onClick={handleClick}>{!menu ? <MenuIcon /> : <CloseIcon />}</div>
+    <div className="nav-menu-table-cell">
+      <button className="nav-toggler-icon" onClick={handleClick}>
+        {!props.navStyles.isNavMenuOpen ? (
+          <MenuIcon style={{ color: "#fff" }} />
+        ) : (
+          <CloseIcon style={{ color: "#fff" }} />
+        )}
+      </button>
+    </div>
   );
 };
 

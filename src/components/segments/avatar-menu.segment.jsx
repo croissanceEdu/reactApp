@@ -1,118 +1,63 @@
-import { IconButton } from "@material-ui/core";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import { makeStyles } from "@material-ui/core/styles";
-import { useEffect, useRef, useState } from "react";
-import { CameraAlt } from "@material-ui/icons";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
-  camIcon: {
-    height: "4rem",
-    width: "4rem",
-    position: "absolute",
-    bottom: "0",
-    right: "100px",
-    backgroundColor: "white",
-    "&:hover": {
-      backgroundColor: "#f5fff5",
-    },
-  },
-}));
+import { useState } from "react";
+import { CameraAlt, DeleteForever, Edit } from "@material-ui/icons";
 
 const AvatarMenuSegment = (props) => {
-  const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
+  const [camClass, setCamClass] = useState("avatar-menu-button");
+  const [editClass, setEditClass] = useState("avatar-menu-button-hidden");
+  const [deleteClass, setDeleteClass] = useState("avatar-menu-button-hidden");
 
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
+    if (!open) {
+      setCamClass("avatar-menu-button-hidden");
+      setEditClass("avatar-menu-button");
+      setDeleteClass("avatar-menu-button");
+      setOpen(true);
+    } else {
+      setCamClass("avatar-menu-button");
+      setEditClass("avatar-menu-button-hidden");
+      setDeleteClass("avatar-menu-button-hidden");
+      setOpen(false);
     }
-
+  };
+  const handleClose = () => {
+    setCamClass("avatar-menu-button");
+    setEditClass("avatar-menu-button-hidden");
+    setDeleteClass("avatar-menu-button-hidden");
     setOpen(false);
   };
 
-  function handleListKeyDown(event) {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setOpen(false);
-    }
-  }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = useRef(open);
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
-
   return (
-    <div className={classes.root}>
+    <div className="avatar-menu">
       <div>
-        <IconButton
-          ref={anchorRef}
-          aria-controls={open ? "menu-list-grow" : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-          className={classes.camIcon}
-        >
+        <button onClick={handleToggle} className={camClass}>
           <CameraAlt fontSize="large" />
-        </IconButton>
-        <Popper
-          open={open}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          transition
-          disablePortal
+        </button>
+        <button
+          onClick={() => {
+            handleClose();
+            props.handleCropper();
+          }}
+          className={editClass}
         >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom",
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList
-                    autoFocusItem={open}
-                    id="menu-list-grow"
-                    onKeyDown={handleListKeyDown}
-                  >
-                    <MenuItem onClick={handleClose}>View</MenuItem>
-                    <MenuItem
-                      onClick={(e) => {
-                        props.handleCropper();
-                        handleClose(e);
-                      }}
-                    >
-                      Change
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>Remove</MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+          <Edit fontSize="large" />
+        </button>
+        <button
+          onClick={() => {
+            handleClose();
+            props.handleRemoveImage();
+          }}
+          className={deleteClass}
+          disabled={
+            !props.profilePicture ||
+            props.profilePicture ==
+              `${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_DEFAULT_PROFILE_PIC}`
+              ? true
+              : false
+          }
+        >
+          <DeleteForever fontSize="large" />
+        </button>
       </div>
     </div>
   );

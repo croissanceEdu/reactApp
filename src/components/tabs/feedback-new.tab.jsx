@@ -1,7 +1,15 @@
 import FeedbackAddBlock from "../blocks/feedback-add.block";
 
 const FeedbackNewTab = (props) => {
-  return <FeedbackAddBlock handleSubmit={props.handleSubmit} />;
+  return (
+    <div className="tab-window">
+      <FeedbackAddBlock
+        handleSubmit={props.handleSubmit}
+        formData={props.formData}
+        setFormData={props.setFormData}
+      />
+    </div>
+  );
 };
 
 export default FeedbackNewTab;

@@ -9,11 +9,11 @@ const TeacherStudentSelectorBlock = (props, ref) => {
   const [selectedUser, setSelectedUser] = useState({});
   const handleUserSelect = (user) => {
     setSelectedUser(user);
-    props.handleUserSelect(user);
+    props.handleUserSelect(user.teacher, user.student);
   };
   const loadUsers = (role, _id) => {
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/user/getpair`, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/user/getbyid`, {
         _id,
         role,
       })
@@ -25,10 +25,11 @@ const TeacherStudentSelectorBlock = (props, ref) => {
       });
   };
   const bindUsers = () => {
+    if (!userOptions.length) return <p className="empty-p">Empty</p>;
     return userOptions.map((item) => {
       let itemClassName = "";
       if (selectedUser._id === item._id) {
-        itemClassName = "text-danger";
+        itemClassName = "selected-user";
       }
       return (
         <TeacherStudentSelectorItem
@@ -44,7 +45,7 @@ const TeacherStudentSelectorBlock = (props, ref) => {
     if (props.autoLoad) loadUsers(props.myRole, props.myId);
   }, [props.autoLoad, props.myRole, props.myId]);
 
-  return <ul>{bindUsers()}</ul>;
+  return <ul className="user-selector-block">{bindUsers()}</ul>;
 };
 
 export default TeacherStudentSelectorBlock;

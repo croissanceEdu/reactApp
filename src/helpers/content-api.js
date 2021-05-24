@@ -17,6 +17,9 @@ let Api = {
     getNavLinkContent(language = 'English') {
         return navBarContent.filter(obj => obj.language === language)[0];
     },
+    getNavBarContent(language = 'English') {
+        return navBarContent.filter(obj => obj.language === language)[0];
+    },
     getNavLinkPath(name) {
         return urlPathContent[name];
     },

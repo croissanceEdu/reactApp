@@ -11,7 +11,11 @@ const SyllabusPage = (props) => {
   }, [props]);
   if (isAuth())
     return (
-      <SyllabusSection syllabusContent={getSyllabusContent(props.language)} />
+      <SyllabusSection
+        syllabusContent={getSyllabusContent(props.language)}
+        notifications={props.notifications}
+        notify={props.notify}
+      />
     );
   else return <Redirect to={props.urlPathContent.loginPage} />;
 };

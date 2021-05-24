@@ -13,19 +13,23 @@ import TabSelectorBlock from "../blocks/tab-selector.block";
 const SyllabusSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("syllabusListTab");
   const [syllabuses, setSyllabuses] = useState([]);
-  const [myDetails, setMyDetails] = useState(isAuth());
-  const [oppDetails, setOppDetails] = useState({});
+  const [myDetails, setMyDetails] = useState(
+    isAuth().role !== "admin" ? isAuth() : {}
+  );
+  const [oppDetails, setOppDetails] = useState(null);
 
-  const bindTable = (myId, myRole, oppId) => {
+  const bindTable = (myId, myRole, oppId, mapId) => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/syllabus/list`, {
         _id: myId,
         role: myRole,
         oppId: oppId,
+        mapId: mapId,
       })
       .then((response) => {
         if (response.data.syllabus) {
           setSyllabuses(response.data.syllabus);
+          props.notify();
         } else {
           toast.error("Something went wrong");
         }
@@ -35,7 +39,21 @@ const SyllabusSection = (props) => {
       });
   };
   const bindSyllabuses = (editMode) => {
+    if (!syllabuses.length) return <p className="empty-p">Empty</p>;
+    let totalChapter = syllabuses.length;
+    let paidChapter = 6.9;
+    let feeAmount = oppDetails.studentMap.feesAmount
+      ? Number(oppDetails.studentMap.feesAmount)
+      : 0;
+    let paidAmount = oppDetails.studentMap.paidAmount
+      ? Number(oppDetails.studentMap.paidAmount)
+      : 0;
+    if (paidAmount >= feeAmount) paidChapter = totalChapter;
+    else paidChapter = (totalChapter * paidAmount) / feeAmount;
+
+    let i = 0;
     return syllabuses.map((item) => {
+      i++;
       return (
         <SyllabusItem
           syllabus={item}
@@ -46,19 +64,27 @@ const SyllabusSection = (props) => {
           deleteSyllabus={deleteSyllabus}
           loginAs={isAuth().role}
           syllabusContent={props.syllabusContent}
+          itemClass={
+            i <= paidChapter
+              ? "payed"
+              : i - paidChapter < 1
+              ? "partial"
+              : "unpayed"
+          }
         />
       );
     });
   };
-  const handleTeacherStudentSelect = (user) => {
-    setMyDetails(user.teacher);
-    setOppDetails(user.student);
-    bindTable(user.teacher._id, user.teacher.role, user.student._id);
+  const handleTeacherStudentSelect = (teacher, student) => {
+    setMyDetails(teacher);
+    setOppDetails(student);
+    bindTable(teacher._id, teacher.role, student._id, student.studentMap._id);
   };
   const handleUserSelect = (user) => {
     setOppDetails(user);
-    bindTable(myDetails._id, myDetails.role, user._id);
+    bindTable(myDetails._id, myDetails.role, user._id, user.studentMap._id);
   };
+
   const completeSyllabus = (id) => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/syllabus/complete`, {
@@ -66,7 +92,12 @@ const SyllabusSection = (props) => {
         role: myDetails.role,
       })
       .then((response) => {
-        bindTable(myDetails._id, myDetails.role, oppDetails._id);
+        bindTable(
+          myDetails._id,
+          myDetails.role,
+          oppDetails._id,
+          oppDetails.studentMap._id
+        );
       });
   };
   const unCheckSyllabus = (id) => {
@@ -76,7 +107,12 @@ const SyllabusSection = (props) => {
         role: myDetails.role,
       })
       .then((response) => {
-        bindTable(myDetails._id, myDetails.role, oppDetails._id);
+        bindTable(
+          myDetails._id,
+          myDetails.role,
+          oppDetails._id,
+          oppDetails.studentMap._id
+        );
       });
   };
   const deleteSyllabus = (id) => {
@@ -98,19 +134,26 @@ const SyllabusSection = (props) => {
       myDetails.role === "student" ? myDetails._id : oppDetails._id;
     const teacherID =
       myDetails.role === "teacher" ? myDetails._id : oppDetails._id;
+    const studentMapID = oppDetails.studentMap._id;
 
-    if (chapterName && studentID && moduleName && teacherID) {
+    if (chapterName && studentID && moduleName && teacherID && studentMapID) {
       axios
         .post(`${process.env.REACT_APP_SERVER_URL}/syllabus/add`, {
           chapterName,
           moduleName,
           studentID,
           teacherID,
+          studentMapID,
         })
         .then((response) => {
           toast.success("Submitted successfully");
           callback();
-          bindTable(myDetails._id, myDetails.role, oppDetails._id);
+          bindTable(
+            myDetails._id,
+            myDetails.role,
+            oppDetails._id,
+            oppDetails.studentMap._id
+          );
         });
     } else {
       toast.error("please fill all fields");
@@ -138,12 +181,12 @@ const SyllabusSection = (props) => {
     }
   };
   return (
-    <section>
+    <section className="syllabus-section">
       <h2>{props.syllabusContent.title}</h2>
       {isAuth().role === "admin" ? (
         <TeacherStudentSelectorBlock
-          myId={myDetails._id}
-          myRole={myDetails.role}
+          myId={isAuth()._id}
+          myRole={isAuth().role}
           handleUserSelect={handleTeacherStudentSelect}
           autoLoad={true}
         />
@@ -153,12 +196,17 @@ const SyllabusSection = (props) => {
           myRole={myDetails.role}
           handleUserSelect={handleUserSelect}
           autoLoad={true}
+          selectedPage={"syllabusPage"}
+          notifications={props.notifications}
+          notify={props.notify}
         ></UserSelectorBlock>
       )}
       <TabSelectorBlock
         tabWindows={props.syllabusContent.tabWindows}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
+        isAvailable={oppDetails}
+        unAvailableMessage="Select one from the list"
       />
       {bindTabWindow()}
     </section>

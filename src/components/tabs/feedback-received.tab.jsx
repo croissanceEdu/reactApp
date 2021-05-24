@@ -1,6 +1,6 @@
 const FeedbackReceivedTab = (props) => {
   return (
-    <div>
+    <div className="tab-window">
       <ul>{props.bindReceived()}</ul>
     </div>
   );

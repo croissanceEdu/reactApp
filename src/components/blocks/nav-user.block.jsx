@@ -1,58 +1,24 @@
 import { isAuth, signout } from "../../helpers/auth";
 import Api from "../../helpers/content-api";
-import Button from "@material-ui/core/Button";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import { makeStyles } from "@material-ui/core/styles";
-import { useEffect, useRef, useState } from "react";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
-}));
+import { useState } from "react";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 const NavUserBlock = (props) => {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
+  const [panelClassName, setPanelClassName] = useState("hidden-menu");
 
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
+    setPanelClassName((prevClass) =>
+      prevClass === "hidden-menu" ? "shown-menu" : "hidden-menu"
+    );
   };
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
+  const handleClose = () => {
+    setPanelClassName("hidden-menu");
   };
+  document.onscroll = handleClose;
 
-  function handleListKeyDown(event) {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setOpen(false);
-    }
-  }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = useRef(open);
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
   //Logout
   const handleLogout = () => {
+    handleClose();
     signout(() => {
       if (isAuth()) {
         window.location = "/";
@@ -64,69 +30,56 @@ const NavUserBlock = (props) => {
 
   //ChangePassword
   const handleChangePassword = () => {
+    handleClose();
     window.location = Api.getNavLinkPath("changePasswordPage");
   };
   //Profile
   const handleProfile = () => {
+    handleClose();
     window.location = Api.getNavLinkPath("profilePage");
   };
   return (
-    <div className={classes.root}>
-      <div>
-        <img
-          src={
-            props.profilePicture
-              ? props.profilePicture
-              : process.env.REACT_APP_DEFAULT_PROFILE_PIC
-          }
-          alt="img"
-          onClick={handleToggle}
-          style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-        />
-
-        <Button
-          ref={anchorRef}
-          aria-controls={open ? "menu-list-grow" : undefined}
-          aria-haspopup="true"
-          color="primary"
-          onClick={handleToggle}
-        >
-          {isAuth().name}
-        </Button>
-        <Popper
-          open={open}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          transition
-          disablePortal
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
+    <div className="nav-user-block">
+      <div className="nav-user-div" onClick={handleToggle}>
+        <div className="nav-avatar-name">
+          <div className="user-avatar">
+            <div
+              className="avatar-img"
               style={{
-                transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom",
+                backgroundImage: "url(" + props.profilePicture + ")",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                height: "100%",
+                width: "100%",
+                backgroundPosition: "center",
               }}
-            >
-              <Paper className={classes.paper}>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList
-                    autoFocusItem={open}
-                    id="menu-list-grow"
-                    onKeyDown={handleListKeyDown}
-                  >
-                    <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                    <MenuItem onClick={handleChangePassword}>
-                      Change Password
-                    </MenuItem>
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+            ></div>
+          </div>
+          <h4>
+            {isAuth() ? isAuth().name : null}{" "}
+            <ArrowDropDownIcon style={{ color: "#fff" }} />
+          </h4>{" "}
+        </div>{" "}
+        <p>{isAuth() ? isAuth().email : null} </p>
       </div>
+
+      <ul className={panelClassName}>
+        <li>
+          <button onClick={handleProfile}>
+            {props.navUserContent.profileContent}
+          </button>
+        </li>
+        <li>
+          <button onClick={handleChangePassword}>
+            {props.navUserContent.changePasswordContent}
+          </button>
+        </li>
+        <li>
+          <button onClick={handleLogout}>
+            {props.navUserContent.logoutContent}
+          </button>
+        </li>
+      </ul>
     </div>
   );
 };

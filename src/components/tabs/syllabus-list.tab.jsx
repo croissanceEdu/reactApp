@@ -1,5 +1,9 @@
-const SyllabusListTab = (probs) => {
-  return <ol>{probs.bindSyllabuses(false)}</ol>;
+const SyllabusListTab = (props) => {
+  return (
+    <div className="tab-window">
+      <ol>{props.bindSyllabuses(false)}</ol>
+    </div>
+  );
 };
 
 export default SyllabusListTab;

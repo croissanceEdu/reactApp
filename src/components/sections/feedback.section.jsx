@@ -14,17 +14,17 @@ import FeedbackMessageItem from "../items/feedback-message.item";
 const FeedbackSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("historyTab");
   const [myDetails, setMyDetails] = useState(isAuth());
-  const [oppDetails, setOppDetails] = useState({});
+  const [oppDetails, setOppDetails] = useState({ studentMap: {} });
   const [receivedFeedback, setReceivedFeedback] = useState([]);
   const [sentFeedback, setSentFeedback] = useState([]);
   const [mixedFeedback, setMixedFeedback] = useState();
-
+  const [formData, setFormData] = useState({ title: "", content: "" });
   //submit to backend
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const titleName = e.target.titleName.value;
-    const messageContent = e.target.messageContent.value;
+    const titleName = formData.title;
+    const messageContent = formData.content;
     if (titleName && messageContent) {
       axios
         .post(`${process.env.REACT_APP_SERVER_URL}/feedback/send`, {
@@ -32,23 +32,24 @@ const FeedbackSection = (props) => {
           messageContent,
           fromID: myDetails._id,
           toID: oppDetails._id,
+          studentMapID: oppDetails.studentMap._id,
         })
         .then((response) => {
           toast.success("Submitted successfully");
-          e.target.titleName.value = "";
-          e.target.messageContent.value = "";
-          bindTables(myDetails._id, oppDetails._id);
+          setFormData({ title: "", content: "" });
+          bindTables(myDetails._id, oppDetails._id, oppDetails.studentMap._id);
         });
     } else {
       toast.error("please fill all fields");
     }
   };
-  const loadSentMessages = (myId, oppoId) => {
+  const loadSentMessages = (myId, oppoId, mapId) => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/feedback/receive`, {
         fromID: myId,
         toID: oppoId,
         isSender: true,
+        studentMapID: mapId,
       })
       .then((response) => {
         setSentFeedback(response.data.feedback);
@@ -57,15 +58,17 @@ const FeedbackSection = (props) => {
         console.log(error);
       });
   };
-  const loadReceivedMessages = (myId, oppoId) => {
+  const loadReceivedMessages = (myId, oppoId, mapId) => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/feedback/receive`, {
         fromID: oppoId,
         toID: myId,
         isSender: false,
+        studentMapID: mapId,
       })
       .then((response) => {
         setReceivedFeedback(response.data.newFeedback);
+        props.notify();
       })
       .catch((error) => {
         console.log(error);
@@ -84,12 +87,14 @@ const FeedbackSection = (props) => {
   //       console.log(error);
   //     });
   // };
-  const bindTables = (myId, oppId) => {
-    loadSentMessages(myId, oppId);
-    loadReceivedMessages(myId, oppId);
+  const bindTables = (myId, oppId, mapId) => {
+    loadSentMessages(myId, oppId, mapId);
+    loadReceivedMessages(myId, oppId, mapId);
     // loadMixedMessages(myId, oppId);
   };
   const bindHistory = () => {
+    if (!(sentFeedback.length || receivedFeedback.length))
+      return <p className="empty-p">Empty</p>;
     return sentFeedback
       .concat(receivedFeedback)
       .sort((a, b) => (a._id > b._id ? -1 : b._id > a._id ? 1 : 0))
@@ -104,6 +109,7 @@ const FeedbackSection = (props) => {
       });
   };
   const bindSent = () => {
+    if (!sentFeedback.length) return <p className="empty-p">Empty</p>;
     return sentFeedback.map((item) => {
       return (
         <FeedbackMessageItem feedback={item} key={uuidv4()} isSender={true} />
@@ -111,6 +117,7 @@ const FeedbackSection = (props) => {
     });
   };
   const bindReceived = () => {
+    if (!receivedFeedback.length) return <p className="empty-p">Empty</p>;
     return receivedFeedback.map((item) => {
       return (
         <FeedbackMessageItem feedback={item} key={uuidv4()} isSender={false} />
@@ -119,7 +126,8 @@ const FeedbackSection = (props) => {
   };
   const handleUserSelect = (user) => {
     setOppDetails(user);
-    bindTables(myDetails._id, user._id);
+    setSelectedTab("historyTab");
+    bindTables(myDetails._id, user._id, user.studentMap._id);
   };
   const bindTabWindow = () => {
     switch (selectedTab) {
@@ -149,6 +157,8 @@ const FeedbackSection = (props) => {
           <FeedbackNewTab
             feedbackContent={props.feedbackContent}
             handleSubmit={handleSubmit}
+            formData={formData}
+            setFormData={setFormData}
           />
         );
 
@@ -157,17 +167,21 @@ const FeedbackSection = (props) => {
     }
   };
   return (
-    <section>
+    <section className="feedback-section">
       <UserSelectorBlock
         myId={myDetails._id}
         myRole={myDetails.role}
         handleUserSelect={handleUserSelect}
         autoLoad={true}
+        selectedPage={"feedbackPage"}
+        notifications={props.notifications}
       />
       <TabSelectorBlock
         tabWindows={props.feedbackContent.tabWindows}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
+        isAvailable={oppDetails}
+        unAvailableMessage="Select one from the list"
       />
       {bindTabWindow()}
     </section>

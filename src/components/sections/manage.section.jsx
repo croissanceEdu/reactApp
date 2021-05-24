@@ -63,7 +63,9 @@ const ManageSection = (props) => {
         tabWindows={props.manageContent.tabWindows}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
-      />{" "}
+        isAvailable={true}
+        unAvailableMessage="no Access"
+      />
       {bindTabWindow()}
     </section>
   );

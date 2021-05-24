@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -17,6 +17,9 @@ import FeedbackPage from "./components/pages/feedback.page";
 import SyllabusPage from "./components/pages/syllabus.page";
 import ManagePage from "./components/pages/manage.page";
 import RegisterTeacherPage from "./components/pages/register-teacher.page";
+import ScreenOverlayExtra from "./components/extras/screen-overlay.extra";
+import { loadNotifications } from "./helpers/api-call-helper";
+import { isAuth } from "./helpers/auth";
 
 function App() {
   // const browserlanguage = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage;
@@ -32,11 +35,63 @@ function App() {
   let [language, setLanguage] = useState(preferredLanguage);
 
   const urlPathContent = Api.getUrlPathContent();
+  const [userDetails, setUserDetails] = useState(isAuth())
   const [selectedPage, setselectedPage] = useState("")
   const [profilePicture, setProfilePicture] = useState(null)
+  const [notifications, setNotifications] = useState({ feedback: [], activationLinks: [], syllabus: [], joinClass: [] })
+  const [overlayClassNames, setoverlayClassNames] = useState("")
+  const [navStyles, setNavStyles] = useState({
+    navClassNames: "",
+    navbarSectionClassNames: "navbar",
+    navbarSectionScrollEffectClassNames: " ",
+    isNavMenuOpen: false
+  });
 
+  const setNavVisible = (visiblity) => {
+    if (visiblity) {
+      setoverlayClassNames("overlay-visible");
+      setNavStyles({
+        ...navStyles,
+        navClassNames: "nav-visible ",
+        navbarSectionClassNames: "navbar nav-visible",
+        isNavMenuOpen: true
+      });
+    } else {
+      setoverlayClassNames("");
+      setNavStyles({
+        ...navStyles,
+        navClassNames: "",
+        navbarSectionClassNames: "navbar",
+        isNavMenuOpen: false
+      });
+    }
+  };
+  const logoSizeToggle = () => {
+    // console.log(window.scrollY)
+    if (window.scrollY > 10)
+      setNavStyles({ ...navStyles, navbarSectionScrollEffectClassNames: " navbar-short" })
+    else setNavStyles({ ...navStyles, navbarSectionScrollEffectClassNames: " " })
+  }
+  // document.addEventListener("scroll", logoSizeToggle);
+
+
+  const updateProfilePicture = (imagePath) => {
+    if (imagePath) {
+      if (!profilePicture)
+        setProfilePicture(
+          `${process.env.REACT_APP_SERVER_URL}/${imagePath}`
+        );
+    } else
+      setProfilePicture(
+        `${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_DEFAULT_PROFILE_PIC}`
+      );
+  };
+  const notify = () => { if (userDetails) loadNotifications(userDetails._id, userDetails.role, setNotifications, updateProfilePicture) }
+  useEffect(() => {
+    notify();
+  }, [])
   return (
-    <Router>
+    <Router>  <ScreenOverlayExtra overlayClassNames={overlayClassNames} setNavVisible={setNavVisible} />
       <Route
         path={[
           urlPathContent.homePage,
@@ -49,7 +104,11 @@ function App() {
           urlPathContent.managePage
         ]}
         exact
-        render={(props) => <NavbarSection {...props} language={language} setLanguage={setLanguage} selectedPage={selectedPage} profilePicture={profilePicture} setProfilePicture={setProfilePicture} />}
+        render={(props) => <NavbarSection {...props} language={language} setLanguage={setLanguage} selectedPage={selectedPage}
+          profilePicture={profilePicture} setProfilePicture={setProfilePicture}
+          setoverlayClassNames={setoverlayClassNames} setNavVisible={setNavVisible} navStyles={navStyles}
+          notifications={notifications}
+        />}
       />
 
       <Switch>
@@ -105,12 +164,16 @@ function App() {
         <Route
           path={urlPathContent.feedbackPage}
           exact
-          render={(props) => <FeedbackPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage} />}
+          render={(props) => <FeedbackPage {...props} language={language} urlPathContent={urlPathContent}
+            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
+            notifications={notifications} notify={notify} />}
         />
         <Route
           path={urlPathContent.syllabusPage}
           exact
-          render={(props) => <SyllabusPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage} />}
+          render={(props) => <SyllabusPage {...props} language={language} urlPathContent={urlPathContent}
+            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
+            notifications={notifications} notify={notify} />}
         />
         <Route
           path={urlPathContent.managePage}
