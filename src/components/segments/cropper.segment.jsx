@@ -93,7 +93,7 @@ const CropperSegment = (props) => {
     <div className="profile-popup">
       <div className="container">
         <button
-          className="cancel-button"
+          className="close-button"
           onClick={() => {
             props.handleCropper();
           }}

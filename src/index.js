@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/main.css";
+import "./css/font.css";
 
 
 // import HomePage from './components/pages/home.page';

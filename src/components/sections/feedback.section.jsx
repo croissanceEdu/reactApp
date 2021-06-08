@@ -10,10 +10,11 @@ import FeedbackHistoryTab from "../tabs/feedback-history.tab";
 import FeedbackReceivedTab from "../tabs/feedback-received.tab";
 import FeedbackSentTab from "../tabs/feedback-sent.tab";
 import FeedbackMessageItem from "../items/feedback-message.item";
+import { Add } from "@material-ui/icons";
 
 const FeedbackSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("historyTab");
-  const [myDetails, setMyDetails] = useState(isAuth());
+  const [myDetails, setMyDetails] = useState(props.userDetails);
   const [oppDetails, setOppDetails] = useState({ studentMap: {} });
   const [receivedFeedback, setReceivedFeedback] = useState([]);
   const [sentFeedback, setSentFeedback] = useState([]);
@@ -38,6 +39,7 @@ const FeedbackSection = (props) => {
           toast.success("Submitted successfully");
           setFormData({ title: "", content: "" });
           bindTables(myDetails._id, oppDetails._id, oppDetails.studentMap._id);
+          setSelectedTab("historyTab");
         });
     } else {
       toast.error("please fill all fields");
@@ -168,6 +170,7 @@ const FeedbackSection = (props) => {
   };
   return (
     <section className="feedback-section">
+      <div className="navbar-spacer"></div>
       <UserSelectorBlock
         myId={myDetails._id}
         myRole={myDetails.role}
@@ -176,14 +179,28 @@ const FeedbackSection = (props) => {
         selectedPage={"feedbackPage"}
         notifications={props.notifications}
       />
-      <TabSelectorBlock
-        tabWindows={props.feedbackContent.tabWindows}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-        isAvailable={oppDetails}
-        unAvailableMessage="Select one from the list"
-      />
-      {bindTabWindow()}
+      <div className="tab-section">
+        <TabSelectorBlock
+          tabWindows={props.feedbackContent.tabWindows}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+          isAvailable={oppDetails}
+          unAvailableMessage="Select one from the list"
+        />
+        {bindTabWindow()}
+        {oppDetails._id && selectedTab !== "newFeedbackTab" && (
+          <div className="add-new-round-button-block">
+            <button
+              className="add-new-round-button add-button"
+              onClick={() => {
+                setSelectedTab("newFeedbackTab");
+              }}
+            >
+              <Add />
+            </button>
+          </div>
+        )}
+      </div>
     </section>
   );
 };

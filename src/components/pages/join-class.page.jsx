@@ -1,4 +1,3 @@
-import { isAuth } from "../../helpers/auth";
 import { Redirect } from "react-router-dom";
 
 import JoinClassSection from "../sections/join-class.section";
@@ -10,12 +9,13 @@ const JoinClassPage = (props) => {
     props.setselectedPage("joinClassPage");
   }, [props]);
   if (
-    isAuth() &&
-    props.hasPageAccess("joinClassPage", isAuth().role, props.language)
+    props.userDetails &&
+    props.hasPageAccess("joinClassPage", props.userDetails.role, props.language)
   )
     return (
       <JoinClassSection
         joinClassContent={getJoinClassContent(props.language)}
+        userDetails={props.userDetails}
       />
     );
   else return <Redirect to={props.urlPathContent.loginPage} />;

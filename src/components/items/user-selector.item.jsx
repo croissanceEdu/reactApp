@@ -22,16 +22,21 @@ const UserSelectorItem = (props) => {
             }}
           ></div>
         </div>
+        <div className="name-course-block">
+          <div className="name-block">
+            <h3>{props.user.name}</h3>
 
-        <h3>{props.user.name}</h3>
-
-        <span className=" badge badge-pill">
-          {props.user.notificationCount === 0
-            ? null
-            : props.user.notificationCount}
-        </span>
+            <span className=" badge badge-pill">
+              {props.user.notificationCount === 0
+                ? null
+                : props.user.notificationCount}
+            </span>
+          </div>
+          <p>
+            {props.user.studentMap ? props.user.studentMap.courseName : null}
+          </p>
+        </div>
       </div>
-      <p>{props.user.studentMap ? props.user.studentMap.courseName : null}</p>
     </li>
   );
 };

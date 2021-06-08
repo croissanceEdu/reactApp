@@ -2,28 +2,28 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
-import { isAuth } from "../../helpers/auth";
+
 import ActivateAccountItem from "../items/activate-account.item";
 
-const ActivateAccountSection = () => {
+const ActivateAccountSection = (props) => {
   const [activationLinks, setActivationLinks] = useState([]);
   const getActivationLinks = () => {
-    if (isAuth() && isAuth().role === "admin") {
+    if (props.userDetails && props.userDetails.role === "admin") {
       axios
         .post(`${process.env.REACT_APP_SERVER_URL}/api/getforactivation`, {
-          _Id: isAuth()._id,
-          role: isAuth().role,
+          _Id: props.userDetails._id,
+          role: props.userDetails.role,
         })
         .then((res) => {
           if (res.data.activationLinks.length) {
             setActivationLinks(res.data.activationLinks);
-          } else toast.error("No Activation links are available now");
+          } else console.log("No Activation links are available now");
         })
         .catch((err) => {
-          toast.error(err.response.data.error);
+          console.log(err.response.data.error);
         });
     } else {
-      toast.error("err");
+      console.log("err");
     }
   };
   useEffect(() => {
@@ -46,8 +46,8 @@ const ActivateAccountSection = () => {
   };
 
   return (
-    <section>
-      <div>Activate Users</div>
+    <section className="activation-section">
+      <div className="navbar-spacer"></div>
       <ul>{BindActivationLinks()}</ul>
     </section>
   );

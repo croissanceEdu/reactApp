@@ -1,15 +1,19 @@
 import logo from "../../assets/images/alpha-helix-logo-1069x322-quarter-128x128-15.png";
-const NavLogoBlock = () => {
+import Api from "../../helpers/content-api";
+const NavLogoBlock = (props) => {
   return (
     <div className="navbar-brand">
-      <a href="http://croissance.uk" className="navbar-logo">
+      <a
+        href={Api.getNavLinkPath(props.navLogoontent.logoUrl)}
+        className="navbar-logo"
+      >
         <img src={logo} alt="CROISSANCE TECHNOLOGIES" />
       </a>
       <a
         className="navbar-caption"
-        href="http://croissance.uk/Croissanceedu.html"
+        href={Api.getNavLinkPath(props.navLogoontent.titleUrl)}
       >
-        CROISSANCE EDU
+        {props.navLogoontent.logoContent}
       </a>
     </div>
   );

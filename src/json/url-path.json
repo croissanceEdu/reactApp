@@ -1,13 +1,15 @@
 {
-    "homePage":"/",
-    "loginPage":"/login/",
-    "registerPage":"/register/",
-    "registerTeacherPage":"/register-teacher/",
-    "syllabusPage":"/syllabus/",
-    "feedbackPage":"/feedback/",
-    "changePasswordPage":"/changePassword/",
-    "joinClassPage":"/joinclass/",
-    "profilePage":"/profile/",
-    "managePage":"/manage/",
-    "activateAccountPage":"/activate/"
+    "homePage": "/",
+    "loginPage": "/login/",
+    "registerPage": "/register/",
+    "registerTeacherPage": "/register-teacher/",
+    "syllabusPage": "/syllabus/",
+    "feedbackPage": "/feedback/",
+    "changePasswordPage": "/changePassword/",
+    "joinClassPage": "/joinclass/",
+    "profilePage": "/profile/",
+    "managePage": "/manage/",
+    "activateAccountPage": "/activate/",
+    "croissanceWebSite": "http://croissance.uk",
+    "croissanceEduWebSite": "http://croissance.uk/Croissanceedu.html"
 }

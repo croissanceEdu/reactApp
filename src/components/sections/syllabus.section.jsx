@@ -14,7 +14,7 @@ const SyllabusSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("syllabusListTab");
   const [syllabuses, setSyllabuses] = useState([]);
   const [myDetails, setMyDetails] = useState(
-    isAuth().role !== "admin" ? isAuth() : {}
+    props.userDetails.role !== "admin" ? props.userDetails : {}
   );
   const [oppDetails, setOppDetails] = useState(null);
 
@@ -50,28 +50,37 @@ const SyllabusSection = (props) => {
       : 0;
     if (paidAmount >= feeAmount) paidChapter = totalChapter;
     else paidChapter = (totalChapter * paidAmount) / feeAmount;
+    let moduleName = "";
 
     let i = 0;
     return syllabuses.map((item) => {
       i++;
+      let isModuleChange = true;
+      if (moduleName !== item.moduleName) moduleName = item.moduleName;
+      else isModuleChange = false;
       return (
-        <SyllabusItem
-          syllabus={item}
-          key={uuidv4()}
-          completeSyllabus={completeSyllabus}
-          unCheckSyllabus={unCheckSyllabus}
-          editMode={editMode}
-          deleteSyllabus={deleteSyllabus}
-          loginAs={isAuth().role}
-          syllabusContent={props.syllabusContent}
-          itemClass={
-            i <= paidChapter
-              ? "payed"
-              : i - paidChapter < 1
-              ? "partial"
-              : "unpayed"
-          }
-        />
+        <>
+          {isModuleChange ? (
+            <h3 className="syllabus-module">{moduleName}</h3>
+          ) : null}
+          <SyllabusItem
+            syllabus={item}
+            key={uuidv4()}
+            completeSyllabus={completeSyllabus}
+            unCheckSyllabus={unCheckSyllabus}
+            editMode={editMode}
+            deleteSyllabus={deleteSyllabus}
+            loginAs={props.userDetails.role}
+            syllabusContent={props.syllabusContent}
+            itemClass={
+              i <= paidChapter
+                ? "payed"
+                : i - paidChapter < 1
+                ? "partial"
+                : "unpayed"
+            }
+          />
+        </>
       );
     });
   };
@@ -182,11 +191,12 @@ const SyllabusSection = (props) => {
   };
   return (
     <section className="syllabus-section">
+      <div className="navbar-spacer"></div>
       <h2>{props.syllabusContent.title}</h2>
-      {isAuth().role === "admin" ? (
+      {props.userDetails.role === "admin" ? (
         <TeacherStudentSelectorBlock
-          myId={isAuth()._id}
-          myRole={isAuth().role}
+          myId={props.userDetails._id}
+          myRole={props.userDetails.role}
           handleUserSelect={handleTeacherStudentSelect}
           autoLoad={true}
         />
@@ -201,14 +211,16 @@ const SyllabusSection = (props) => {
           notify={props.notify}
         ></UserSelectorBlock>
       )}
-      <TabSelectorBlock
-        tabWindows={props.syllabusContent.tabWindows}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-        isAvailable={oppDetails}
-        unAvailableMessage="Select one from the list"
-      />
-      {bindTabWindow()}
+      <div className="tab-section">
+        <TabSelectorBlock
+          tabWindows={props.syllabusContent.tabWindows}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+          isAvailable={oppDetails}
+          unAvailableMessage="Select one from the list"
+        />
+        {bindTabWindow()}
+      </div>
     </section>
   );
 };

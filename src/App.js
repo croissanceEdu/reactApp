@@ -108,6 +108,7 @@ function App() {
           profilePicture={profilePicture} setProfilePicture={setProfilePicture}
           setoverlayClassNames={setoverlayClassNames} setNavVisible={setNavVisible} navStyles={navStyles}
           notifications={notifications}
+          userDetails={userDetails}
         />}
       />
 
@@ -116,69 +117,87 @@ function App() {
           path={urlPathContent.loginPage}
           exact
           render={(props) => <LoginPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} />}
-        />
+          userDetails={userDetails} setUserDetails={setUserDetails} />
         <Route
           path={urlPathContent.registerTeacherPage}
           exact
           render={(props) => (
-            <RegisterTeacherPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} />
+            <RegisterTeacherPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess}
+              userDetails={userDetails} />
           )}
         />
         <Route
           path={urlPathContent.registerPage}
           exact
           render={(props) => (
-            <RegistrationPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} />
+            <RegistrationPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess}
+              userDetails={userDetails} />
           )}
         />
 
         <Route
           path={urlPathContent.homePage}
           exact
-          render={(props) => <HomePage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage} />}
+          render={(props) => <HomePage {...props} language={language} urlPathContent={urlPathContent}
+            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
+            userDetails={userDetails} notifications={notifications}
+            profilePicture={profilePicture} />}
         />
         <Route
           path={urlPathContent.changePasswordPage}
           exact
           render={(props) => (
-            <ChangePasswordPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage} />
+            <ChangePasswordPage {...props} language={language} urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
+              userDetails={userDetails} />
           )}
         />
         <Route
           path={urlPathContent.profilePage}
           exact
-          render={(props) => <ProfilePage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} profilePicture={profilePicture} setProfilePicture={setProfilePicture} setselectedPage={setselectedPage} />}
+          render={(props) => <ProfilePage {...props} language={language} urlPathContent={urlPathContent}
+            hasPageAccess={Api.hasPageAccess} profilePicture={profilePicture}
+            setProfilePicture={setProfilePicture} setselectedPage={setselectedPage}
+            userDetails={userDetails} setUserDetails={setUserDetails} />}
         />
         <Route
           path={urlPathContent.activateAccountPage}
           exact
           render={(props) => (
-            <ActivateAccountPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage} />
+            <ActivateAccountPage {...props} language={language} urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
+              userDetails={userDetails} />
           )}
         />
         <Route
           path={urlPathContent.joinClassPage}
           exact
-          render={(props) => <JoinClassPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage} />}
+          render={(props) => <JoinClassPage {...props} language={language} urlPathContent={urlPathContent}
+            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
+            userDetails={userDetails} />}
         />
         <Route
           path={urlPathContent.feedbackPage}
           exact
           render={(props) => <FeedbackPage {...props} language={language} urlPathContent={urlPathContent}
             hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
-            notifications={notifications} notify={notify} />}
+            notifications={notifications} notify={notify}
+            userDetails={userDetails} />}
         />
         <Route
           path={urlPathContent.syllabusPage}
           exact
           render={(props) => <SyllabusPage {...props} language={language} urlPathContent={urlPathContent}
             hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
-            notifications={notifications} notify={notify} />}
+            notifications={notifications} notify={notify}
+            userDetails={userDetails} />}
         />
         <Route
           path={urlPathContent.managePage}
           exact
-          render={(props) => <ManagePage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage} />}
+          render={(props) => <ManagePage {...props} language={language} urlPathContent={urlPathContent}
+            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
+            userDetails={userDetails} setUserDetails={setUserDetails} />}
         />
       </Switch>
       <Route

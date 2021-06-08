@@ -22,11 +22,6 @@ const TeacherStudentSelectorItem = (props) => {
             }}
           ></div>
         </div>
-
-        <h2>
-          {props.user.teacher.name}-{props.user.student.name}
-        </h2>
-
         <div className="user-avatar">
           <div
             className="avatar-img"
@@ -42,10 +37,19 @@ const TeacherStudentSelectorItem = (props) => {
             }}
           ></div>
         </div>
-      </div>{" "}
-      {/* <p>
-        {props.user.teacher.email}-{props.user.student.email}
-      </p> */}
+        <div className="name-course-block">
+          <div className="name-block">
+            <h3>
+              {props.user.teacher.name}-{props.user.student.name}
+            </h3>
+          </div>{" "}
+          <p>
+            {props.user.student.studentMap
+              ? props.user.student.studentMap.courseName
+              : null}
+          </p>
+        </div>
+      </div>
     </li>
   );
 };

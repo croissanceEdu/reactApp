@@ -47,7 +47,7 @@ const SyllabusAddBlock = (props) => {
 
       <div className="form-group row">
         <div className="container">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn primary-button">
             {props.syllabusContent.addContent}
           </button>
         </div>

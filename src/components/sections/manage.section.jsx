@@ -58,15 +58,18 @@ const ManageSection = (props) => {
     }
   };
   return (
-    <section>
-      <TabSelectorBlock
-        tabWindows={props.manageContent.tabWindows}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-        isAvailable={true}
-        unAvailableMessage="no Access"
-      />
-      {bindTabWindow()}
+    <section className="manage-section">
+      <div className="navbar-spacer"></div>
+      <div className="tab-section">
+        <TabSelectorBlock
+          tabWindows={props.manageContent.tabWindows}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+          isAvailable={true}
+          unAvailableMessage="no Access"
+        />
+        {bindTabWindow()}
+      </div>
     </section>
   );
 };

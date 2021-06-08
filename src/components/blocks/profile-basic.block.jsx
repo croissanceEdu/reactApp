@@ -1,21 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { isAuth } from "../../helpers/auth";
 
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
-
-import CropperSegment from "../segments/cropper.segment";
-import ProfileAvatarSegment from "../segments/profile-avatar.segment";
 
 const ProfileBasicBlock = (props) => {
   const [showCropper, setShowCropper] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
-    name: isAuth().name,
-    email: isAuth().email,
+    name: props.userDetails.name,
+    email: props.userDetails.email,
     dateOfBirth: new Date(),
     contactNumber: "",
     fullAddress: "",
@@ -32,7 +27,7 @@ const ProfileBasicBlock = (props) => {
   const LoadDetails = () => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/user/getdetails`, {
-        id: isAuth()._id,
+        id: props.userDetails._id,
       })
       .then((res) => {
         // props.setProfilePicture(
@@ -59,7 +54,7 @@ const ProfileBasicBlock = (props) => {
   const handleRemoveImage = () => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/user/removepic`, {
-        id: isAuth()._id,
+        id: props.userDetails._id,
       })
       .then((res) => {
         toast.success(res.data.message);
@@ -80,7 +75,7 @@ const ProfileBasicBlock = (props) => {
           `${process.env.REACT_APP_SERVER_URL}/user/updateprofile`,
 
           {
-            id: isAuth()._id,
+            id: props.userDetails._id,
             dateOfBirth: formData.dateOfBirth,
             contactNumber: formData.contactNumber,
             fullAddress: formData.fullAddress,
@@ -118,25 +113,22 @@ const ProfileBasicBlock = (props) => {
     setFormData({ ...formData, dateOfBirth: selectedDate });
   };
   return (
-    <div>
-      {!showCropper ? (
-        <ProfileAvatarSegment
-          profileContent={props.profileContent}
-          handleCropper={handleCropper}
-          handleRemoveImage={handleRemoveImage}
-          profilePicture={props.profilePicture}
-          setProfilePicture={props.setProfilePicture}
-        />
-      ) : (
-        <CropperSegment
-          profileContent={props.profileContent}
-          handleCropper={handleCropper}
-          profilePicture={props.profilePicture}
-          setProfilePicture={props.setProfilePicture}
-        />
-      )}
+    <div className="bacic-profile-block">
+      <div className="edit-cancel-block">
+        <button
+          onClick={() => {
+            if (editMode) LoadDetails();
+            setEditMode((prev) => !prev);
+          }}
+          className={`btn button-edit-profile ${
+            editMode ? "cancel-button" : "edit-button"
+          }`}
+        >
+          {editMode ? "CANCEL" : "EDIT"}
+        </button>
+      </div>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="form-group container">
           <label htmlFor="inputUserName">Name</label>
           <input
             type="text"
@@ -154,7 +146,7 @@ const ProfileBasicBlock = (props) => {
             </small>
           )}
         </div>
-        <div className="form-group">
+        <div className="form-group container">
           <label htmlFor="inputUserEmail">EMAIL</label>
           <input
             type="text"
@@ -173,7 +165,7 @@ const ProfileBasicBlock = (props) => {
           )}
         </div>
 
-        <div className="form-group">
+        <div className="form-group container">
           <label htmlFor="inputGender">Gender</label>
           <select
             className="form-control"
@@ -188,7 +180,7 @@ const ProfileBasicBlock = (props) => {
           </select>
         </div>
 
-        <div className="form-group">
+        <div className="form-group container">
           <label htmlFor="inputDateOfBirth">Date of birth</label>
           <DatePicker
             // dateFormat="dd/MM//yyyy"
@@ -199,7 +191,7 @@ const ProfileBasicBlock = (props) => {
             className="form-control"
           />
         </div>
-        <div className="form-group">
+        <div className="form-group container">
           <label htmlFor="inputContactNumber">Contact Number</label>
           <input
             type="text"
@@ -212,7 +204,7 @@ const ProfileBasicBlock = (props) => {
             readOnly={!editMode}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group container">
           <label htmlFor="inputAddress">Address</label>
           <textarea
             className="form-control"
@@ -224,7 +216,7 @@ const ProfileBasicBlock = (props) => {
             readOnly={!editMode}
           ></textarea>
         </div>
-        <div className="form-group">
+        <div className="form-group container">
           <label htmlFor="inputQualification">Qualification</label>
           <textarea
             className="form-control"
@@ -236,17 +228,12 @@ const ProfileBasicBlock = (props) => {
             readOnly={!editMode}
           ></textarea>
         </div>
+
         <button
-          type="button"
-          onClick={() => {
-            if (editMode) LoadDetails();
-            setEditMode((prev) => !prev);
-          }}
-          className="btn btn-info button-edit-profile"
+          disabled={!editMode}
+          type="submit"
+          className="btn save-button button-save-profile"
         >
-          {editMode ? "CANCEL" : "EDIT"}
-        </button>
-        <button type="submit" className="btn btn-primary button-save-profile">
           SAVE
         </button>
       </form>

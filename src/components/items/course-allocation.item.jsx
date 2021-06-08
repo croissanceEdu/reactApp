@@ -1,15 +1,19 @@
+import { Backdrop } from "@material-ui/core";
+import { ArrowBack, ArrowLeft } from "@material-ui/icons";
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import UserAvatarBlock from "./user-avatar-block";
+import UserSelectorItem from "./user-selector.item";
 
 const CourseAllocationItem = (props) => {
   const [editMode, setEditMode] = useState(false);
-  const [classUrl, setClassUrl] = useState(props.studentmap.classLink);
+  const [classUrl, setClassUrl] = useState(props.studentMap.classLink);
   const [formData, setFormData] = useState({
-    courseName: props.studentmap.courseName,
-    feesAmount: props.studentmap.feesAmount,
-    feesCurrency: props.studentmap.feesCurrency,
-    paidAmount: props.studentmap.paidAmount,
+    courseName: props.studentMap.courseName,
+    feesAmount: props.studentMap.feesAmount,
+    feesCurrency: props.studentMap.feesCurrency,
+    paidAmount: props.studentMap.paidAmount,
   });
   const onChangeClassLink = (e) => {
     setClassUrl(e.target.value);
@@ -21,12 +25,12 @@ const CourseAllocationItem = (props) => {
 
   const handleToggleEditMode = () => {
     if (editMode) {
-      setClassUrl(props.studentmap.classLink);
+      setClassUrl(props.studentMap.classLink);
       setFormData({
-        courseName: props.studentmap.courseName,
-        feesAmount: props.studentmap.feesAmount,
-        feesCurrency: props.studentmap.feesCurrency,
-        paidAmount: props.studentmap.paidAmount,
+        courseName: props.studentMap.courseName,
+        feesAmount: props.studentMap.feesAmount,
+        feesCurrency: props.studentMap.feesCurrency,
+        paidAmount: props.studentMap.paidAmount,
       });
     }
     setEditMode((prev) => !prev);
@@ -38,7 +42,7 @@ const CourseAllocationItem = (props) => {
       axios
         .put(
           `${process.env.REACT_APP_SERVER_URL}/syllabus/map/` +
-            props.studentmap._id,
+            props.studentMap._id,
           {
             classLink: classUrl,
             courseName: formData.courseName,
@@ -60,7 +64,7 @@ const CourseAllocationItem = (props) => {
       axios
         .put(
           `${process.env.REACT_APP_SERVER_URL}/syllabus/map/` +
-            props.studentmap._id,
+            props.studentMap._id,
           {
             classLink: classUrl,
           }
@@ -73,16 +77,34 @@ const CourseAllocationItem = (props) => {
     }
   };
   return (
-    <li>
-      <div>{props.studentmap.studentName}</div>
-      <div>{props.studentmap.teacherName}</div>
+    <li
+      className={props.itemClassName}
+      onClick={() => {
+        props.handleAllocationSelect(props.studentMap);
+      }}
+    >
+      <div className="back-button-block text-right">
+        <button
+          className="btn back-button"
+          onClick={() => {
+            props.handleBackButtonClick(props.studentMap);
+          }}
+        >
+          <ArrowBack />
+        </button>
+      </div>
+      <div className="teacher-student">
+        <UserAvatarBlock user={props.studentMap.teacher} />
+        <UserAvatarBlock user={props.studentMap.student} />
+      </div>
+      <p className="course-name">{props.studentMap.courseName}</p>
       <div className="no-need-in-test">
-        <div>{props.studentmap.courseName}</div>
+        <div>{props.studentMap.courseName}</div>
         <div>
-          {props.studentmap.feesAmount}
-          <span>{props.studentmap.feesCurrency}</span>
+          {props.studentMap.feesAmount}
+          <span>{props.studentMap.feesCurrency}</span>
         </div>
-        <div>{props.studentmap.paidAmount}</div>
+        <div>{props.studentMap.paidAmount}</div>
       </div>
       <div className="for-test">
         <div className="form-group container">
@@ -152,20 +174,28 @@ const CourseAllocationItem = (props) => {
           onChange={onChangeClassLink}
         ></textarea>
       </div>
-      {editMode ? (
-        <button onClick={handleSubmitForTest}>
-          {props.manageContent.saveContent}
+      <div className="action-buttons">
+        {editMode ? (
+          <button onClick={handleSubmitForTest} className="save-button">
+            {props.manageContent.saveContent}
+          </button>
+        ) : (
+          <button
+            onClick={() => props.deleteMap(props.studentMap._id)}
+            className="delete-button"
+          >
+            {props.manageContent.deleteContent}
+          </button>
+        )}
+        <button
+          onClick={handleToggleEditMode}
+          className={editMode ? "cancel-button" : "edit-button"}
+        >
+          {editMode
+            ? props.manageContent.cancelContent
+            : props.manageContent.editContent}
         </button>
-      ) : (
-        <button onClick={() => props.deleteMap(props.studentmap._id)}>
-          {props.manageContent.deleteContent}
-        </button>
-      )}
-      <button onClick={handleToggleEditMode}>
-        {editMode
-          ? props.manageContent.cancelContent
-          : props.manageContent.editContent}
-      </button>
+      </div>
     </li>
   );
 };

@@ -9,11 +9,15 @@ const ActivateAccountPage = (props) => {
   useEffect(() => {
     props.setselectedPage("activateAccountPage");
   }, [props]);
-  if (isAuth()) {
+  if (props.userDetails) {
     if (
-      props.hasPageAccess("activateAccountPage", isAuth().role, props.language)
+      props.hasPageAccess(
+        "activateAccountPage",
+        props.userDetails.role,
+        props.language
+      )
     )
-      return <ActivateAccountSection />;
+      return <ActivateAccountSection userDetails={props.userDetails} />;
     else return <Redirect to={props.urlPathContent.homePage} />;
   } else return <ActivateByLinkSection />;
 };

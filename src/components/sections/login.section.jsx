@@ -39,10 +39,12 @@ const LoginSection = (props) => {
               // console.log(res.data);
             });
             //authorise
-            // if (isAuth()) history.push(urlPathContent.homePage);
+            // if (props.userDetails) history.push(urlPathContent.homePage);
             // else history.push(urlPathContent.homePage);
             if (isAuth()) {
-              //   toast.success(`Welcome ${res.data.user.name}`);
+              toast.success(`Welcome ${res.data.user.name}`);
+              console.log(props);
+              // props.setUserDetails(isAuth());
               window.location = urlPathContent.homePage;
             } else toast.error("Couldn't login!");
             // console.log(res.data.user);

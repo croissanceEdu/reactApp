@@ -3,27 +3,31 @@ import { CameraAlt, DeleteForever, Edit } from "@material-ui/icons";
 
 const AvatarMenuSegment = (props) => {
   const [open, setOpen] = useState(false);
-  const [camClass, setCamClass] = useState("avatar-menu-button");
-  const [editClass, setEditClass] = useState("avatar-menu-button-hidden");
-  const [deleteClass, setDeleteClass] = useState("avatar-menu-button-hidden");
+  const [camClass, setCamClass] = useState("avatar-menu-button primary-button");
+  const [editClass, setEditClass] = useState(
+    "avatar-menu-button-hidden edit-button"
+  );
+  const [deleteClass, setDeleteClass] = useState(
+    "avatar-menu-button-hidden delete-button"
+  );
 
   const handleToggle = () => {
     if (!open) {
-      setCamClass("avatar-menu-button-hidden");
-      setEditClass("avatar-menu-button");
-      setDeleteClass("avatar-menu-button");
+      setCamClass("avatar-menu-button-hidden primary-button");
+      setEditClass("avatar-menu-button edit-button");
+      setDeleteClass("avatar-menu-button delete-button");
       setOpen(true);
     } else {
-      setCamClass("avatar-menu-button");
-      setEditClass("avatar-menu-button-hidden");
-      setDeleteClass("avatar-menu-button-hidden");
+      setCamClass("avatar-menu-button primary-button");
+      setEditClass("avatar-menu-button-hidden edit-button");
+      setDeleteClass("avatar-menu-button-hidden delete-button");
       setOpen(false);
     }
   };
   const handleClose = () => {
-    setCamClass("avatar-menu-button");
-    setEditClass("avatar-menu-button-hidden");
-    setDeleteClass("avatar-menu-button-hidden");
+    setCamClass("avatar-menu-button primary-button");
+    setEditClass("avatar-menu-button-hidden edit-button");
+    setDeleteClass("avatar-menu-button-hidden delete-button");
     setOpen(false);
   };
 

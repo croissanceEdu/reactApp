@@ -1,0 +1,45 @@
+[
+    {
+        "language": "English",
+        "welcomeContent": "Welcome",
+        "banners": [
+            {
+                "name": "syllabusBanner",
+                "titleContent": "Syllabus",
+                "clickHereContent": "click here to view syllabus",
+                "notificationContent": "You have @number@ new chapters.",
+                "notificationSingleContent": "You have 1 new chapter."
+            },
+            {
+                "name": "feedbackBanner",
+                "titleContent": "Feedback",
+                "clickHereContent": "click here to view feedbacks",
+                "notificationContent": "You have @number@ new feedbacks.",
+                "notificationSingleContent": "You have 1 new feedback."
+            },
+            {
+                "name": "activateAcountBanner",
+                "titleContent": "Account Activation",
+                "clickHereContent": "click here to view pending account activation",
+                "notificationContent": "You have @number@ new activation requests.",
+                "notificationSingleContent": "You have 1 new activation request."
+            },
+            {
+                "name": "profileBanner",
+                "titleContent": "Profile",
+                "clickHereContent": "click here to view or edit profile",
+                "notificationNoProfilePictureContent": "You have'nt set your profile picture yet."
+            },
+            {
+                "name": "joinClassBanner",
+                "titleContent": "Join Class",
+                "clickHereContent": "click here to join online class"
+            },
+            {
+                "name": "manageBanner",
+                "titleContent": "Manage",
+                "clickHereContent": "click here to manage users"
+            }
+        ]
+    }
+]

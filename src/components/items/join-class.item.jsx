@@ -62,54 +62,66 @@ const JoinClassItem = (props) => {
 
   return (
     <li className="join-class-item container">
-      <div className="avatar-name">
-        <div className="user-avatar">
-          <div
-            className="avatar-img"
-            style={{
-              backgroundImage: `url(${process.env.REACT_APP_SERVER_URL}/${
-                props.classlink.oppDetails.imagePath
-                  ? props.classlink.oppDetails.imagePath
-                  : process.env.REACT_APP_DEFAULT_PROFILE_PIC
-              })`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              height: "100%",
-              width: "100%",
-              backgroundPosition: "center",
-            }}
-          ></div>
+      <div className="top-block">
+        <div className="avatar-name">
+          <div className="user-avatar">
+            <div
+              className="avatar-img"
+              style={{
+                backgroundImage: `url(${process.env.REACT_APP_SERVER_URL}/${
+                  props.classlink.oppDetails.imagePath
+                    ? props.classlink.oppDetails.imagePath
+                    : process.env.REACT_APP_DEFAULT_PROFILE_PIC
+                })`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                height: "100%",
+                width: "100%",
+                backgroundPosition: "center",
+              }}
+            ></div>
+          </div>
+          <div className="name-course-block">
+            <h3>{props.classlink.oppDetails.name}</h3>
+            {props.classlink.courseName ? (
+              <p>{props.classlink.courseName}</p>
+            ) : null}
+          </div>
         </div>
-        <h3>{props.classlink.oppDetails.name}</h3>
       </div>
-      {classUrl ? (
-        <div>
-          <button onClick={handleopyLink}>
-            {props.joinClassContent.copyContent}
-          </button>
-          <button onClick={handleGoto}>
-            {props.joinClassContent.gotoContent}
-          </button>
-        </div>
-      ) : (
-        <div>No classes available now</div>
-      )}
-      <textarea
-        rows={1}
-        id={props.classlink._id}
-        className="m-1 border rounded-5  container"
-        value={classUrl}
-        readOnly={!editMode}
-        onChange={onChangeClassLink}
-      ></textarea>
+      <div className="textarea-block">
+        <textarea
+          rows={1}
+          id={props.classlink._id}
+          className="m-1 border rounded-5  container"
+          value={classUrl}
+          readOnly={!editMode}
+          onChange={onChangeClassLink}
+        ></textarea>
+        {classUrl ? (
+          <div className="copy-goto-buttons-block">
+            <button onClick={handleopyLink}>
+              {props.joinClassContent.copyContent}
+            </button>
+            <button onClick={handleGoto}>
+              {props.joinClassContent.gotoContent}
+            </button>
+          </div>
+        ) : (
+          <div>No classes available now</div>
+        )}
+      </div>
       {isAuth().role === "teacher" && editMode ? (
-        <button onClick={handleSubmit}>
+        <button onClick={handleSubmit} className="save-button">
           {/* {props.joinClassContent.saveContent} */}
           <Save />
         </button>
       ) : null}
       {isAuth().role === "teacher" ? (
-        <button onClick={handleToggleEditMode}>
+        <button
+          onClick={handleToggleEditMode}
+          className={editMode ? "back-button" : "edit-button"}
+        >
           {/* {editMode ? props.joinClassContent.cancelContent: props.joinClassContent.editContent} */}
           {editMode ? <Cancel /> : <Edit />}
         </button>

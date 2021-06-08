@@ -3,15 +3,25 @@ import UserSelectorItem from "../items/user-selector.item";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 const UserSelectorByRoleBlock = (props) => {
   const [userOptions, setUserOptions] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
   const [selectorTitle, setSelectorTitle] = useState("");
+  const [visibilityclass, setVisibilityclass] = useState("");
 
   const handleUserSelect = (user) => {
-    setSelectedUser(user);
-    props.handleUserSelect(user);
+    if (visibilityclass === "") {
+      setVisibilityclass("collapse-block");
+      if (selectedUser !== user) {
+        setSelectedUser(user);
+        props.handleUserSelect(user);
+      }
+    }
+  };
+  const handleSelectorClick = (user) => {
+    if (visibilityclass === "collapse-block") setVisibilityclass("");
   };
   const loadUsers = (role) => {
     axios
@@ -26,17 +36,17 @@ const UserSelectorByRoleBlock = (props) => {
       });
     switch (role) {
       case "admin":
-        setSelectorTitle("Teacher-Student");
+        setSelectorTitle("--Select Teacher-Student--");
         break;
       case "teacher":
-        setSelectorTitle("Teachers");
+        setSelectorTitle("--Select Teacher--");
         break;
       case "student":
-        setSelectorTitle("Students");
+        setSelectorTitle("--Select Student--");
         break;
 
       default:
-        setSelectorTitle("Select User");
+        setSelectorTitle("--Select User--");
         break;
     }
   };
@@ -44,7 +54,7 @@ const UserSelectorByRoleBlock = (props) => {
     if (!userOptions.length) return <p className="empty-p">Empty</p>;
     return userOptions.map((item) => {
       item.notificationCount = 0;
-      let itemClassName = "";
+      let itemClassName = "non-selected";
       if (selectedUser._id === item._id) {
         itemClassName = "selected-user";
       }
@@ -62,10 +72,16 @@ const UserSelectorByRoleBlock = (props) => {
     if (props.autoLoad) loadUsers(props.userRole);
   }, [props.autoLoad]);
   return (
-    <ul className="user-selector-block">
+    <div className={`user-selector-block ${visibilityclass}`}>
       <h5>{selectorTitle}</h5>
-      {bindUsers()}
-    </ul>
+      <ul onClick={handleSelectorClick}>
+        {bindUsers()}{" "}
+        <ArrowDropDownIcon
+          style={{ color: "#fff" }}
+          className="dropdown-icon"
+        />
+      </ul>
+    </div>
   );
 };
 

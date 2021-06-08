@@ -1,4 +1,4 @@
-import { isAuth, signout } from "../../helpers/auth";
+import { signout } from "../../helpers/auth";
 import Api from "../../helpers/content-api";
 import { useState } from "react";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
@@ -20,7 +20,7 @@ const NavUserBlock = (props) => {
   const handleLogout = () => {
     handleClose();
     signout(() => {
-      if (isAuth()) {
+      if (props.userDetails) {
         window.location = "/";
       } else {
         window.location = "/login";
@@ -39,7 +39,7 @@ const NavUserBlock = (props) => {
     window.location = Api.getNavLinkPath("profilePage");
   };
   return (
-    <div className="nav-user-block">
+    <div className={`nav-user-block ${panelClassName}`}>
       <div className="nav-user-div" onClick={handleToggle}>
         <div className="nav-avatar-name">
           <div className="user-avatar">
@@ -56,11 +56,11 @@ const NavUserBlock = (props) => {
             ></div>
           </div>
           <h4>
-            {isAuth() ? isAuth().name : null}{" "}
+            {props.userDetails ? props.userDetails.name : null}{" "}
             <ArrowDropDownIcon style={{ color: "#fff" }} />
           </h4>{" "}
         </div>{" "}
-        <p>{isAuth() ? isAuth().email : null} </p>
+        <p>{props.userDetails ? props.userDetails.email : null} </p>
       </div>
 
       <ul className={panelClassName}>

@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { Redirect } from "react-router";
-import { isAuth } from "../../helpers/auth";
 import ChangePasswordSection from "../sections/change-password.section";
 
 const ChangePasswordPage = (props) => {
   useEffect(() => {
     props.setselectedPage("changePasswordPage");
   }, [props]);
-  if (isAuth()) return <ChangePasswordSection />;
+  if (props.userDetails)
+    return <ChangePasswordSection userDetails={props.userDetails} />;
   else return <Redirect to={props.urlPathContent.loginPage} />;
 };
 

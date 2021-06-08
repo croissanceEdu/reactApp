@@ -1,20 +1,35 @@
 [
     {
-        "language":"English",      
-        "tabWindows":[
-            {"name":"joinClassTab","content":"Join Class","availableFor":["teacher","student"]}
+        "language": "English",
+        "tabWindows": [
+            {
+                "name": "profilePictureTab",
+                "content": "Profile Picture",
+                "availableFor": [
+                    "teacher",
+                    "student",
+                    "admin"
+                ]
+            },
+            {
+                "name": "basicProfileTab",
+                "content": "Edit Profile",
+                "availableFor": [
+                    "teacher",
+                    "student",
+                    "admin"
+                ]
+            }
         ],
-        "titleContent":"Profile",
-        "nameContent":"Name",
-        "emailContent":"Email Address",
-        "saveContent":"Save",
-        "editContent":"Edit",
-        "cancelContent":"Cancel",
-        "changeContent":"Change",
-        "viewContent":"View",
-        "removeContent":"Remove",
-        "addYourImageContent":"Add your Image"
-        
-
+        "titleContent": "Profile",
+        "nameContent": "Name",
+        "emailContent": "Email Address",
+        "saveContent": "Save",
+        "editContent": "Edit",
+        "cancelContent": "Cancel",
+        "changeContent": "Change",
+        "viewContent": "View",
+        "removeContent": "Remove",
+        "addYourImageContent": "Add your Image"
     }
 ]

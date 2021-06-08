@@ -6,12 +6,14 @@ const FeedbackAddBlock = (props) => {
 
   return (
     <form
+      id="form-new-feedback"
+      className="container"
       onSubmit={(formProps) => {
         props.handleSubmit(formProps);
       }}
     >
-      <div className="form-group row">
-        <div className="col-sm-12 pt-4">
+      <div className="form-group row  p-2 m-2">
+        <div className="container">
           <input
             type="text"
             required
@@ -25,10 +27,10 @@ const FeedbackAddBlock = (props) => {
           />
         </div>
       </div>
-      <div className="form-group">
+      <div className="form-group  p-2 m-2">
         <textarea
           placeholder="Message"
-          className="form-control"
+          className="form-control container"
           name="messageContent"
           id="messageContent"
           rows="3"
@@ -40,7 +42,7 @@ const FeedbackAddBlock = (props) => {
 
       <div className="form-group row button-submit-div">
         <div className="offset-sm-2 ">
-          <button type="submit" className="btn btn-primary ">
+          <button type="submit" className="btn primary-button ">
             Send
           </button>
         </div>

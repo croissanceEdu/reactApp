@@ -56,21 +56,19 @@ const CourseAllocationAddBlock = (props) => {
         handleSubmit(formProps);
       }}
     >
-      <div className="form-group container">
+      <div className="teacher-student">
         <UserSelectorByRoleBlock
           userRole="teacher"
           autoLoad={true}
           handleUserSelect={handleTeacherSelect}
         />
-      </div>
-      <div className="form-group  container">
+
         <UserSelectorByRoleBlock
           userRole="student"
           autoLoad={true}
           handleUserSelect={handleStudentSelect}
         />
       </div>
-
       <div className="form-group container">
         <input
           type="text"
@@ -138,12 +136,10 @@ const CourseAllocationAddBlock = (props) => {
           value={classUrl}
         ></textarea>
       </div>
-      <div className="form-group row">
-        <div className="offset-sm-2 col-sm-10">
-          <button type="submit" className="btn btn-primary float-right">
-            Save
-          </button>
-        </div>
+      <div className="form-group  container text-center justify-content-center">
+        <button type="submit" className="btn save-button">
+          Save
+        </button>
       </div>
     </form>
   );

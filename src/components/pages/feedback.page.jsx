@@ -1,4 +1,3 @@
-import { isAuth } from "../../helpers/auth";
 import { Redirect } from "react-router-dom";
 
 import FeedbackSection from "../sections/feedback.section";
@@ -10,14 +9,15 @@ const FeedbackPage = (props) => {
     props.setselectedPage("feedbackPage");
   }, [props]);
   if (
-    isAuth() &&
-    props.hasPageAccess("feedbackPage", isAuth().role, props.language)
+    props.userDetails &&
+    props.hasPageAccess("feedbackPage", props.userDetails.role, props.language)
   )
     return (
       <FeedbackSection
         feedbackContent={getFeedbackContent(props.language)}
         notifications={props.notifications}
         notify={props.notify}
+        userDetails={props.userDetails}
       />
     );
   else return <Redirect to={props.urlPathContent.loginPage} />;

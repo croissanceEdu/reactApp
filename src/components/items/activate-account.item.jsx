@@ -21,24 +21,40 @@ const ActivateAccountItem = (props) => {
         toast.error(err.response.data.error);
       });
   };
+  const handleCancel = (e) => {
+    e.preventDefault();
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/cancel`, {
+        _id: userData._id,
+        reason: "Admin Cancelled",
+        adminId: isAuth()._id,
+      })
+      .then((res) => {
+        props.DeleteActivationLink(userData._id);
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error);
+      });
+  };
   return (
     <li>
-      <h2>
-        Name: <b>{userData.name}</b>
-      </h2>
-      <h2>
-        email: <b>{userData.email}</b>
-      </h2>
-      <h2>{userData.role}</h2>
-      <button onClick={handleActivate} className="btn btn-primary">
-        Activate
-      </button>
-      <button
-        onClick={() => props.DeleteActivationLink(userData._id)}
-        className="btn btn-warning"
-      >
-        Cancel
-      </button>
+      <div className="details">
+        <h2>{userData.name}</h2>
+        <h3>{userData.email}</h3>
+        <div className="action-buttons">
+          <button onClick={handleActivate} className="btn btn-primary">
+            Activate
+          </button>
+          <button onClick={handleCancel} className="btn btn-warning">
+            Cancel
+          </button>
+        </div>
+      </div>
+      <p>
+        <span>Registered as </span>
+        {userData.role}
+      </p>
     </li>
   );
 };

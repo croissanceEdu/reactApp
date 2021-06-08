@@ -9,6 +9,7 @@ let manageContent = require('../json/manage.json');
 let registerContent = require('../json/register.json');
 let loginContent = require('../json/login.json');
 let profileContent = require('../json/profile.json');
+let homeContent = require('../json/home.json');
 
 let Api = {
     getUrlPathContent() {
@@ -47,6 +48,10 @@ let Api = {
     getProfileContent(language = 'English') {
         return profileContent.filter(obj => obj.language === language)[0];
     },
+    getHomeContent(language = 'English') {
+        return homeContent.filter(obj => obj.language === language)[0];
+    },
+
 
 };
 

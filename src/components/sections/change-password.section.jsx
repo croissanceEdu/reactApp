@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { isAuth } from "../../helpers/auth";
 
-const ChangePasswordSection = () => {
+const ChangePasswordSection = (props) => {
   const [formData, setFormData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -28,7 +28,7 @@ const ChangePasswordSection = () => {
       if (formData.newPassword === formData.confirmPassword) {
         axios
           .post(`${process.env.REACT_APP_SERVER_URL}/api/changepassword`, {
-            _id: isAuth()._id,
+            _id: props.userDetails._id,
             currentPassword: formData.currentPassword,
             newPassword: formData.newPassword,
           })
@@ -52,6 +52,7 @@ const ChangePasswordSection = () => {
   };
   return (
     <section className="change-password-section container">
+      <div className="navbar-spacer"></div>
       <h2>Change Password </h2>
       <form
         className="form-signin text-center container "
@@ -90,7 +91,7 @@ const ChangePasswordSection = () => {
             value={formData.confirmPassword}
           />
         </div>
-        <button className="btn btn-lg btn-primary btn-block " type="submit">
+        <button className="btn btn-lg save-button" type="submit">
           Submit
         </button>
       </form>

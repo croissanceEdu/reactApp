@@ -1,4 +1,3 @@
-import { isAuth } from "../../helpers/auth";
 import { useEffect, useState } from "react";
 import JoinClassItem from "../items/join-class.item";
 import { v4 as uuidv4 } from "uuid";
@@ -10,8 +9,8 @@ const JoinClassSection = (props) => {
   const loadClasses = () => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/user/classlink`, {
-        id: isAuth()._id,
-        role: isAuth().role,
+        id: props.userDetails._id,
+        role: props.userDetails.role,
       })
       .then((res) => {
         if (res.data.classlinks.length) {
@@ -41,6 +40,7 @@ const JoinClassSection = (props) => {
   }, []);
   return (
     <section className="join-class-section container">
+      <div className="navbar-spacer"></div>
       <ul>{bindClasses()}</ul>
     </section>
   );
