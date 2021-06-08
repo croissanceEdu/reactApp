@@ -20,7 +20,8 @@ const ActivateAccountSection = (props) => {
           } else console.log("No Activation links are available now");
         })
         .catch((err) => {
-          console.log(err.response.data.error);
+          if (err.response) console.log(err.response.data.error);
+          else console.log(err);
         });
     } else {
       console.log("err");

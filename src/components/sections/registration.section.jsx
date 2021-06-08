@@ -73,7 +73,7 @@ const RegistrationSection = (props) => {
             </a>
           </p>
         </div>
-        <div className="form-label-group">
+        <div className="form-label-group m-2">
           <input
             type="text"
             className="form-control"
@@ -83,9 +83,9 @@ const RegistrationSection = (props) => {
             onChange={handleChange("name")}
             value={formData.name}
           />
-          <label htmlFor="inputName">{props.registerContent.nameContent}</label>
+          {/* <label htmlFor="inputName">{props.registerContent.nameContent}</label> */}
         </div>
-        <div className="form-label-group">
+        <div className="form-label-group m-2">
           <input
             type="email"
             id="inputEmail"
@@ -95,11 +95,11 @@ const RegistrationSection = (props) => {
             onChange={handleChange("email")}
             value={formData.email}
           />
-          <label htmlFor="inputEmail">
+          {/* <label htmlFor="inputEmail">
             {props.registerContent.emailContent}
-          </label>
+          </label> */}
         </div>
-        <div className="form-label-group">
+        <div className="form-label-group m-2">
           <input
             type="password"
             id="inputPassword"
@@ -109,11 +109,11 @@ const RegistrationSection = (props) => {
             onChange={handleChange("password")}
             value={formData.password}
           />
-          <label htmlFor="inputPassword">
+          {/* <label htmlFor="inputPassword">
             {props.registerContent.passwordContent}
-          </label>
+          </label> */}
         </div>
-        <div className="form-label-group">
+        <div className="form-label-group m-2">
           <input
             type="password"
             id="inputConfirmPassword"
@@ -123,9 +123,9 @@ const RegistrationSection = (props) => {
             onChange={handleChange("confirmPassword")}
             value={formData.confirmPassword}
           />
-          <label htmlFor="inputConfirmPassword">
+          {/* <label htmlFor="inputConfirmPassword">
             {props.registerContent.confirmPasswordContent}
-          </label>
+          </label> */}
         </div>
 
         <button className="btn btn-lg btn-primary btn-block mt-5" type="submit">

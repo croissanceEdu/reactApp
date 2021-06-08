@@ -59,6 +59,12 @@
   --syllabus-item-chapter-color: rgb(28, 25, 54);
   --syllabus-item-module-color: rgb(183, 187, 129);
 
+  --form-background: linear-gradient(
+    90deg,
+    rgba(11, 109, 60, 0.5),
+    rgba(58, 110, 9, 0.438)
+  );
+
   --course-allocation-background: linear-gradient(
     90deg,
     rgba(30, 119, 75, 0.5),
@@ -1473,6 +1479,32 @@ section.activation-section {
     }
   }
 }
+section.login-section,
+section.register-section {
+  height: 100vh;
+  vertical-align: middle;
+  padding: auto;
+  position: relative;
+
+  form {
+    position: relative;
+
+    margin-bottom: auto;
+    margin: auto;
+    margin-top: auto;
+    max-width: 500px;
+    background: var(--form-background);
+    border: solid 2px transparent;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.116);
+    border-radius: 5px;
+    button {
+      max-width: max-content;
+      margin: auto;
+    }
+  }
+}
 @media only screen and (min-width: 750px) {
   .user-selector-block {
     ul {
@@ -1769,6 +1801,12 @@ section.activation-section {
       padding-left: 2em;
       padding-right: 2em;
       max-width: 600px;
+    }
+  }
+  section.login-section,
+  section.register-section {
+    form {
+      margin-top: 2em;
     }
   }
 }

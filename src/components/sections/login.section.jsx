@@ -74,7 +74,8 @@ const LoginSection = (props) => {
           </p>
         </div>
 
-        <div className="form-label-group">
+        <div className="form-label-group container m-2">
+          {/* <label htmlFor="inputEmail">Email address</label>{" "} */}
           <input
             type="email"
             id="inputEmail"
@@ -85,9 +86,9 @@ const LoginSection = (props) => {
             onChange={handleChange("email")}
             value={formData.email}
           />
-          <label htmlFor="inputEmail">Email address</label>
         </div>
-        <div className="form-label-group">
+        <div className="form-label-group container m-2">
+          {/* <label htmlFor="inputPassword">Password</label> */}
           <input
             type="password"
             id="inputPassword"
@@ -97,14 +98,16 @@ const LoginSection = (props) => {
             onChange={handleChange("password")}
             value={formData.password}
           />
-          <label htmlFor="inputPassword">Password</label>
         </div>
         {/* <div className="checkbox mb-3">
           <label>
             <input type="checkbox" value="remember-me" /> Remember me
           </label>
         </div> */}
-        <button className="btn btn-lg btn-primary btn-block mt-5" type="submit">
+        <button
+          className="btn btn-lg btn-primary btn-block container"
+          type="submit"
+        >
           Sign in
         </button>
         <p className="mt-5 mb-3 text-muted text-center">
