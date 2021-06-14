@@ -54,7 +54,7 @@ const AvatarMenuSegment = (props) => {
           className={deleteClass}
           disabled={
             !props.profilePicture ||
-            props.profilePicture ==
+            props.profilePicture ===
               `${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_DEFAULT_PROFILE_PIC}`
               ? true
               : false

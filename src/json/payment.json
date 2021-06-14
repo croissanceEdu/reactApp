@@ -1,0 +1,50 @@
+[
+    {
+        "language": "English",
+        "tabWindows": [
+            {
+                "name": "pendingTab",
+                "content": "Pending",
+                "availableFor": [
+                    "teacher",
+                    "student",
+                    "admin"
+                ]
+            },
+            {
+                "name": "historyTab",
+                "content": "History",
+                "availableFor": [
+                    "teacher",
+                    "student",
+                    "admin"
+                ]
+            },
+            {
+                "name": "upcomingTab",
+                "content": "Upcoming",
+                "availableFor": [
+                    "teacher",
+                    "student",
+                    "admin"
+                ]
+            },
+            {
+                "name": "scheduleTab",
+                "content": "Schedule",
+                "availableFor": [
+                    "teacher"
+                ]
+            }
+        ],
+        "requestAmountContent": "Amount",
+        "warningDateContent": "Warning Date",
+        "lastDateContent": "Last Date",
+        "selectDateContent": "--Select Date--",
+        "commentContent": "Comment",
+        "addScheduleContent": "Add",
+        "editScheduleContent": "Edit",
+        "deleteScheduleContent": "Delete",
+        "payContent": "Pay"
+    }
+]

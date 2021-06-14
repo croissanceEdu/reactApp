@@ -20,6 +20,7 @@ import RegisterTeacherPage from "./components/pages/register-teacher.page";
 import ScreenOverlayExtra from "./components/extras/screen-overlay.extra";
 import { loadNotifications } from "./helpers/api-call-helper";
 import { isAuth } from "./helpers/auth";
+import PaymentPage from "./components/pages/payment.page";
 
 function App() {
   // const browserlanguage = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage;
@@ -38,7 +39,7 @@ function App() {
   const [userDetails, setUserDetails] = useState(isAuth())
   const [selectedPage, setselectedPage] = useState("")
   const [profilePicture, setProfilePicture] = useState(null)
-  const [notifications, setNotifications] = useState({ feedback: [], activationLinks: [], syllabus: [], joinClass: [] })
+  const [notifications, setNotifications] = useState({ feedback: [], activationLinks: [], syllabus: [], joinClass: [], payment: [] })
   const [overlayClassNames, setoverlayClassNames] = useState("")
   const [navStyles, setNavStyles] = useState({
     navClassNames: "",
@@ -101,7 +102,8 @@ function App() {
           urlPathContent.joinClassPage,
           urlPathContent.feedbackPage,
           urlPathContent.syllabusPage,
-          urlPathContent.managePage
+          urlPathContent.managePage,
+          urlPathContent.paymentPage
         ]}
         exact
         render={(props) => <NavbarSection {...props} language={language} setLanguage={setLanguage} selectedPage={selectedPage}
@@ -199,6 +201,14 @@ function App() {
             hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
             userDetails={userDetails} setUserDetails={setUserDetails} />}
         />
+        <Route
+          path={urlPathContent.paymentPage}
+          exact
+          render={(props) => <PaymentPage {...props} language={language} urlPathContent={urlPathContent}
+            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
+            notifications={notifications} notify={notify}
+            userDetails={userDetails} />}
+        />
       </Switch>
       <Route
         path={[
@@ -209,7 +219,8 @@ function App() {
           urlPathContent.joinClassPage,
           urlPathContent.feedbackPage,
           urlPathContent.syllabusPage,
-          urlPathContent.managePage
+          urlPathContent.managePage,
+          urlPathContent.paymentPage
         ]}
         exact
         render={(props) => <FooterSection {...props} language={language} />}

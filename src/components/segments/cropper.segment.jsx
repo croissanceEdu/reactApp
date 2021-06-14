@@ -4,13 +4,7 @@ import Cropper from "react-easy-crop";
 
 import Slider from "@material-ui/core/Slider";
 
-import {
-  Close as CancelIcon,
-  // Cancel as CancelIcon,
-  CloudUpload,
-  Edit,
-  Save,
-} from "@material-ui/icons";
+import { Close as CancelIcon, Edit, Save } from "@material-ui/icons";
 
 import getCroppedImg from "../../utils/cropImage";
 import dataURLtoFile from "../../utils/dataURLtoFile";
@@ -83,11 +77,6 @@ const CropperSegment = (props) => {
           });
       } else toast.error("Something went wrong!");
     }
-  };
-  const handleClear = () => {
-    if (!image) {
-      toast.warning("No image selected");
-    } else setImage(null);
   };
   return (
     <div className="profile-popup">

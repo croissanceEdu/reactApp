@@ -3,7 +3,7 @@ import { ArrowBack, ArrowLeft } from "@material-ui/icons";
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import UserAvatarBlock from "./user-avatar-block";
+import UserAvatarBlock from "../blocks/user-avatar-block";
 import UserSelectorItem from "./user-selector.item";
 
 const CourseAllocationItem = (props) => {
@@ -22,7 +22,19 @@ const CourseAllocationItem = (props) => {
   const handleFormdataChange = (text) => (e) => {
     setFormData({ ...formData, [text]: e.target.value });
   };
-
+  const handleFormdataNumberChange = (text) => (e) => {
+    if (!isNaN(Number(e.target.value))) {
+      if (e.target.value.includes("."))
+        setFormData({ ...formData, [text]: e.target.value });
+      else setFormData({ ...formData, [text]: Number(e.target.value) });
+    }
+  };
+  const handleScheduleFormAmountBlur = (text) => (e) => {
+    setFormData({
+      ...formData,
+      [text]: Number(e.target.value),
+    });
+  };
   const handleToggleEditMode = () => {
     if (editMode) {
       setClassUrl(props.studentMap.classLink);
@@ -130,7 +142,8 @@ const CourseAllocationItem = (props) => {
             aria-describedby="helpId"
             placeholder="Fee"
             readOnly={!editMode}
-            onChange={handleFormdataChange("feesAmount")}
+            onChange={handleFormdataNumberChange("feesAmount")}
+            onBlur={handleScheduleFormAmountBlur("feesAmount")}
             value={formData.feesAmount}
           />
         </div>
@@ -158,7 +171,8 @@ const CourseAllocationItem = (props) => {
             aria-describedby="helpId"
             placeholder="Paid Ammount"
             readOnly={!editMode}
-            onChange={handleFormdataChange("paidAmount")}
+            onChange={handleFormdataNumberChange("paidAmount")}
+            onBlur={handleScheduleFormAmountBlur("paidAmount")}
             value={formData.paidAmount}
           />
         </div>

@@ -7,7 +7,10 @@ const SyllabusPage = (props) => {
   useEffect(() => {
     props.setselectedPage("syllabusPage");
   }, [props]);
-  if (props.userDetails)
+  if (
+    props.userDetails &&
+    props.hasPageAccess("syllabusPage", props.userDetails.role, props.language)
+  )
     return (
       <SyllabusSection
         syllabusContent={getSyllabusContent(props.language)}

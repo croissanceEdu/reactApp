@@ -28,6 +28,9 @@ const HomePage = (props) => {
   const handleActivateAccountBannerClick = () => {
     window.location = props.urlPathContent.activateAccountPage;
   };
+  const handlePaymentBannerClick = () => {
+    window.location = props.urlPathContent.paymentPage;
+  };
 
   if (props.userDetails) {
     switch (props.userDetails.role) {
@@ -40,6 +43,7 @@ const HomePage = (props) => {
             handleFeedbackBannerClick={handleFeedbackBannerClick}
             handleJoinClassBannerClick={handleJoinClassBannerClick}
             handleProfileBannerClick={handleProfileBannerClick}
+            handlePaymentBannerClick={handlePaymentBannerClick}
             notifications={props.notifications}
             profilePicture={props.profilePicture}
           />
@@ -53,6 +57,7 @@ const HomePage = (props) => {
             handleFeedbackBannerClick={handleFeedbackBannerClick}
             handleJoinClassBannerClick={handleJoinClassBannerClick}
             handleProfileBannerClick={handleProfileBannerClick}
+            handlePaymentBannerClick={handlePaymentBannerClick}
             notifications={props.notifications}
             profilePicture={props.profilePicture}
           />
@@ -66,6 +71,7 @@ const HomePage = (props) => {
             handleProfileBannerClick={handleProfileBannerClick}
             handleManageBannerClick={handleManageBannerClick}
             handleActivateAccountBannerClick={handleActivateAccountBannerClick}
+            handlePaymentBannerClick={handlePaymentBannerClick}
             notifications={props.notifications}
             profilePicture={props.profilePicture}
           />

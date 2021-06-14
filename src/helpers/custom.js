@@ -49,3 +49,22 @@ export const makeDateArrays = (startYear, endYear) => {
    }
    return { yearArray, monthArray, dateArray };
 };
+export const compareResult = {
+   sameDay: 1,
+   date_1_is_bigger: 2,
+   date_2_is_bigger: 3,
+}
+export const compareDate = (date_1, date_2) => {
+   const dt_1 = new Date(date_1);
+   const dt_2 = new Date(date_2);
+   if (dt_1.getFullYear() === dt_2.getFullYear()) {
+      if (dt_1.getMonth() === dt_2.getMonth()) {
+         if (dt_1.getDate() === dt_2.getDate()) {
+            return compareResult.sameDay;
+         } else if (dt_1.getDate() > dt_2.getDate()) return compareResult.date_1_is_bigger;
+         else return compareResult.date_2_is_bigger
+      } else if (dt_1.getMonth() > dt_2.getMonth()) return compareResult.date_1_is_bigger;
+      else return compareResult.date_2_is_bigger
+   } else if (dt_1.getFullYear() > dt_2.getFullYear()) return compareResult.date_1_is_bigger;
+   else return compareResult.date_2_is_bigger
+}

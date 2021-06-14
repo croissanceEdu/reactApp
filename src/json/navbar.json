@@ -54,6 +54,15 @@
                 "availableFor": [
                     "admin"
                 ]
+            },
+            {
+                "name": "paymentPage",
+                "content": "PAYMENT",
+                "availableFor": [
+                    "admin",
+                    "teacher",
+                    "student"
+                ]
             }
         ],
         "navUser": {

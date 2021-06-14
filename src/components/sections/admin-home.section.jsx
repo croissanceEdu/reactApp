@@ -1,4 +1,5 @@
 import ActivateAccountBanner from "../banners/activate-account.banner";
+import HomeTileBanner from "../banners/home-tile.banner";
 import ManageBanner from "../banners/manage.banner";
 import ProfileBanner from "../banners/profile.banner";
 import SyllabusBanner from "../banners/syllabus.banner";
@@ -34,6 +35,14 @@ const AdminHomeSection = (props) => {
             handleProfileBannerClick={props.handleProfileBannerClick}
             userDetails={props.userDetails}
             profilePicture={props.profilePicture}
+          />
+          <HomeTileBanner
+            displayContent={props.homeContent.banners.find(
+              (el) => el.name === "paymentBanner"
+            )}
+            handleBannerClick={props.handlePaymentBannerClick}
+            userRole={props.userDetails.role}
+            notifications={props.notifications.payment}
           />
         </div>
       </div>

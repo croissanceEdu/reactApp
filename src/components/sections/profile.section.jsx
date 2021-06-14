@@ -1,6 +1,4 @@
 import { useState } from "react";
-import ProfileBasicBlock from "../blocks/profile-basic.block";
-import ProfilePictureBlock from "../blocks/profile-picture.block";
 import TabSelectorBlock from "../blocks/tab-selector.block";
 import ProfileBasicTab from "../tabs/profile-basic.tab";
 import ProfilePictureTab from "../tabs/profile-picture.tab";

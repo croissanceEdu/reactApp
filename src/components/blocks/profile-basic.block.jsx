@@ -6,7 +6,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const ProfileBasicBlock = (props) => {
-  const [showCropper, setShowCropper] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     name: props.userDetails.name,
@@ -21,20 +20,13 @@ const ProfileBasicBlock = (props) => {
     LoadDetails();
     setEditMode(false);
   }, []);
-  const handleCropper = () => {
-    setShowCropper((prev) => !prev);
-  };
+
   const LoadDetails = () => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/user/getdetails`, {
         id: props.userDetails._id,
       })
       .then((res) => {
-        // props.setProfilePicture(
-        //   res.data.user.imagePath
-        //     ? `${process.env.REACT_APP_SERVER_URL}/${res.data.user.imagePath}`
-        //     : ""
-        // );
         if (res.data.userProfile)
           setFormData({
             ...formData,
@@ -51,22 +43,6 @@ const ProfileBasicBlock = (props) => {
       });
   };
 
-  const handleRemoveImage = () => {
-    axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/user/removepic`, {
-        id: props.userDetails._id,
-      })
-      .then((res) => {
-        toast.success(res.data.message);
-        props.setProfilePicture(
-          `${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_DEFAULT_PROFILE_PIC}`
-        );
-      })
-      .catch((err) => {
-        if (err.response) toast.error(err.response.data.error);
-        else toast.error("Something went wrong!");
-      });
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (true) {

@@ -1,4 +1,5 @@
 import FeedbackBanner from "../banners/feedback.banner";
+import HomeTileBanner from "../banners/home-tile.banner";
 import JoinClassBanner from "../banners/join-class.banner";
 import ProfileBanner from "../banners/profile.banner";
 import SyllabusBanner from "../banners/syllabus.banner";
@@ -33,6 +34,14 @@ const TeacherHomeSection = (props) => {
             handleProfileBannerClick={props.handleProfileBannerClick}
             userDetails={props.userDetails}
             profilePicture={props.profilePicture}
+          />
+          <HomeTileBanner
+            displayContent={props.homeContent.banners.find(
+              (el) => el.name === "paymentBanner"
+            )}
+            handleBannerClick={props.handlePaymentBannerClick}
+            userRole={props.userDetails.role}
+            notifications={props.notifications.payment}
           />
         </div>
       </div>

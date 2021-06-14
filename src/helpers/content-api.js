@@ -10,6 +10,7 @@ let registerContent = require('../json/register.json');
 let loginContent = require('../json/login.json');
 let profileContent = require('../json/profile.json');
 let homeContent = require('../json/home.json');
+let paymentContent = require('../json/payment.json');
 
 let Api = {
     getUrlPathContent() {
@@ -50,6 +51,9 @@ let Api = {
     },
     getHomeContent(language = 'English') {
         return homeContent.filter(obj => obj.language === language)[0];
+    },
+    getPaymentContent(language = 'English') {
+        return paymentContent.filter(obj => obj.language === language)[0];
     },
 
 

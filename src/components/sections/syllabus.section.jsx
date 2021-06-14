@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { isAuth } from "../../helpers/auth";
 import UserSelectorBlock from "../blocks/user-selector.block";
 import SyllabusItem from "../items/syllabus.item";
 import { v4 as uuidv4 } from "uuid";

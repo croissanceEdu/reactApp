@@ -39,6 +39,21 @@
                 "name": "manageBanner",
                 "titleContent": "Manage",
                 "clickHereContent": "click here to manage users"
+            },
+            {
+                "name": "paymentBanner",
+                "titleContent": "Payments",
+                "clickHereContent": "click here to go to payment page",
+                "notificationContent": {
+                    "admin": "You have @number@ notification.",
+                    "teacher": "You have @number@ notification.",
+                    "student": "You have @number@ notification."
+                },
+                "notificationSingleContent": {
+                    "admin": "You have 1 notification.",
+                    "teacher": "You have 1 notification.",
+                    "student": "You have 1 notification."
+                }
             }
         ]
     }
