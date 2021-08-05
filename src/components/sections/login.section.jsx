@@ -43,7 +43,6 @@ const LoginSection = (props) => {
             // else history.push(urlPathContent.homePage);
             if (isAuth()) {
               toast.success(`Welcome ${res.data.user.name}`);
-              console.log(props);
               // props.setUserDetails(isAuth());
               window.location = urlPathContent.homePage;
             } else toast.error("Couldn't login!");

@@ -44,11 +44,11 @@ const RegistrationSection = (props) => {
               imagePath: "",
               role: props.userRole,
             });
-
             toast.success(res.data.message);
           })
           .catch((err) => {
-            toast.error(err.response.data.error);
+            if (err.response) toast.error(err.response.data.error);
+            else console.log(err);
           });
       } else {
         toast.error("Passwords don't match");
@@ -83,6 +83,7 @@ const RegistrationSection = (props) => {
             onChange={handleChange("name")}
             value={formData.name}
           />
+
           {/* <label htmlFor="inputName">{props.registerContent.nameContent}</label> */}
         </div>
         <div className="form-label-group m-2">
@@ -95,6 +96,7 @@ const RegistrationSection = (props) => {
             onChange={handleChange("email")}
             value={formData.email}
           />
+
           {/* <label htmlFor="inputEmail">
             {props.registerContent.emailContent}
           </label> */}
@@ -133,6 +135,9 @@ const RegistrationSection = (props) => {
             ? props.registerContent.registerAsTeacherContent
             : props.registerContent.registerAsStudentContent}
         </button>
+        <blockquote className="">
+          {props.registerContent.commonWarningContent}
+        </blockquote>
         <p className="mt-5 mb-3 text-muted text-center">
           &copy; Croissance Edu
         </p>

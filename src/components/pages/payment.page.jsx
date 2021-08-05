@@ -17,6 +17,7 @@ const PaymentPage = (props) => {
         notifications={props.notifications}
         notify={props.notify}
         userDetails={props.userDetails}
+        popupFunctions={props.popupFunctions}
       />
     );
   else return <Redirect to={props.urlPathContent.loginPage} />;

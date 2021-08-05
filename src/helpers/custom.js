@@ -1,4 +1,6 @@
 export const getFormattedDate = (date) => {
+   // var gmtDt = new Date(date);
+   // var gmtStr = gmtStr.toGMTString();
    var dt = new Date(date);
    var dd = dt.getDate();
    var MM = dt.getMonth();

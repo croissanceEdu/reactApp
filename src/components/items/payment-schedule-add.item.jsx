@@ -11,7 +11,7 @@ const PaymentScheduleAddItem = (props) => {
       >
         <div className="all-details">
           <div className="primary-details ">
-            <div className="row list-form-group">
+            <div className="list-form-group">
               <label htmlFor="warningDate">
                 {props.paymentContent.requestAmountContent}:
               </label>
@@ -29,7 +29,7 @@ const PaymentScheduleAddItem = (props) => {
           </div>
           <div className="secondary-details">
             <div className="date-body">
-              <div className="row list-form-group">
+              <div className="list-form-group">
                 <label htmlFor="warningDate">
                   {props.paymentContent.warningDateContent}:
                 </label>
@@ -44,7 +44,7 @@ const PaymentScheduleAddItem = (props) => {
                   id="warningDate"
                 />
               </div>{" "}
-              <div className="row list-form-group">
+              <div className="list-form-group">
                 <label htmlFor="lastDate">
                   {props.paymentContent.lastDateContent}:
                 </label>
@@ -71,7 +71,7 @@ const PaymentScheduleAddItem = (props) => {
               />
             </div>
           </div>
-          <div className="container">
+          <div className="container third-details">
             <button type="submit" className="btn primary-button">
               {props.paymentContent.addScheduleContent}
             </button>

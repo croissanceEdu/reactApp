@@ -21,7 +21,7 @@ const ManageSection = (props) => {
         console.log(error);
       });
   };
-  const deleteMap = (id) => {
+  const confirmDeleteMap = (id) => {
     axios
       .delete(`${process.env.REACT_APP_SERVER_URL}/syllabus/map/` + id)
       .then((response) => {
@@ -31,6 +31,27 @@ const ManageSection = (props) => {
       .catch((error) => {
         console.log(error);
       });
+  };
+  const deleteMap = (id) => {
+    props.popupFunctions.showWarningPopup(
+      "Delete Allocation",
+      "are you sure?",
+      "delete-popup",
+      [
+        {
+          content: "delete",
+          className: "btn delete-button",
+          closeAfter: true,
+          onClickFunction: confirmDeleteMap,
+          onClickArgument: id,
+        },
+        {
+          content: "cancel",
+          className: "btn cancel-button",
+          closeAfter: true,
+        },
+      ]
+    );
   };
   const bindList = (callbackBindItem) => {
     return callbackBindItem(studentMap);

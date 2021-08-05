@@ -16,9 +16,11 @@ import PaymentHistoryItem from "../items/payment-history.item";
 import PaymentHistoryTab from "../tabs/payment-history.tab";
 import PaymentUpcomingTab from "../tabs/payment-upcoming.tab";
 import { compareDate, compareResult } from "../../helpers/custom";
+import PaymentRequestTab from "../tabs/payment-request.tab";
+import PaymentRequestItem from "../items/payment-request.item";
 
 const PaymentSection = (props) => {
-  const [selectedTab, setSelectedTab] = useState("syllabusListTab");
+  const [selectedTab, setSelectedTab] = useState("pendingTab");
   const [myDetails, setMyDetails] = useState(
     props.userDetails.role !== "admin" ? props.userDetails : {}
   );
@@ -27,11 +29,21 @@ const PaymentSection = (props) => {
   const [paymentPending, setPaymentPending] = useState([]);
   const [paymentUpcoming, setPaymentUpcoming] = useState([]);
   const [paymentHistory, setPaymentHistory] = useState([]);
+  const [paymentRequests, setPaymentRequests] = useState([]);
   const [balanceAmount, setBalanceAmount] = useState(0);
+  const [feeDetails, setFeeDetails] = useState({
+    feeAmount: 0,
+    paidAmount: 0,
+    editFeeMode: false,
+  });
   const [scheduleFormData, setScheduleFormData] = useState({
     requestAmount: balanceAmount,
     lastDate: new Date(),
     warningDate: new Date(),
+    comment: "",
+  });
+  const [recordPaymentFormData, setRecordPaymentFormData] = useState({
+    paymentMethod: "",
     comment: "",
   });
   const handleScheduleFormChange = (text) => (e) => {
@@ -65,7 +77,6 @@ const PaymentSection = (props) => {
   };
   const handleScheduleFormDateChange = (text, selectedDate) => {
     setScheduleFormData({ ...scheduleFormData, [text]: selectedDate });
-    console.log(selectedDate, scheduleFormData);
   };
   const clearScheduleFormData = () => {
     setScheduleFormData({
@@ -79,19 +90,207 @@ const PaymentSection = (props) => {
   const handleTeacherStudentSelect = (teacher, student) => {
     setMyDetails(teacher);
     setOppDetails(student);
-    loadSchedules(
+
+    loadTablesOnUserSelect(
       teacher._id,
       teacher.role,
       student._id,
       student.studentMap._id
     );
+
     // clearScheduleFormData();
   };
   const handleUserSelect = (user) => {
     setOppDetails(user);
-    loadSchedules(myDetails._id, myDetails.role, user._id, user.studentMap._id);
+    loadTablesOnUserSelect(
+      myDetails._id,
+      myDetails.role,
+      user._id,
+      user.studentMap._id
+    );
     // clearScheduleFormData();
   };
+  const confirmDeleteSchedule = (id) => {
+    axios
+      .delete(`${process.env.REACT_APP_SERVER_URL}/payment/schedule/` + id)
+      .then((response) => {
+        toast.success(response.data.message);
+        loadTables();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    loadTables();
+  };
+  const generateRecordPayment = (paymentSchedule) => {
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/payment/addrecord/`, {
+        userId: props.userDetails._id,
+        userRole: props.userDetails.role,
+        myId: myDetails._id,
+        myRole: myDetails.role,
+        oppId: oppDetails._id,
+        paymentSchedule,
+        comment: "test",
+        paymentMethod: "record-payment",
+      })
+      .then((response) => {
+        toast.success(response.data.message);
+        loadTables();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    loadTables();
+  };
+
+  const approveRecordPayment = (paymentRequest) => {
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/payment/approverecord/`, {
+        userId: props.userDetails._id,
+        userRole: props.userDetails.role,
+        myId: myDetails._id,
+        myRole: myDetails.role,
+        oppId: oppDetails._id,
+        paymentRequest,
+      })
+      .then((response) => {
+        toast.success(response.data.message);
+        loadTables();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    loadTables();
+  };
+  const rejectRecordPayment = (paymentRequest) => {
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/payment/rejectrecord/`, {
+        userId: props.userDetails._id,
+        userRole: props.userDetails.role,
+        myId: myDetails._id,
+        myRole: myDetails.role,
+        oppId: oppDetails._id,
+        paymentRequest,
+      })
+      .then((response) => {
+        toast.success(response.data.message);
+        loadTables();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    loadTables();
+  };
+  const deleteSchedule = (id) => {
+    props.popupFunctions.showWarningPopup(
+      "Delete Schedule",
+      "are you sure?",
+      "delete-popup",
+      [
+        {
+          content: "delete",
+          className: "btn delete-button",
+          closeAfter: true,
+          onClickFunction: confirmDeleteSchedule,
+          onClickArgument: id,
+        },
+        {
+          content: "cancel",
+          className: "btn cancel-button",
+          closeAfter: true,
+        },
+      ]
+    );
+  };
+
+  const recordPaymentPopupOpen = (paymentSchedule) => {
+    props.popupFunctions.showRecordPaymentPopup(
+      "Record a Payment",
+      "Record an external payment to pay " +
+        paymentSchedule.currency +
+        paymentSchedule.requestAmount,
+      "payment-popup",
+      [
+        {
+          content: "Record Pay",
+          className: "btn edit-button",
+          closeAfter: true,
+          onClickFunction: generateRecordPayment,
+          onClickArgument: paymentSchedule,
+        },
+
+        {
+          content: "cancel",
+          className: "btn cancel-button",
+          closeAfter: true,
+        },
+      ],
+      { comment: props.popupFunctions.getPopupData().comment }
+    );
+    console.log(props.popupFunctions.getPopupData());
+  };
+  const approvePaymentPopupOpen = (paymentRequest) => {
+    props.popupFunctions.showApprovePaymentRequestPopup(
+      "Payment Request Approval",
+      "Please confirm if you received " +
+        paymentRequest.currency +
+        paymentRequest.paidAmount,
+      "payment-popup",
+      [
+        {
+          content: "Confirm",
+          className: "btn save-button",
+          closeAfter: true,
+          onClickFunction: approveRecordPayment,
+          onClickArgument: paymentRequest,
+        },
+        {
+          content: "Reject",
+          className: "btn delete-button",
+          closeAfter: true,
+          onClickFunction: rejectRecordPayment,
+          onClickArgument: paymentRequest,
+        },
+        {
+          content: "cancel",
+          className: "btn cancel-button",
+          closeAfter: true,
+        },
+      ],
+      {}
+    );
+  };
+
+  const handlePayButtonClick = (paymentSchedule) => {
+    props.popupFunctions.showWarningPopup(
+      "How to Pay",
+      "Choose your payment",
+      "payment-popup",
+      [
+        {
+          content: "Record Pay",
+          className: "btn edit-button",
+          closeAfter: false,
+          onClickFunction: recordPaymentPopupOpen,
+          onClickArgument: paymentSchedule,
+        },
+        {
+          content: "RazorPay",
+          className: "btn razorpay-button",
+          closeAfter: false,
+          // onClickFunction: ,
+          // onClickArgument: paymentSchedule,
+        },
+        {
+          content: "cancel",
+          className: "btn cancel-button",
+          closeAfter: true,
+        },
+      ]
+    );
+  };
+
   const bindScheduleAdd = () => {
     if (balanceAmount > 0)
       return (
@@ -108,6 +307,32 @@ const PaymentSection = (props) => {
         />
       );
   };
+
+  const loadTables = () => {
+    loadSchedules(
+      myDetails._id,
+      myDetails.role,
+      oppDetails._id,
+      oppDetails.studentMap._id
+    );
+    loadHistory(
+      myDetails._id,
+      myDetails.role,
+      oppDetails._id,
+      oppDetails.studentMap._id
+    );
+    loadRequests(
+      myDetails._id,
+      myDetails.role,
+      oppDetails._id,
+      oppDetails.studentMap._id
+    );
+  };
+  const loadTablesOnUserSelect = (myId, myRole, oppoId, mapId) => {
+    loadSchedules(myId, myRole, oppoId, mapId);
+    loadHistory(myId, myRole, oppoId, mapId);
+    loadRequests(myId, myRole, oppoId, mapId);
+  };
   const loadSchedules = (myId, myRole, oppoId, mapId) => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/payment/getshedules`, {
@@ -119,6 +344,11 @@ const PaymentSection = (props) => {
       .then((response) => {
         setTables(response.data.paymentSchedule);
         setBalanceAmount(response.data.balanceAmount);
+        setFeeDetails({
+          ...feeDetails,
+          feeAmount: response.data.feeAmount,
+          paidAmount: response.data.paidAmount,
+        });
         setScheduleFormData({
           ...scheduleFormData,
           requestAmount: response.data.balanceAmount,
@@ -128,13 +358,44 @@ const PaymentSection = (props) => {
         console.log(error);
       });
   };
+  const loadHistory = (myId, myRole, oppoId, mapId) => {
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/payment/gethistory`, {
+        myId,
+        myRole,
+        oppoId,
+        mapId,
+      })
+      .then((response) => {
+        setPaymentHistory(response.data.feePayment);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const loadRequests = (myId, myRole, oppoId, mapId) => {
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/payment/getrequest`, {
+        myId,
+        myRole,
+        oppoId,
+        mapId,
+      })
+      .then((response) => {
+        setPaymentRequests(response.data.feePaymentRequest);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const handleAddNewShedule = (e) => {
     e.preventDefault();
 
     const studentMapID = oppDetails.studentMap._id;
-    const userID = myDetails._id;
-    const userRole = myDetails.role;
+    const userID = props.userDetails._id;
+    const userRole = props.userDetails.role;
     const requestAmount = scheduleFormData.requestAmount;
+    const currency = oppDetails.studentMap.feesCurrency;
     const comment = scheduleFormData.comment;
     const warningDate = scheduleFormData.warningDate;
     const lastDate = scheduleFormData.lastDate;
@@ -149,16 +410,12 @@ const PaymentSection = (props) => {
           comment,
           warningDate,
           lastDate,
+          currency,
         })
         .then((response) => {
           toast.success("Added successfully");
+          loadTables();
 
-          loadSchedules(
-            myDetails._id,
-            myDetails.role,
-            oppDetails._id,
-            oppDetails.studentMap._id
-          );
           // clearScheduleFormData();
         });
     } else {
@@ -171,8 +428,9 @@ const PaymentSection = (props) => {
       schedules.filter(
         (el) =>
           el.isPaid === false &&
-          compareDate(el.warningDate, new Date()) ===
-            compareResult.date_2_is_bigger
+          (compareDate(el.warningDate, new Date()) ===
+            compareResult.date_2_is_bigger ||
+            compareDate(el.warningDate, new Date()) === compareResult.sameDay)
       )
     );
     setPaymentUpcoming(
@@ -183,7 +441,31 @@ const PaymentSection = (props) => {
             compareResult.date_1_is_bigger
       )
     );
-    setPaymentHistory(schedules.filter((el) => el.isPaid === true));
+  };
+
+  const bindFeeDetails = () => {
+    return (
+      <div className="fee-details">
+        <div className="form-group">
+          <label>Fee</label>
+          <input
+            type="text"
+            placeholder="Fee"
+            readOnly={!feeDetails.editFeeMode}
+            value={feeDetails.feeAmount}
+          ></input>
+        </div>
+        <div className="form-group">
+          <label>Paid</label>
+          <input
+            type="text"
+            placeholder="Paid"
+            readOnly
+            value={feeDetails.paidAmount}
+          ></input>
+        </div>
+      </div>
+    );
   };
   const bindPending = () => {
     if (!paymentPending.length) return <p className="empty-p">Empty</p>;
@@ -194,6 +476,9 @@ const PaymentSection = (props) => {
           key={uuidv4()}
           paymentContent={props.paymentContent}
           currency={oppDetails.studentMap.feesCurrency}
+          userDetails={props.userDetails}
+          handlePayButtonClick={handlePayButtonClick}
+          recordPaymentPopupOpen={recordPaymentPopupOpen}
         />
       );
     });
@@ -207,6 +492,9 @@ const PaymentSection = (props) => {
           key={uuidv4()}
           paymentContent={props.paymentContent}
           currency={oppDetails.studentMap.feesCurrency}
+          userDetails={props.userDetails}
+          handlePayButtonClick={handlePayButtonClick}
+          recordPaymentPopupOpen={recordPaymentPopupOpen}
         />
       );
     });
@@ -225,6 +513,21 @@ const PaymentSection = (props) => {
     });
   };
 
+  const bindRequests = () => {
+    if (!paymentRequests.length) return <p className="empty-p">Empty</p>;
+    return paymentRequests.map((item) => {
+      return (
+        <PaymentRequestItem
+          payment={item}
+          key={uuidv4()}
+          paymentContent={props.paymentContent}
+          currency={oppDetails.studentMap.feesCurrency}
+          userDetails={props.userDetails}
+          approvePaymentPopupOpen={approvePaymentPopupOpen}
+        />
+      );
+    });
+  };
   const bindSchedule = () => {
     if (!paymentSchedule.length) return <p className="empty-p">Empty</p>;
     return paymentSchedule.map((item) => {
@@ -234,6 +537,8 @@ const PaymentSection = (props) => {
           key={uuidv4()}
           paymentContent={props.paymentContent}
           currency={oppDetails.studentMap.feesCurrency}
+          deleteSchedule={deleteSchedule}
+          userDetails={props.userDetails}
         />
       );
     });
@@ -246,6 +551,7 @@ const PaymentSection = (props) => {
           <PaymentPendingTab
             paymentContent={props.paymentContent}
             bindPending={bindPending}
+            bindFeeDetails={bindFeeDetails}
           />
         );
       case "historyTab":
@@ -253,6 +559,7 @@ const PaymentSection = (props) => {
           <PaymentHistoryTab
             paymentContent={props.paymentContent}
             bindHistory={bindHistory}
+            bindFeeDetails={bindFeeDetails}
           />
         );
       case "upcomingTab":
@@ -268,15 +575,23 @@ const PaymentSection = (props) => {
             paymentContent={props.paymentContent}
             bindSchedule={bindSchedule}
             bindScheduleAdd={bindScheduleAdd}
+            userDetails={props.userDetails}
+            bindFeeDetails={bindFeeDetails}
           />
         );
-
+      case "requestTab":
+        return (
+          <PaymentRequestTab
+            paymentContent={props.paymentContent}
+            bindRequests={bindRequests}
+          />
+        );
       default:
         return null;
     }
   };
   return (
-    <section className="payment-section container">
+    <section className="payment-section">
       <div className="navbar-spacer"></div>
       {props.userDetails.role === "admin" ? (
         <TeacherStudentSelectorBlock

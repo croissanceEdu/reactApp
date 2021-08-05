@@ -62,12 +62,21 @@ input {
   font-weight: 600;
 }
 
-.navbar li {
-  font-family: "Montserrat", sans-serif;
+.navbar ul.nav-links li a {
+  font-family: "Raleway", sans-serif;
+  font-weight: normal;
+  font-size: 0.8em;
 }
 
 .navbar .nav-user-block {
   font-family: "Montserrat", sans-serif;
+  font-weight: normal;
+}
+
+.navbar .nav-user-block .nav-user-div .nav-avatar-name h4 {
+  font-family: "Raleway", sans-serif;
+  font-weight: normal;
+  font-size: 1.2em;
 }
 
 .navbar .nav-user-block p {
@@ -76,6 +85,7 @@ input {
 
 .navbar .nav-user-block button {
   font-family: "Montserrat", sans-serif;
+  font-size: 0.8em;
 }
 
 h3.syllabus-module {
@@ -84,5 +94,10 @@ h3.syllabus-module {
 
 .primary-details h3 {
   font-family: "Raleway", sans-serif;
+}
+
+blockquote {
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
 }
 /*# sourceMappingURL=font.css.map */

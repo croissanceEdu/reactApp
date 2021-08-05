@@ -21,6 +21,10 @@ import ScreenOverlayExtra from "./components/extras/screen-overlay.extra";
 import { loadNotifications } from "./helpers/api-call-helper";
 import { isAuth } from "./helpers/auth";
 import PaymentPage from "./components/pages/payment.page";
+import PopupContainerExtra from "./components/extras/popup-container.extra";
+import WarningPopup from "./components/popups/warning.popup";
+import RecordPaymentPopup from "./components/popups/record-payment.popup";
+import ApprovePaymentPopup from "./components/popups/approve-payment.popup";
 
 function App() {
   // const browserlanguage = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage;
@@ -36,16 +40,32 @@ function App() {
   let [language, setLanguage] = useState(preferredLanguage);
 
   const urlPathContent = Api.getUrlPathContent();
-  const [userDetails, setUserDetails] = useState(isAuth())
-  const [selectedPage, setselectedPage] = useState("")
-  const [profilePicture, setProfilePicture] = useState(null)
-  const [notifications, setNotifications] = useState({ feedback: [], activationLinks: [], syllabus: [], joinClass: [], payment: [] })
-  const [overlayClassNames, setoverlayClassNames] = useState("")
+  const [userDetails, setUserDetails] = useState(isAuth());
+  const [selectedPage, setselectedPage] = useState("");
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [notifications, setNotifications] = useState({
+    feedback: [],
+    activationLinks: [],
+    syllabus: [],
+    joinClass: [],
+    payment: [],
+  });
+  const [overlayClassNames, setoverlayClassNames] = useState("");
+  const [popupContainerClassNames, setPopupContainerClassNames] = useState("");
+  const [popupVisibility, setPopupVisibility] = useState(false);
+  const [popupDetails, setPopupDetails] = useState({
+    title: "",
+    content: "",
+    popupType: "",
+    className: "",
+    buttons: [],
+    popupData: {}
+  });
   const [navStyles, setNavStyles] = useState({
     navClassNames: "",
     navbarSectionClassNames: "navbar",
     navbarSectionScrollEffectClassNames: " ",
-    isNavMenuOpen: false
+    isNavMenuOpen: false,
   });
 
   const setNavVisible = (visiblity) => {
@@ -55,7 +75,7 @@ function App() {
         ...navStyles,
         navClassNames: "nav-visible ",
         navbarSectionClassNames: "navbar nav-visible",
-        isNavMenuOpen: true
+        isNavMenuOpen: true,
       });
     } else {
       setoverlayClassNames("");
@@ -63,36 +83,117 @@ function App() {
         ...navStyles,
         navClassNames: "",
         navbarSectionClassNames: "navbar",
-        isNavMenuOpen: false
+        isNavMenuOpen: false,
       });
     }
   };
   const logoSizeToggle = () => {
     // console.log(window.scrollY)
     if (window.scrollY > 10)
-      setNavStyles({ ...navStyles, navbarSectionScrollEffectClassNames: " navbar-short" })
-    else setNavStyles({ ...navStyles, navbarSectionScrollEffectClassNames: " " })
-  }
+      setNavStyles({
+        ...navStyles,
+        navbarSectionScrollEffectClassNames: " navbar-short",
+      });
+    else
+      setNavStyles({ ...navStyles, navbarSectionScrollEffectClassNames: " " });
+  };
   // document.addEventListener("scroll", logoSizeToggle);
-
 
   const updateProfilePicture = (imagePath) => {
     if (imagePath) {
       if (!profilePicture)
-        setProfilePicture(
-          `${process.env.REACT_APP_SERVER_URL}/${imagePath}`
-        );
+        setProfilePicture(`${process.env.REACT_APP_SERVER_URL}/${imagePath}`);
     } else
       setProfilePicture(
         `${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_DEFAULT_PROFILE_PIC}`
       );
   };
-  const notify = () => { if (userDetails) loadNotifications(userDetails._id, userDetails.role, setNotifications, updateProfilePicture) }
+  const notify = () => {
+    if (userDetails)
+      loadNotifications(
+        userDetails._id,
+        userDetails.role,
+        setNotifications,
+        updateProfilePicture
+      );
+  };
   useEffect(() => {
     notify();
-  }, [])
+  }, []);
+
+  const popupFunctions = {
+    showWarningPopup(title, content, className, buttons) {
+      setPopupDetails({ title, content, popupType: "warning", className, buttons, popupData: {} });
+      setPopupVisibility(true);
+      setTimeout(() => {
+        setPopupContainerClassNames("overlay-visible");
+      }, 10);
+    },
+    showRecordPaymentPopup(title, content, className, buttons, popupData) {
+      setPopupDetails({ title, content, popupType: "record-payment", className, buttons, popupData });
+      setPopupVisibility(true);
+      setTimeout(() => {
+        setPopupContainerClassNames("overlay-visible");
+      }, 10);
+    }, showApprovePaymentRequestPopup(title, content, className, buttons, popupData) {
+      setPopupDetails({ title, content, popupType: "approve-payment", className, buttons, popupData });
+      setPopupVisibility(true);
+      setTimeout(() => {
+        setPopupContainerClassNames("overlay-visible");
+      }, 10);
+    },
+    getPopupData() { return popupDetails.popupData; },
+    setPopupData(popupData) { setPopupDetails({ ...popupDetails, popupData }) },
+    closePopup() {
+      setPopupContainerClassNames("closing");
+      setTimeout(() => {
+        setPopupContainerClassNames("");
+        setPopupVisibility(false);
+        setPopupDetails({ title: "", content: "", popupType: "", className: "", buttons: [], popupData: {} });
+      }, 1000);
+    },
+  };
+  const displayPopup = () => {
+    switch (popupDetails.popupType) {
+      case "warning":
+        return (<WarningPopup
+          popupContainerClassNames={popupContainerClassNames}
+          popupDetails={popupDetails}
+          popupFunctions={popupFunctions}
+        />);
+      case "record-payment":
+        return (<RecordPaymentPopup
+          popupContainerClassNames={popupContainerClassNames}
+          popupDetails={popupDetails}
+          popupFunctions={popupFunctions}
+        />);
+      case "approve-payment":
+        return (<ApprovePaymentPopup
+          popupContainerClassNames={popupContainerClassNames}
+          popupDetails={popupDetails}
+          popupFunctions={popupFunctions}
+        />);
+      default:
+        return null;
+    }
+  }
+  // document.onscroll = popupFunctions.closePopup; //uncomment if popup need to exit on scroll
+  // window.addEventListener("resize", () => {  setNavVisible(false) })
   return (
-    <Router>  <ScreenOverlayExtra overlayClassNames={overlayClassNames} setNavVisible={setNavVisible} />
+    <Router>
+      <ScreenOverlayExtra
+        overlayClassNames={overlayClassNames}
+        setNavVisible={setNavVisible}
+      />
+      {popupVisibility && (
+        <>
+          <PopupContainerExtra
+            popupFunctions={popupFunctions}
+            popupContainerClassNames={popupContainerClassNames}
+          />
+          {displayPopup()}
+        </>
+      )}
       <Route
         path={[
           urlPathContent.homePage,
@@ -103,111 +204,208 @@ function App() {
           urlPathContent.feedbackPage,
           urlPathContent.syllabusPage,
           urlPathContent.managePage,
-          urlPathContent.paymentPage
+          urlPathContent.paymentPage,
         ]}
         exact
-        render={(props) => <NavbarSection {...props} language={language} setLanguage={setLanguage} selectedPage={selectedPage}
-          profilePicture={profilePicture} setProfilePicture={setProfilePicture}
-          setoverlayClassNames={setoverlayClassNames} setNavVisible={setNavVisible} navStyles={navStyles}
-          notifications={notifications}
-          userDetails={userDetails}
-        />}
+        render={(props) => (
+          <NavbarSection
+            {...props}
+            language={language}
+            setLanguage={setLanguage}
+            selectedPage={selectedPage}
+            profilePicture={profilePicture}
+            setProfilePicture={setProfilePicture}
+            setoverlayClassNames={setoverlayClassNames}
+            setNavVisible={setNavVisible}
+            navStyles={navStyles}
+            notifications={notifications}
+            userDetails={userDetails}
+          />
+        )}
       />
 
       <Switch>
         <Route
           path={urlPathContent.loginPage}
           exact
-          render={(props) => <LoginPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess} />}
-          userDetails={userDetails} setUserDetails={setUserDetails} />
+          render={(props) => (
+            <LoginPage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+            />
+          )}
+          userDetails={userDetails}
+          setUserDetails={setUserDetails}
+        />
         <Route
           path={urlPathContent.registerTeacherPage}
           exact
           render={(props) => (
-            <RegisterTeacherPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess}
-              userDetails={userDetails} />
+            <RegisterTeacherPage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              userDetails={userDetails}
+            />
           )}
         />
         <Route
           path={urlPathContent.registerPage}
           exact
           render={(props) => (
-            <RegistrationPage {...props} language={language} urlPathContent={urlPathContent} hasPageAccess={Api.hasPageAccess}
-              userDetails={userDetails} />
+            <RegistrationPage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              userDetails={userDetails}
+            />
           )}
         />
 
         <Route
           path={urlPathContent.homePage}
           exact
-          render={(props) => <HomePage {...props} language={language} urlPathContent={urlPathContent}
-            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
-            userDetails={userDetails} notifications={notifications}
-            profilePicture={profilePicture} />}
+          render={(props) => (
+            <HomePage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              setselectedPage={setselectedPage}
+              userDetails={userDetails}
+              notifications={notifications}
+              profilePicture={profilePicture}
+            />
+          )}
         />
         <Route
           path={urlPathContent.changePasswordPage}
           exact
           render={(props) => (
-            <ChangePasswordPage {...props} language={language} urlPathContent={urlPathContent}
-              hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
-              userDetails={userDetails} />
+            <ChangePasswordPage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              setselectedPage={setselectedPage}
+              userDetails={userDetails}
+            />
           )}
         />
         <Route
           path={urlPathContent.profilePage}
           exact
-          render={(props) => <ProfilePage {...props} language={language} urlPathContent={urlPathContent}
-            hasPageAccess={Api.hasPageAccess} profilePicture={profilePicture}
-            setProfilePicture={setProfilePicture} setselectedPage={setselectedPage}
-            userDetails={userDetails} setUserDetails={setUserDetails} />}
+          render={(props) => (
+            <ProfilePage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              profilePicture={profilePicture}
+              setProfilePicture={setProfilePicture}
+              setselectedPage={setselectedPage}
+              userDetails={userDetails}
+              setUserDetails={setUserDetails}
+            />
+          )}
         />
         <Route
           path={urlPathContent.activateAccountPage}
           exact
           render={(props) => (
-            <ActivateAccountPage {...props} language={language} urlPathContent={urlPathContent}
-              hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
-              userDetails={userDetails} />
+            <ActivateAccountPage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              setselectedPage={setselectedPage}
+              userDetails={userDetails}
+            />
           )}
         />
         <Route
           path={urlPathContent.joinClassPage}
           exact
-          render={(props) => <JoinClassPage {...props} language={language} urlPathContent={urlPathContent}
-            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
-            userDetails={userDetails} />}
+          render={(props) => (
+            <JoinClassPage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              setselectedPage={setselectedPage}
+              userDetails={userDetails}
+            />
+          )}
         />
         <Route
           path={urlPathContent.feedbackPage}
           exact
-          render={(props) => <FeedbackPage {...props} language={language} urlPathContent={urlPathContent}
-            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
-            notifications={notifications} notify={notify}
-            userDetails={userDetails} />}
+          render={(props) => (
+            <FeedbackPage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              setselectedPage={setselectedPage}
+              notifications={notifications}
+              notify={notify}
+              userDetails={userDetails}
+            />
+          )}
         />
         <Route
           path={urlPathContent.syllabusPage}
           exact
-          render={(props) => <SyllabusPage {...props} language={language} urlPathContent={urlPathContent}
-            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
-            notifications={notifications} notify={notify}
-            userDetails={userDetails} />}
+          render={(props) => (
+            <SyllabusPage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              setselectedPage={setselectedPage}
+              notifications={notifications}
+              notify={notify}
+              userDetails={userDetails}
+              popupFunctions={popupFunctions}
+            />
+          )}
         />
         <Route
           path={urlPathContent.managePage}
           exact
-          render={(props) => <ManagePage {...props} language={language} urlPathContent={urlPathContent}
-            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
-            userDetails={userDetails} setUserDetails={setUserDetails} />}
+          render={(props) => (
+            <ManagePage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              setselectedPage={setselectedPage}
+              userDetails={userDetails}
+              setUserDetails={setUserDetails}
+              popupFunctions={popupFunctions}
+            />
+          )}
         />
         <Route
           path={urlPathContent.paymentPage}
           exact
-          render={(props) => <PaymentPage {...props} language={language} urlPathContent={urlPathContent}
-            hasPageAccess={Api.hasPageAccess} setselectedPage={setselectedPage}
-            notifications={notifications} notify={notify}
-            userDetails={userDetails} />}
+          render={(props) => (
+            <PaymentPage
+              {...props}
+              language={language}
+              urlPathContent={urlPathContent}
+              hasPageAccess={Api.hasPageAccess}
+              setselectedPage={setselectedPage}
+              notifications={notifications}
+              notify={notify}
+              userDetails={userDetails}
+              popupFunctions={popupFunctions}
+            />
+          )}
         />
       </Switch>
       <Route
@@ -220,7 +418,7 @@ function App() {
           urlPathContent.feedbackPage,
           urlPathContent.syllabusPage,
           urlPathContent.managePage,
-          urlPathContent.paymentPage
+          urlPathContent.paymentPage,
         ]}
         exact
         render={(props) => <FooterSection {...props} language={language} />}

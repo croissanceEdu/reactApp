@@ -58,6 +58,7 @@ const CourseAllocationAddBlock = (props) => {
         .then((response) => {
           toast.success(response.data.message);
           setClassUrl("");
+          props.loadStudentMap();
         });
     } else {
       toast.error("please fill all fields");

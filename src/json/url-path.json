@@ -1,8 +1,8 @@
 {
     "homePage": "/",
     "loginPage": "/login/",
-    "registerPage": "/register/",
-    "registerTeacherPage": "/register-teacher/",
+    "registerPage": "/register/student/",
+    "registerTeacherPage": "/register/teacher/",
     "syllabusPage": "/syllabus/",
     "feedbackPage": "/feedback/",
     "changePasswordPage": "/changePassword/",

@@ -11,19 +11,25 @@ const CourseAllocationListBlock = (props) => {
     setSelectedAllocation(slectedItem);
   };
   const handleBackButtonClick = (slectedItem) => {
-    if (visibilityclass === "collapse-block") setVisibilityclass("");
+    setVisibilityclass("");
   };
+  const handleDeleteButtonClick = (slectedItem) => {
+    props.deleteMap(slectedItem);
+    setVisibilityclass("");
+  };
+
   const bindItem = (itemsList) => {
     return itemsList.map((item) => {
       let itemClassName = "non-selected";
       if (selectedAllocation._id === item._id) {
         itemClassName = "selected-allocation";
       }
+
       return (
         <CourseAllocationItem
           key={uuidv4()}
           studentMap={item}
-          deleteMap={props.deleteMap}
+          deleteMap={handleDeleteButtonClick}
           manageContent={props.manageContent}
           loadStudentMap={props.loadStudentMap}
           handleAllocationSelect={handleAllocationSelect}

@@ -1,6 +1,6 @@
 import { getFormattedDate } from "../../helpers/custom";
 
-const PaymentHistoryItem = (props) => {
+const PaymentRequestItem = (props) => {
   return (
     <li>
       {" "}
@@ -19,7 +19,7 @@ const PaymentHistoryItem = (props) => {
           </div>
           <div className="date-body">
             <div className="list-form-group">
-              <p>{props.paymentContent.paidDateContent}:</p>
+              <p>{props.paymentContent.requestedDateContent}:</p>
               <h4>{getFormattedDate(props.payment.createdAt)}</h4>
             </div>
           </div>
@@ -27,9 +27,33 @@ const PaymentHistoryItem = (props) => {
             <p>{props.payment.comment}</p>
           </div>
         </div>
+        <div className="third-details">
+          {props.userDetails.role === "admin" && (
+            <>
+              <button
+                className="btn edit-button"
+                disabled={props.payment.isPaid}
+                onClick={() => {
+                  props.approvePaymentPopupOpen(props.payment);
+                }}
+              >
+                {props.paymentContent.approveContent}
+              </button>
+              <button
+                className="btn cancel-button"
+                disabled={props.payment.isPaid}
+                onClick={() => {
+                  props.approvePaymentPopupOpen(props.payment);
+                }}
+              >
+                {props.paymentContent.cancelContent}
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </li>
   );
 };
 
-export default PaymentHistoryItem;
+export default PaymentRequestItem;

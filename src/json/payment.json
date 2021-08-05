@@ -33,18 +33,33 @@
                 "name": "scheduleTab",
                 "content": "Schedule",
                 "availableFor": [
-                    "teacher"
+                    "admin"
+                ]
+            },
+            {
+                "name": "requestTab",
+                "content": "Requests",
+                "availableFor": [
+                    "admin"
                 ]
             }
         ],
         "requestAmountContent": "Amount",
+        "paidAmountContent": "Amount",
         "warningDateContent": "Warning Date",
+        "paidDateContent": "Date",
+        "requestedDateContent": "Date",
         "lastDateContent": "Last Date",
         "selectDateContent": "--Select Date--",
         "commentContent": "Comment",
+        "paymentMethodContent": "Method",
         "addScheduleContent": "Add",
         "editScheduleContent": "Edit",
         "deleteScheduleContent": "Delete",
-        "payContent": "Pay"
+        "payContent": "Pay",
+        "recordPaymentContent": "Record Payment",
+        "approveRequestContent": "Approve Request",
+        "approveContent": "Approve",
+        "cancelContent": "Cancel"
     }
 ]

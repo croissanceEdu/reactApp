@@ -8,6 +8,7 @@ import TeacherStudentSelectorBlock from "../blocks/teacher-student-selector.bloc
 import SyllabusListTab from "../tabs/syllabus-list.tab";
 import SyllabusEditTab from "../tabs/syllabus-edit.tab";
 import TabSelectorBlock from "../blocks/tab-selector.block";
+import React from "react";
 
 const SyllabusSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("syllabusListTab");
@@ -58,13 +59,10 @@ const SyllabusSection = (props) => {
       if (moduleName !== item.moduleName) moduleName = item.moduleName;
       else isModuleChange = false;
       return (
-        <>
-          {isModuleChange ? (
-            <h3 className="syllabus-module">{moduleName}</h3>
-          ) : null}
+        <React.Fragment key={uuidv4()}>
+          {isModuleChange && <h3 className="syllabus-module">{moduleName}</h3>}
           <SyllabusItem
             syllabus={item}
-            key={uuidv4()}
             completeSyllabus={completeSyllabus}
             unCheckSyllabus={unCheckSyllabus}
             editMode={editMode}
@@ -79,7 +77,7 @@ const SyllabusSection = (props) => {
                 : "unpayed"
             }
           />
-        </>
+        </React.Fragment>
       );
     });
   };
@@ -123,7 +121,7 @@ const SyllabusSection = (props) => {
         );
       });
   };
-  const deleteSyllabus = (id) => {
+  const confirmDeleteSyllabus = (id) => {
     axios
       .delete(`${process.env.REACT_APP_SERVER_URL}/syllabus/list/` + id)
       .then((response) => {
@@ -133,6 +131,27 @@ const SyllabusSection = (props) => {
         console.log(error);
       });
     setSyllabuses(syllabuses.filter((el) => el._id !== id));
+  };
+  const deleteSyllabus = (id) => {
+    props.popupFunctions.showWarningPopup(
+      `Delete Chapter`,
+      "are you sure?",
+      "delete-popup",
+      [
+        {
+          content: "delete",
+          className: "btn delete-button",
+          closeAfter: true,
+          onClickFunction: confirmDeleteSyllabus,
+          onClickArgument: id,
+        },
+        {
+          content: "cancel",
+          className: "btn cancel-button",
+          closeAfter: true,
+        },
+      ]
+    );
   };
   const handleAddNewSyllabus = (e, callback) => {
     e.preventDefault();

@@ -20,16 +20,18 @@ import "./css/font.css";
 // import Api from './helpers/content-api';
 
 import App from './App';
+
 // import BackdropExtra from './components/extras/backdrop.extra';
 
 
 require('dotenv').config();
 
+
+
 ReactDOM.render(
   <React.StrictMode>
     <ToastContainer></ToastContainer>
     <App />
-
   </React.StrictMode>,
   document.getElementById('root')
 );

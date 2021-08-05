@@ -11,7 +11,12 @@ const ManagePage = (props) => {
     props.userDetails &&
     props.hasPageAccess("managePage", props.userDetails.role, props.language)
   )
-    return <ManageSection manageContent={getManageContent(props.language)} />;
+    return (
+      <ManageSection
+        manageContent={getManageContent(props.language)}
+        popupFunctions={props.popupFunctions}
+      />
+    );
   else return <Redirect to={props.urlPathContent.loginPage} />;
 };
 
