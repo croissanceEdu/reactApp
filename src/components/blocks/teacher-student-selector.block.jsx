@@ -4,9 +4,11 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import TeacherStudentSelectorItem from "../items/teacher-student-selector.item";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { manageWebSocketGetOnlineUsers } from "../../helpers/websocket-helper";
 
 const TeacherStudentSelectorBlock = (props, ref) => {
   const [userOptions, setUserOptions] = useState([]);
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
   const [selectorTitle, setSelectorTitle] = useState("");
   const [visibilityclass, setVisibilityclass] = useState("");
@@ -58,6 +60,13 @@ const TeacherStudentSelectorBlock = (props, ref) => {
       if (selectedUser._id === item._id) {
         itemClassName = "selected-user";
       }
+      item.student.isOnline = props.onlineUsers.includes(item.student._id)
+        ? true
+        : false;
+      item.teacher.isOnline = props.onlineUsers.includes(item.teacher._id)
+        ? true
+        : false;
+
       return (
         <TeacherStudentSelectorItem
           key={uuidv4()}
@@ -68,6 +77,7 @@ const TeacherStudentSelectorBlock = (props, ref) => {
       );
     });
   };
+
   useEffect(() => {
     if (props.autoLoad) loadUsers(props.myRole, props.myId);
   }, [props.autoLoad, props.myRole, props.myId]);

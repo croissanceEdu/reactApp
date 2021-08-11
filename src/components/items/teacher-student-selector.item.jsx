@@ -21,6 +21,9 @@ const TeacherStudentSelectorItem = (props) => {
               backgroundPosition: "center",
             }}
           ></div>
+          {props.user.teacher.isOnline && (
+            <div className="avatar-status-buble online"></div>
+          )}
         </div>
         <div className="user-avatar">
           <div
@@ -36,6 +39,9 @@ const TeacherStudentSelectorItem = (props) => {
               backgroundPosition: "center",
             }}
           ></div>
+          {props.user.student.isOnline && (
+            <div className="avatar-status-buble online"></div>
+          )}
         </div>
         <div className="name-course-block">
           <div className="name-block">

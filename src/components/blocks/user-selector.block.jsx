@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { Refresh } from "@material-ui/icons";
 
 const UserSelectorBlock = (props, ref) => {
   const [userOptions, setUserOptions] = useState([]);
@@ -23,6 +24,9 @@ const UserSelectorBlock = (props, ref) => {
   };
   const handleSelectorClick = (user) => {
     if (visibilityclass === "collapse-block") setVisibilityclass("");
+  };
+  const handleRefreshClick = (user) => {
+    if (props.handleRefresh) props.handleRefresh();
   };
   const loadUsers = (role, _id) => {
     axios
@@ -66,6 +70,23 @@ const UserSelectorBlock = (props, ref) => {
         return 0;
     }
   };
+  const bindRefreshIcon = () => {
+    if (
+      getNotifications(
+        selectedUser._id,
+        selectedUser.studentMap._id,
+        props.selectedPage
+      ) > 0
+    ) {
+      return (
+        <Refresh
+          style={{ color: "#fff" }}
+          className="refresh-icon"
+          onClick={handleRefreshClick}
+        />
+      );
+    } else return null;
+  };
   const bindUsers = () => {
     if (!userOptions.length) return <p className="empty-p">Empty</p>;
     return userOptions.map((item) => {
@@ -74,10 +95,12 @@ const UserSelectorBlock = (props, ref) => {
         item.studentMap._id,
         props.selectedPage
       );
+
       let itemClassName = "non-selected";
       if (selectedUser.studentMap._id === item.studentMap._id) {
         itemClassName = "selected-user";
       }
+      item.isOnline = props.onlineUsers.includes(item._id) ? true : false;
       return (
         <UserSelectorItem
           key={uuidv4()}
@@ -95,6 +118,7 @@ const UserSelectorBlock = (props, ref) => {
   return (
     <div className={`user-selector-block ${visibilityclass}`}>
       <h5>{selectorTitle}</h5>
+
       <ul onClick={handleSelectorClick}>
         {bindUsers()}{" "}
         <ArrowDropDownIcon
@@ -102,6 +126,7 @@ const UserSelectorBlock = (props, ref) => {
           className="dropdown-icon"
         />
       </ul>
+      {bindRefreshIcon()}
     </div>
   );
 };

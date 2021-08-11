@@ -11,6 +11,7 @@ import FeedbackReceivedTab from "../tabs/feedback-received.tab";
 import FeedbackSentTab from "../tabs/feedback-sent.tab";
 import FeedbackMessageItem from "../items/feedback-message.item";
 import { Add } from "@material-ui/icons";
+import { manageWebSocketSendNotification } from "../../helpers/websocket-helper";
 
 const FeedbackSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("historyTab");
@@ -40,6 +41,7 @@ const FeedbackSection = (props) => {
           setFormData({ title: "", content: "" });
           bindTables(myDetails._id, oppDetails._id, oppDetails.studentMap._id);
           setSelectedTab("historyTab");
+          manageWebSocketSendNotification(myDetails);
         });
     } else {
       toast.error("please fill all fields");
@@ -70,7 +72,7 @@ const FeedbackSection = (props) => {
       })
       .then((response) => {
         setReceivedFeedback(response.data.newFeedback);
-        props.notify();
+        props.notify(); //commented for socket test
       })
       .catch((error) => {
         console.log(error);
@@ -126,10 +128,31 @@ const FeedbackSection = (props) => {
       );
     });
   };
+  // const autoRefresh = () => {
+  //   if (
+  //     props.notifications.feedback.filter(
+  //       (el) =>
+  //         el.fromID === oppDetails._id &&
+  //         el.studentMapID === oppDetails.studentMap._id
+  //     ).length > 0
+  //   ) {
+  //     loadReceivedMessages(
+  //       myDetails._id,
+  //       oppDetails._id,
+  //       oppDetails.studentMap._id
+  //     );
+  //     // console.log("received");
+  //   }
+  // };
+  // // autoRefresh();
+
   const handleUserSelect = (user) => {
     setOppDetails(user);
     setSelectedTab("historyTab");
     bindTables(myDetails._id, user._id, user.studentMap._id);
+  };
+  const handleRefresh = () => {
+    bindTables(myDetails._id, oppDetails._id, oppDetails.studentMap._id);
   };
   const bindTabWindow = () => {
     switch (selectedTab) {
@@ -178,6 +201,8 @@ const FeedbackSection = (props) => {
         autoLoad={true}
         selectedPage={"feedbackPage"}
         notifications={props.notifications}
+        handleRefresh={handleRefresh}
+        onlineUsers={props.onlineUsers}
       />
       <div className="tab-section">
         <TabSelectorBlock

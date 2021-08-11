@@ -21,6 +21,9 @@ const UserSelectorItem = (props) => {
               backgroundPosition: "center",
             }}
           ></div>
+          {props.user.isOnline && (
+            <div className="avatar-status-buble online"></div>
+          )}
         </div>
         <div className="name-course-block">
           <div className="name-block">

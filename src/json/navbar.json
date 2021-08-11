@@ -3,8 +3,16 @@
         "language": "English",
         "navLogo": {
             "logoContent": "CROISSANCE EDU",
-            "logoUrl": "croissanceWebSite",
-            "titleUrl": "croissanceEduWebSite"
+            "logoUrl": {
+                "urlPathName": "croissanceWebSite",
+                "external": false,
+                "newTab": false
+            },
+            "titleUrl": {
+                "urlPathName": "croissanceEduWebSite",
+                "external": false,
+                "newTab": false
+            }
         },
         "navLinks": [
             {
@@ -59,9 +67,7 @@
                 "name": "paymentPage",
                 "content": "PAYMENT",
                 "availableFor": [
-                    "admin",
-                    "teacher",
-                    "student"
+                    "admin"
                 ]
             }
         ],

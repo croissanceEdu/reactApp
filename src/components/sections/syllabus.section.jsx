@@ -9,6 +9,7 @@ import SyllabusListTab from "../tabs/syllabus-list.tab";
 import SyllabusEditTab from "../tabs/syllabus-edit.tab";
 import TabSelectorBlock from "../blocks/tab-selector.block";
 import React from "react";
+import { manageWebSocketSendNotification } from "../../helpers/websocket-helper";
 
 const SyllabusSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("syllabusListTab");
@@ -29,7 +30,7 @@ const SyllabusSection = (props) => {
       .then((response) => {
         if (response.data.syllabus) {
           setSyllabuses(response.data.syllabus);
-          props.notify();
+          props.notify(); //commented for socket test
         } else {
           toast.error("Something went wrong");
         }
@@ -90,7 +91,14 @@ const SyllabusSection = (props) => {
     setOppDetails(user);
     bindTable(myDetails._id, myDetails.role, user._id, user.studentMap._id);
   };
-
+  const handleRefresh = () => {
+    bindTable(
+      myDetails._id,
+      myDetails.role,
+      oppDetails._id,
+      oppDetails.studentMap._id
+    );
+  };
   const completeSyllabus = (id) => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/syllabus/complete`, {
@@ -181,6 +189,7 @@ const SyllabusSection = (props) => {
             oppDetails._id,
             oppDetails.studentMap._id
           );
+          manageWebSocketSendNotification(myDetails);
         });
     } else {
       toast.error("please fill all fields");
@@ -217,6 +226,7 @@ const SyllabusSection = (props) => {
           myRole={props.userDetails.role}
           handleUserSelect={handleTeacherStudentSelect}
           autoLoad={true}
+          onlineUsers={props.onlineUsers}
         />
       ) : (
         <UserSelectorBlock
@@ -227,6 +237,8 @@ const SyllabusSection = (props) => {
           selectedPage={"syllabusPage"}
           notifications={props.notifications}
           notify={props.notify}
+          handleRefresh={handleRefresh}
+          onlineUsers={props.onlineUsers}
         ></UserSelectorBlock>
       )}
       <div className="tab-section">

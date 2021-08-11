@@ -25,6 +25,7 @@ import PopupContainerExtra from "./components/extras/popup-container.extra";
 import WarningPopup from "./components/popups/warning.popup";
 import RecordPaymentPopup from "./components/popups/record-payment.popup";
 import ApprovePaymentPopup from "./components/popups/approve-payment.popup";
+import { userConnected } from "./helpers/websocket-helper";
 
 function App() {
   // const browserlanguage = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage;
@@ -67,6 +68,7 @@ function App() {
     navbarSectionScrollEffectClassNames: " ",
     isNavMenuOpen: false,
   });
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   const setNavVisible = (visiblity) => {
     if (visiblity) {
@@ -101,14 +103,26 @@ function App() {
 
   const updateProfilePicture = (imagePath) => {
     if (imagePath) {
-      if (!profilePicture)
-        setProfilePicture(`${process.env.REACT_APP_SERVER_URL}/${imagePath}`);
-    } else
-      setProfilePicture(
-        `${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_DEFAULT_PROFILE_PIC}`
-      );
+      if (profilePicture != `${process.env.REACT_APP_SERVER_URL}/${imagePath}` || true) {
+        if (!profilePicture || true) {
+          setProfilePicture(`${process.env.REACT_APP_SERVER_URL}/${imagePath}`);
+        }
+      }
+    } else {
+      if (profilePicture != `${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_DEFAULT_PROFILE_PIC}`) {
+        setProfilePicture(
+          `${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_DEFAULT_PROFILE_PIC}`
+        );
+      }
+    }
+  };
+
+  const HandleSetOnlineUsers = (data) => {
+    let ids = data.map((el) => el._id);
+    setOnlineUsers(ids);
   };
   const notify = () => {
+    // console.log("notify")
     if (userDetails)
       loadNotifications(
         userDetails._id,
@@ -117,8 +131,11 @@ function App() {
         updateProfilePicture
       );
   };
+
   useEffect(() => {
-    notify();
+    if (userDetails) {
+      userConnected(userDetails, notify, HandleSetOnlineUsers)
+    }
   }, []);
 
   const popupFunctions = {
@@ -354,6 +371,7 @@ function App() {
               notifications={notifications}
               notify={notify}
               userDetails={userDetails}
+              onlineUsers={onlineUsers}
             />
           )}
         />
@@ -371,6 +389,7 @@ function App() {
               notify={notify}
               userDetails={userDetails}
               popupFunctions={popupFunctions}
+              onlineUsers={onlineUsers}
             />
           )}
         />
@@ -387,6 +406,7 @@ function App() {
               userDetails={userDetails}
               setUserDetails={setUserDetails}
               popupFunctions={popupFunctions}
+              onlineUsers={onlineUsers}
             />
           )}
         />
@@ -404,6 +424,7 @@ function App() {
               notify={notify}
               userDetails={userDetails}
               popupFunctions={popupFunctions}
+              onlineUsers={onlineUsers}
             />
           )}
         />

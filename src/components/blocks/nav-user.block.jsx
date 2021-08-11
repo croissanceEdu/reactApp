@@ -2,10 +2,13 @@ import { signout } from "../../helpers/auth";
 import Api from "../../helpers/content-api";
 import { useState } from "react";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { useHistory } from "react-router-dom";
+import NavLinkItem from "../items/nav-link.item";
+// import { v4 as uuidv4 } from "uuid";
 
 const NavUserBlock = (props) => {
   const [panelClassName, setPanelClassName] = useState("hidden-menu");
-
+  const history = useHistory();
   const handleToggle = () => {
     setPanelClassName((prevClass) =>
       prevClass === "hidden-menu" ? "shown-menu" : "hidden-menu"
@@ -14,16 +17,20 @@ const NavUserBlock = (props) => {
   const handleClose = () => {
     setPanelClassName("hidden-menu");
   };
+  const handleCloseNav = () => {
+    handleClose();
+    props.setNavVisible(false);
+  };
   document.onscroll = handleClose;
 
   //Logout
   const handleLogout = () => {
-    handleClose();
+    handleCloseNav();
     signout(() => {
-      if (props.userDetails) {
-        window.location = "/";
+      if (props.userDetails && false) {
+        history.push("/");
       } else {
-        window.location = "/login";
+        history.push("/login");
       }
     });
   };
@@ -31,12 +38,12 @@ const NavUserBlock = (props) => {
   //ChangePassword
   const handleChangePassword = () => {
     handleClose();
-    window.location = Api.getNavLinkPath("changePasswordPage");
+    history.push(Api.getNavLinkPath("changePasswordPage"));
   };
   //Profile
   const handleProfile = () => {
     handleClose();
-    window.location = Api.getNavLinkPath("profilePage");
+    history.push(Api.getNavLinkPath("profilePage"));
   };
   return (
     <div className={`nav-user-block ${panelClassName}`}>
@@ -64,16 +71,22 @@ const NavUserBlock = (props) => {
       </div>
 
       <ul className={panelClassName}>
-        <li>
-          <button onClick={handleProfile}>
-            {props.navUserContent.profileContent}
-          </button>
-        </li>
-        <li>
-          <button onClick={handleChangePassword}>
-            {props.navUserContent.changePasswordContent}
-          </button>
-        </li>
+        <NavLinkItem
+          content={props.navUserContent.profileContent}
+          navLinkPath={Api.getNavLinkPath("profilePage")}
+          notificationCount={0}
+          // key={uuidv4()}
+          itemClassName=""
+          onClickCallBack={handleCloseNav}
+        />
+        <NavLinkItem
+          content={props.navUserContent.changePasswordContent}
+          navLinkPath={Api.getNavLinkPath("changePasswordPage")}
+          notificationCount={0}
+          // key={uuidv4()}
+          itemClassName=""
+          onClickCallBack={handleCloseNav}
+        />
         <li>
           <button onClick={handleLogout}>
             {props.navUserContent.logoutContent}

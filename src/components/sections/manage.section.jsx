@@ -72,6 +72,7 @@ const ManageSection = (props) => {
           <ManageAllocationNewTab
             manageContent={props.manageContent}
             loadStudentMap={loadStudentMap}
+            onlineUsers={props.onlineUsers}
           />
         );
       default:

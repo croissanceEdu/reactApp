@@ -1,6 +1,7 @@
 import ProfilePictureBlock from "../blocks/profile-picture.block";
 
 const ProfilePictureTab = (props) => {
+  console.log(props.profilePicture);
   return (
     <div className="tab-window">
       <ProfilePictureBlock

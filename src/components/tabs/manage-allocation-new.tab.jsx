@@ -6,6 +6,7 @@ const ManageAllocationNewTab = (props) => {
       <CourseAllocationAddBlock
         manageContent={props.manageContent}
         loadStudentMap={props.loadStudentMap}
+        onlineUsers={props.onlineUsers}
       />
     </div>
   );

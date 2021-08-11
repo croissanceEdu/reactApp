@@ -18,13 +18,16 @@ const NavLinksBlock = (props) => {
         return 0;
     }
   };
+  const onClickEvent = () => {
+    props.setNavVisible(false);
+  };
   const loadLinks = () => {
     return props.navLinkContent.map((item) => {
       if (item.availableFor.includes(isAuth().role)) {
         let itemClassName = "";
-        if (props.selectedPage === item.name) {
-          itemClassName = "nav-link-selected";
-        }
+        // if (props.selectedPage === item.name) {
+        //   itemClassName = "nav-link-selected";
+        // }
         return (
           <NavLinkItem
             content={item.content}
@@ -32,6 +35,7 @@ const NavLinksBlock = (props) => {
             notificationCount={getNotificationCount(item.name)}
             key={uuidv4()}
             itemClassName={itemClassName}
+            onClickCallBack={onClickEvent}
           />
         );
       } else return null;

@@ -245,8 +245,27 @@ const PaymentSection = (props) => {
           onClickFunction: approveRecordPayment,
           onClickArgument: paymentRequest,
         },
+
         {
-          content: "Reject",
+          content: "cancel",
+          className: "btn cancel-button",
+          closeAfter: true,
+        },
+      ],
+      {}
+    );
+  };
+
+  const rejectPaymentPopupOpen = (paymentRequest) => {
+    props.popupFunctions.showApprovePaymentRequestPopup(
+      "Payment Request Reject",
+      "Please confirm if you haven't received " +
+        paymentRequest.currency +
+        paymentRequest.paidAmount,
+      "payment-reject-popup",
+      [
+        {
+          content: "Confirm",
           className: "btn delete-button",
           closeAfter: true,
           onClickFunction: rejectRecordPayment,
@@ -446,23 +465,31 @@ const PaymentSection = (props) => {
   const bindFeeDetails = () => {
     return (
       <div className="fee-details">
-        <div className="form-group">
-          <label>Fee</label>
-          <input
+        <div className="form-group-fee row  container">
+          <label>Fee:</label>
+          <div>
+            {feeDetails.feeAmount}
+            <span>{oppDetails.studentMap.feesCurrency}</span>
+          </div>
+          {/* <input
             type="text"
             placeholder="Fee"
             readOnly={!feeDetails.editFeeMode}
-            value={feeDetails.feeAmount}
-          ></input>
+            value=
+          ></input> */}
         </div>
-        <div className="form-group">
-          <label>Paid</label>
-          <input
+        <div className="form-group-fee row container">
+          <label>Paid:</label>
+          <div>
+            {feeDetails.paidAmount}
+            <span>{oppDetails.studentMap.feesCurrency}</span>
+          </div>
+          {/* <input
             type="text"
             placeholder="Paid"
             readOnly
             value={feeDetails.paidAmount}
-          ></input>
+          ></input> */}
         </div>
       </div>
     );
@@ -524,6 +551,7 @@ const PaymentSection = (props) => {
           currency={oppDetails.studentMap.feesCurrency}
           userDetails={props.userDetails}
           approvePaymentPopupOpen={approvePaymentPopupOpen}
+          rejectPaymentPopupOpen={rejectPaymentPopupOpen}
         />
       );
     });
@@ -567,6 +595,7 @@ const PaymentSection = (props) => {
           <PaymentUpcomingTab
             paymentContent={props.paymentContent}
             bindUpcoming={bindUpcoming}
+            bindFeeDetails={bindFeeDetails}
           />
         );
       case "scheduleTab":
@@ -584,6 +613,7 @@ const PaymentSection = (props) => {
           <PaymentRequestTab
             paymentContent={props.paymentContent}
             bindRequests={bindRequests}
+            bindFeeDetails={bindFeeDetails}
           />
         );
       default:
@@ -599,6 +629,7 @@ const PaymentSection = (props) => {
           myRole={props.userDetails.role}
           handleUserSelect={handleTeacherStudentSelect}
           autoLoad={true}
+          onlineUsers={props.onlineUsers}
         />
       ) : (
         <UserSelectorBlock
@@ -609,6 +640,7 @@ const PaymentSection = (props) => {
           selectedPage={"paymentPage"}
           notifications={props.notifications}
           notify={props.notify}
+          onlineUsers={props.onlineUsers}
         />
       )}
       <div className="tab-section">

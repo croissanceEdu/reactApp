@@ -43,7 +43,7 @@ const PaymentRequestItem = (props) => {
                 className="btn cancel-button"
                 disabled={props.payment.isPaid}
                 onClick={() => {
-                  props.approvePaymentPopupOpen(props.payment);
+                  props.rejectPaymentPopupOpen(props.payment);
                 }}
               >
                 {props.paymentContent.cancelContent}

@@ -8,6 +8,7 @@
   --cancel-color: rgba(119, 62, 121, 0.911);
   --close-color: rgba(187, 46, 152, 0.678);
   --delete-color: rgba(167, 106, 88, 0.671);
+  --online-color: rgba(21, 255, 0);
   --razorpay-button-background: rgba(4, 46, 56, 0.671);
   --razorpay-button-color: rgb(255, 255, 255);
   --background-color: rgb(193, 193, 193);
@@ -48,53 +49,63 @@
     rgb(81, 118, 124)
   );
   --user-selector-collapse-hover-dropdown-color: rgb(0, 247, 255);
+  --user-selector-collapse-hover-refresh-color: rgb(0, 247, 255);
   --user-selector-collapse-dropdown-color: rgb(153, 189, 113);
+  --user-selector-collapse-refresh-color: rgb(82, 7, 72);
   --user-selector-title: rgba(255, 255, 255, 0.863);
   --user-item-background: rgba(132, 110, 141, 0);
   --user-item-hover-background: rgba(178, 192, 178, 0.178);
   --user-item-color: rgb(82, 11, 9);
-  --selected-user-background: rgb(58, 50, 68);
+  --selected-user-background: linear-gradient(
+    rgba(58, 50, 68, 0.844) 5%,
+    rgba(58, 50, 68) 95%,
+    rgba(58, 50, 68, 0.81) 100%
+  );
   --selected-user-color: rgb(194, 166, 194);
   --tab-item-border: rgba(38, 55, 68, 0.103);
   --tab-selected-item-border: rgba(52, 143, 204, 0.089);
   --tab-item-background: rgb(162, 180, 194);
   --tab-item-hover-background: linear-gradient(
     90deg,
-    rgb(101, 113, 122),
-    rgb(162, 180, 200),
-    rgb(162, 180, 194),
-    rgb(162, 180, 194),
-    rgb(162, 180, 194),
-    rgb(162, 180, 194),
-    rgb(162, 180, 200),
-    rgb(101, 113, 122)
+    rgb(101, 113, 122) 10%,
+    rgb(162, 180, 200) 20%,
+    rgb(162, 180, 194) 80%,
+    rgb(162, 180, 200) 90%,
+    rgb(101, 113, 122) 100%
   );
   --tab-item-color: rgb(0, 0, 0);
-  --selected-tab-background: rgb(69, 67, 88);
+  --selected-tab-background: rgb(43, 46, 46);
   --selected-tab-color: rgb(240, 240, 240);
   --notification-badge: rgb(255, 0, 0);
   --joinclass-item-background: rgba(140, 204, 204, 0.432);
   --joinclass-button-background: rgba(86, 95, 124, 0.842);
   --joinclass-button-hover-background: linear-gradient(
-    rgba(47, 51, 66, 0.842),
-    rgba(119, 131, 172, 0.842),
-    rgba(86, 95, 124, 0.842),
-    rgba(86, 95, 124, 0.842),
-    rgba(86, 95, 124, 0.842),
-    rgba(86, 95, 124, 0.842),
-    rgba(119, 131, 172, 0.842),
-    rgba(47, 51, 66, 0.842)
+    rgba(48, 67, 129, 0.642) 5%,
+    rgba(48, 67, 129, 0.842) 95%,
+    rgba(48, 67, 129, 0.642) 100%
   );
   --joinclass-button-color: rgb(255, 255, 255);
-  --sent-feedback-background: rgba(148, 182, 177, 0.541);
-  --received-feedback-background: rgba(168, 158, 137, 0.432);
-  --feedback-history-color: rgb(0, 0, 0);
+  --sent-feedback-background: rgba(5, 31, 9, 0.692);
+  --received-feedback-background: rgba(43, 27, 19, 0.774);
+  --feedback-history-color: rgb(255, 255, 255);
   --feedback-add-background: rgba(11, 65, 38, 0.5);
   --feedback-add-color: rgba(253, 253, 255, 0.842);
   --syllabus-item-background: rgba(112, 129, 143, 0.842);
-  --syllabus-item-payed-background: rgba(128, 161, 130, 0.842);
-  --syllabus-item-unpayed-background: rgba(150, 117, 117, 0.842);
-  --syllabus-item-half-payed-background: rgba(180, 166, 88, 0.842);
+  --syllabus-item-payed-background: linear-gradient(
+    90deg,
+    rgba(128, 161, 130, 0.942),
+    rgba(128, 161, 130, 0.842)
+  );
+  --syllabus-item-unpayed-background: linear-gradient(
+    90deg,
+    rgba(150, 117, 117, 0.942),
+    rgba(150, 117, 117, 0.842)
+  );
+  --syllabus-item-half-payed-background: linear-gradient(
+    180deg,
+    rgba(128, 161, 130, 0.842),
+    rgba(150, 117, 117, 0.842)
+  );
   --syllabus-item-color: rgba(253, 253, 255, 0.842);
   --syllabus-add-background: rgba(11, 43, 65, 0.5);
   --syllabus-marker-color: rgb(212, 118, 11);
@@ -105,9 +116,9 @@
   --payment-item-label-color: rgba(218, 215, 199, 0.747);
   --pyment-fee-details-background: linear-gradient(
     0deg,
-    rgba(94, 187, 159, 0.685),
-    rgba(64, 124, 106, 0.685),
-    rgba(94, 187, 159, 0.685)
+    rgba(194, 187, 159, 0.685) 10%,
+    rgba(194, 187, 159, 0.885) 90%,
+    rgba(194, 187, 159, 0.685) 100%
   );
   --form-background: linear-gradient(
     90deg,
@@ -152,6 +163,8 @@
   );
   --banner-hover-color: rgba(225, 214, 235, 0.932);
   --profile-label-color: rgb(204, 230, 201);
+  --payment-reject-popup-background: rgb(235, 159, 146);
+  --payment-reject-popup-title-background: rgb(105, 20, 70);
   --payment-popup-background: rgb(195, 231, 147);
   --payment-popup-title-background: rgba(58, 36, 121);
   --delete-popup-background: rgb(255, 255, 255);
@@ -271,6 +284,21 @@ button:disabled {
   transition: all 0.3s;
 }
 
+.user-selector-block .refresh-icon {
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  display: block;
+  margin: auto;
+  color: var(--user-selector-collapse-refresh-color) !important;
+}
+
+.user-selector-block .refresh-icon:hover {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  color: var(--user-selector-collapse-hover-refresh-color) !important;
+}
+
 .user-selector-block ul {
   margin: 0;
   padding: 0;
@@ -337,6 +365,23 @@ button:disabled {
   margin-right: 5px;
   width: 50px;
   height: 50px;
+}
+
+.user-selector-block ul li .avatar-name .user-avatar .avatar-status-buble {
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  -webkit-transform: translateY(-15px);
+          transform: translateY(-15px);
+}
+
+.user-selector-block ul li .avatar-name .user-avatar .online {
+  background-color: var(--online-color);
 }
 
 .user-selector-block ul li .avatar-name .name-course-block .name-block {
@@ -419,6 +464,11 @@ button:disabled {
   transition: all 0.3s;
 }
 
+.user-selector-block.collapse-block h3 {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
 .user-selector-block.collapse-block:hover {
   cursor: pointer;
   -webkit-transition: all 0.5s;
@@ -426,19 +476,26 @@ button:disabled {
   background: var(--user-selector-collapse-hover-background);
 }
 
-.user-selector-block.collapse-block:hover ul {
+.user-selector-block.collapse-block:hover ul:hover {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
 
-.user-selector-block.collapse-block:hover ul .dropdown-icon {
+.user-selector-block.collapse-block:hover ul:hover .dropdown-icon {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   color: var(--user-selector-collapse-hover-dropdown-color) !important;
 }
 
-.user-selector-block.collapse-block:hover ul li {
+.user-selector-block.collapse-block:hover ul:hover li {
   cursor: pointer !important;
+}
+
+.user-selector-block.collapse-block:hover ul:hover li h3 {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-transform: translateX(-5px);
+          transform: translateX(-5px);
 }
 
 .user-selector-block.collapse-block h5 {
@@ -447,6 +504,20 @@ button:disabled {
   -webkit-transform: translateX(-100vw);
           transform: translateX(-100vw);
   position: absolute;
+}
+
+.user-selector-block.collapse-block .refresh-icon {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  display: block;
+  margin: auto;
+  color: var(--user-selector-collapse-refresh-color) !important;
+}
+
+.user-selector-block.collapse-block .refresh-icon:hover {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  color: var(--user-selector-collapse-hover-refresh-color) !important;
 }
 
 .user-selector-block.collapse-block ul {
@@ -520,6 +591,8 @@ ul.tab-selector-block {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap-reverse;
+      flex-wrap: wrap-reverse;
 }
 
 ul.tab-selector-block li {
@@ -736,6 +809,14 @@ section {
   background: var(--payment-popup-title-background);
 }
 
+.popup-window .payment-reject-popup {
+  background: var(--payment-reject-popup-background);
+}
+
+.popup-window .payment-reject-popup h3 {
+  background: var(--payment-reject-popup-title-background);
+}
+
 #popup-container.closing {
   width: 100%;
   height: 100%;
@@ -810,6 +891,10 @@ section {
   font-size: 1.25rem;
 }
 
+.navbar .container-element .navbar-brand a.navbar-logo {
+  cursor: pointer;
+}
+
 .navbar .container-element .navbar-brand a.navbar-logo img {
   height: 3.125rem;
   -webkit-transition: all 0.3s ease-in-out;
@@ -817,6 +902,7 @@ section {
 }
 
 .navbar .container-element .navbar-brand a.navbar-caption {
+  cursor: pointer;
   text-decoration: none;
   color: white;
   font-size: 1rem;
@@ -929,6 +1015,10 @@ section {
   background: var(--navbar-link-hover-background);
 }
 
+.navbar.nav-visible .container-element nav.nav-visible ul.nav-links li a.nav-link-selected {
+  color: var(--navbar-link-selected);
+}
+
 .navbar.nav-visible .container-element nav.nav-visible ul.nav-links li.nav-link-selected a {
   color: var(--navbar-link-selected);
 }
@@ -990,6 +1080,32 @@ section {
   background: var(--navbar-user-menu-hover-background);
 }
 
+.navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.shown-menu li {
+  border-top: 1px dotted rgba(255, 255, 255, 0.1);
+  padding: 0.875rem 2.4rem 0.875rem 0;
+  white-space: normal;
+}
+
+.navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.shown-menu li a {
+  color: var(--navbar-link-color);
+  font-weight: bold;
+  text-decoration: none;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.shown-menu li p {
+  margin-left: 0.5rem;
+  color: white;
+  background: var(--notification-badge);
+  margin-top: 0;
+  margin-bottom: auto;
+}
+
+.navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.shown-menu li a.nav-link-selected {
+  color: var(--navbar-link-selected);
+}
+
 .navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.hidden-menu {
   display: none;
 }
@@ -1001,11 +1117,12 @@ section {
 @media only screen and (max-width: 450px) {
   ul.tab-selector-block {
     padding: 0;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
+    -ms-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
   }
   .tab-window {
-    padding: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
   .sent-feedbacks {
     width: 100% !important;
@@ -1475,13 +1592,11 @@ section.feedback-section .tab-window ul {
 
 section.feedback-section .tab-window ul li {
   margin-bottom: 1em;
-  border-radius: 5px;
+  border-radius: 20px;
   padding: 0.5em;
   position: relative;
   z-index: 1;
   border: solid 2px transparent;
-  -webkit-box-shadow: 2px 2px 2px rgba(155, 170, 182, 0.315);
-          box-shadow: 2px 2px 2px rgba(155, 170, 182, 0.315);
 }
 
 section.feedback-section .tab-window ul li h3 {
@@ -1511,6 +1626,7 @@ section.feedback-section .tab-window ul .sent-feedbacks {
   margin-right: 0;
   background: var(--sent-feedback-background);
   color: var(--feedback-history-color);
+  border-bottom-right-radius: 0px;
 }
 
 section.feedback-section .tab-window ul .received-feedbacks {
@@ -1519,6 +1635,7 @@ section.feedback-section .tab-window ul .received-feedbacks {
   margin-right: auto;
   background: var(--received-feedback-background);
   color: var(--feedback-history-color);
+  border-bottom-left-radius: 0px;
 }
 
 section.feedback-section .tab-window form {
@@ -1713,6 +1830,10 @@ section.syllabus-section .tab-window ol li .all-details .secondary-details butto
   height: max-content;
   border: 1px transparent solid;
   border-radius: 5px;
+}
+
+section.syllabus-section .tab-window ol li .all-details .secondary-details button:disabled {
+  opacity: 0;
 }
 
 section.syllabus-section .tab-window ol li.payed {
@@ -1966,28 +2087,59 @@ section.payment-section .tab-section .tab-window .fee-details {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   margin: auto;
+  justify-self: center;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  vertical-align: middle;
+}
+
+section.payment-section .tab-section .tab-window .fee-details .form-group-fee {
   border: 2px solid transparent;
   border-radius: 5px;
   background: var(--pyment-fee-details-background);
   vertical-align: middle;
-}
-
-section.payment-section .tab-section .tab-window .fee-details .form-group {
-  vertical-align: middle;
-  margin: auto;
+  margin: 10px;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+section.payment-section .tab-section .tab-window .fee-details .form-group-fee label {
+  padding: 0;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  margin: auto;
+}
+
+section.payment-section .tab-section .tab-window .fee-details .form-group-fee div {
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-weight: bolder;
+  padding-left: 5px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+section.payment-section .tab-section .tab-window .fee-details .form-group-fee div span {
+  padding-left: 3px;
+  opacity: 0.8;
 }
 
 section.payment-section .tab-section .tab-window ul {
@@ -2258,6 +2410,12 @@ section.register-section form button {
     color: var(--navbar-link-hover-color);
     background: var(--navbar-link-hover-background);
   }
+  .navbar .container-element nav ul.nav-links li a.nav-link-selected,
+  .navbar .container-element nav.nav-visible ul.nav-links li a.nav-link-selected,
+  .navbar.nav-visible .container-element nav ul.nav-links li a.nav-link-selected,
+  .navbar.nav-visible .container-element nav.nav-visible ul.nav-links li a.nav-link-selected {
+    color: var(--navbar-link-selected);
+  }
   .navbar .container-element nav ul.nav-links li.nav-link-selected a,
   .navbar .container-element nav.nav-visible ul.nav-links li.nav-link-selected a,
   .navbar.nav-visible .container-element nav ul.nav-links li.nav-link-selected a,
@@ -2337,9 +2495,13 @@ section.register-section form button {
     white-space: normal;
   }
   .navbar .container-element nav .nav-user-block ul.shown-menu li button,
+  .navbar .container-element nav .nav-user-block ul.shown-menu li a,
   .navbar .container-element nav.nav-visible .nav-user-block ul.shown-menu li button,
+  .navbar .container-element nav.nav-visible .nav-user-block ul.shown-menu li a,
   .navbar.nav-visible .container-element nav .nav-user-block ul.shown-menu li button,
-  .navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.shown-menu li button {
+  .navbar.nav-visible .container-element nav .nav-user-block ul.shown-menu li a,
+  .navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.shown-menu li button,
+  .navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.shown-menu li a {
     background: none;
     border: none;
     color: var(--navbar-link-color);
@@ -2352,6 +2514,12 @@ section.register-section form button {
   .navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.shown-menu li :hover {
     color: var(--navbar-user-menu-hover-color);
     background-color: var(--navbar-user-menu-hover-background);
+  }
+  .navbar .container-element nav .nav-user-block ul.shown-menu li a.nav-link-selected,
+  .navbar .container-element nav.nav-visible .nav-user-block ul.shown-menu li a.nav-link-selected,
+  .navbar.nav-visible .container-element nav .nav-user-block ul.shown-menu li a.nav-link-selected,
+  .navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.shown-menu li a.nav-link-selected {
+    color: var(--navbar-link-selected);
   }
   .navbar .container-element nav .nav-user-block ul.hidden-menu,
   .navbar .container-element nav.nav-visible .nav-user-block ul.hidden-menu,

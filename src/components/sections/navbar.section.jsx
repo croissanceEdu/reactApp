@@ -16,7 +16,7 @@ const NavbarSection = (props) => {
         }
       >
         <div className="container-element">
-          <NavLogoBlock navLogoontent={navBarContent.navLogo} />
+          <NavLogoBlock navLogoContent={navBarContent.navLogo} />
           <NavMenuIconBlock
             setoverlayClassNames={props.setoverlayClassNames}
             setNavVisible={props.setNavVisible}

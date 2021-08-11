@@ -18,6 +18,7 @@ const FeedbackPage = (props) => {
         notifications={props.notifications}
         notify={props.notify}
         userDetails={props.userDetails}
+        onlineUsers={props.onlineUsers}
       />
     );
   else return <Redirect to={props.urlPathContent.loginPage} />;

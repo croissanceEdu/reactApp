@@ -8,6 +8,9 @@
   --cancel-color: rgba(119, 62, 121, 0.911);
   --close-color: rgba(187, 46, 152, 0.678);
   --delete-color: rgba(167, 106, 88, 0.671);
+
+  --online-color: rgba(21, 255, 0);
+
   --razorpay-button-background: rgba(4, 46, 56, 0.671);
   --razorpay-button-color: rgb(255, 255, 255);
 
@@ -51,12 +54,18 @@
     rgb(81, 118, 124)
   );
   --user-selector-collapse-hover-dropdown-color: rgb(0, 247, 255);
+  --user-selector-collapse-hover-refresh-color: rgb(0, 247, 255);
   --user-selector-collapse-dropdown-color: rgb(153, 189, 113);
+  --user-selector-collapse-refresh-color: rgb(82, 7, 72);
   --user-selector-title: rgba(255, 255, 255, 0.863);
   --user-item-background: rgba(132, 110, 141, 0);
   --user-item-hover-background: rgba(178, 192, 178, 0.178);
   --user-item-color: rgb(82, 11, 9);
-  --selected-user-background: rgb(58, 50, 68);
+  --selected-user-background: linear-gradient(
+    rgba(58, 50, 68, 0.844) 5%,
+    rgba(58, 50, 68) 95%,
+    rgba(58, 50, 68, 0.81) 100%
+  );
   --selected-user-color: rgb(194, 166, 194);
 
   --tab-item-border: rgba(38, 55, 68, 0.103);
@@ -64,17 +73,14 @@
   --tab-item-background: rgb(162, 180, 194);
   --tab-item-hover-background: linear-gradient(
     90deg,
-    rgb(101, 113, 122),
-    rgb(162, 180, 200),
-    rgb(162, 180, 194),
-    rgb(162, 180, 194),
-    rgb(162, 180, 194),
-    rgb(162, 180, 194),
-    rgb(162, 180, 200),
-    rgb(101, 113, 122)
+    rgb(101, 113, 122) 10%,
+    rgb(162, 180, 200) 20%,
+    rgb(162, 180, 194) 80%,
+    rgb(162, 180, 200) 90%,
+    rgb(101, 113, 122) 100%
   );
   --tab-item-color: rgb(0, 0, 0);
-  --selected-tab-background: rgb(69, 67, 88);
+  --selected-tab-background: rgb(43, 46, 46);
   --selected-tab-color: rgb(240, 240, 240);
 
   --notification-badge: rgb(255, 0, 0);
@@ -82,27 +88,34 @@
   --joinclass-item-background: rgba(140, 204, 204, 0.432);
   --joinclass-button-background: rgba(86, 95, 124, 0.842);
   --joinclass-button-hover-background: linear-gradient(
-    rgba(47, 51, 66, 0.842),
-    rgba(119, 131, 172, 0.842),
-    rgba(86, 95, 124, 0.842),
-    rgba(86, 95, 124, 0.842),
-    rgba(86, 95, 124, 0.842),
-    rgba(86, 95, 124, 0.842),
-    rgba(119, 131, 172, 0.842),
-    rgba(47, 51, 66, 0.842)
+    rgba(48, 67, 129, 0.642) 5%,
+    rgba(48, 67, 129, 0.842) 95%,
+    rgba(48, 67, 129, 0.642) 100%
   );
   --joinclass-button-color: rgb(255, 255, 255);
 
-  --sent-feedback-background: rgba(148, 182, 177, 0.541);
-  --received-feedback-background: rgba(168, 158, 137, 0.432);
-  --feedback-history-color: rgb(0, 0, 0);
+  --sent-feedback-background: rgba(5, 31, 9, 0.692);
+  --received-feedback-background: rgba(43, 27, 19, 0.774);
+  --feedback-history-color: rgb(255, 255, 255);
   --feedback-add-background: rgba(11, 65, 38, 0.5);
   --feedback-add-color: rgba(253, 253, 255, 0.842);
 
   --syllabus-item-background: rgba(112, 129, 143, 0.842);
-  --syllabus-item-payed-background: rgba(128, 161, 130, 0.842);
-  --syllabus-item-unpayed-background: rgba(150, 117, 117, 0.842);
-  --syllabus-item-half-payed-background: rgba(180, 166, 88, 0.842);
+  --syllabus-item-payed-background: linear-gradient(
+    90deg,
+    rgba(128, 161, 130, 0.942),
+    rgba(128, 161, 130, 0.842)
+  );
+  --syllabus-item-unpayed-background: linear-gradient(
+    90deg,
+    rgba(150, 117, 117, 0.942),
+    rgba(150, 117, 117, 0.842)
+  );
+  --syllabus-item-half-payed-background: linear-gradient(
+    180deg,
+    rgba(128, 161, 130, 0.842),
+    rgba(150, 117, 117, 0.842)
+  );
   --syllabus-item-color: rgba(253, 253, 255, 0.842);
   --syllabus-add-background: rgba(11, 43, 65, 0.5);
   --syllabus-marker-color: rgb(212, 118, 11);
@@ -115,9 +128,9 @@
 
   --pyment-fee-details-background: linear-gradient(
     0deg,
-    rgba(94, 187, 159, 0.685),
-    rgba(64, 124, 106, 0.685),
-    rgba(94, 187, 159, 0.685)
+    rgba(194, 187, 159, 0.685) 10%,
+    rgba(194, 187, 159, 0.885) 90%,
+    rgba(194, 187, 159, 0.685) 100%
   );
 
   --form-background: linear-gradient(
@@ -173,6 +186,8 @@
 
   --profile-label-color: rgb(204, 230, 201);
 
+  --payment-reject-popup-background: rgb(235, 159, 146);
+  --payment-reject-popup-title-background: rgb(105, 20, 70);
   --payment-popup-background: rgb(195, 231, 147);
   --payment-popup-title-background: rgba(58, 36, 121);
   --delete-popup-background: rgb(255, 255, 255);
@@ -272,6 +287,17 @@ button:disabled {
     word-wrap: break-word;
     transition: all 0.3s;
   }
+  .refresh-icon {
+    cursor: pointer;
+    transition: all 0.3s;
+    display: block;
+    margin: auto;
+    color: var(--user-selector-collapse-refresh-color) !important;
+    &:hover {
+      transition: all 0.3s;
+      color: var(--user-selector-collapse-hover-refresh-color) !important;
+    }
+  }
   ul {
     margin: 0;
     padding: 0;
@@ -323,7 +349,20 @@ button:disabled {
           margin-right: 5px;
           width: 50px;
           height: 50px;
+          .avatar-status-buble {
+            display: block;
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            align-self: center;
+            transform: translateY(-15px);
+          }
+          .online {
+            background-color: var(--online-color);
+          }
         }
+
         .name-course-block {
           .name-block {
             display: flex;
@@ -391,18 +430,27 @@ button:disabled {
   padding: 1px;
   padding-left: 2px;
   transition: all 0.3s;
+  h3 {
+    transition: all 0.5s;
+  }
   &:hover {
     cursor: pointer;
     transition: all 0.5s;
     background: var(--user-selector-collapse-hover-background);
     ul {
-      transition: all 0.5s;
-      .dropdown-icon {
-        transition: all 0.3s;
-        color: var(--user-selector-collapse-hover-dropdown-color) !important;
-      }
-      li {
-        cursor: pointer !important;
+      &:hover {
+        transition: all 0.5s;
+        .dropdown-icon {
+          transition: all 0.3s;
+          color: var(--user-selector-collapse-hover-dropdown-color) !important;
+        }
+        li {
+          cursor: pointer !important;
+          h3 {
+            transition: all 0.5s;
+            transform: translateX(-5px);
+          }
+        }
       }
     }
   }
@@ -414,6 +462,16 @@ button:disabled {
     // transition: all 0.1s;
     transform: translateX(-100vw);
     position: absolute;
+  }
+  .refresh-icon {
+    transition: all 0.3s;
+    display: block;
+    margin: auto;
+    color: var(--user-selector-collapse-refresh-color) !important;
+    &:hover {
+      transition: all 0.3s;
+      color: var(--user-selector-collapse-hover-refresh-color) !important;
+    }
   }
   ul {
     margin: 0;
@@ -471,6 +529,7 @@ ul.tab-selector-block {
   margin-bottom: 0;
   padding-bottom: 0;
   display: flex;
+  flex-wrap: wrap-reverse;
   li {
     padding: 0.5em 1em;
     cursor: default;
@@ -637,6 +696,12 @@ section {
       background: var(--payment-popup-title-background);
     }
   }
+  .payment-reject-popup {
+    background: var(--payment-reject-popup-background);
+    h3 {
+      background: var(--payment-reject-popup-title-background);
+    }
+  }
 }
 #popup-container.closing {
   width: 100%;
@@ -697,12 +762,14 @@ section {
     .navbar-brand {
       font-size: 1.25rem;
       a.navbar-logo {
+        cursor: pointer;
         img {
           height: 3.125rem;
           transition: all 0.3s ease-in-out;
         }
       }
       a.navbar-caption {
+        cursor: pointer;
         text-decoration: none;
         color: white;
         font-size: 1rem;
@@ -796,6 +863,9 @@ section {
             color: var(--navbar-link-hover-color);
             background: var(--navbar-link-hover-background);
           }
+          a.nav-link-selected {
+            color: var(--navbar-link-selected);
+          }
         }
         li.nav-link-selected {
           a {
@@ -851,6 +921,29 @@ section {
               background: var(--navbar-user-menu-hover-background);
             }
           }
+          li {
+            border-top: 1px dotted rgba(255, 255, 255, 0.1);
+            padding: 0.875rem 2.4rem 0.875rem 0;
+            white-space: normal;
+            a {
+              color: var(--navbar-link-color);
+              font-weight: bold;
+              text-decoration: none;
+              margin-top: auto;
+              margin-bottom: auto;
+            }
+            p {
+              margin-left: 0.5rem;
+              color: white;
+              background: var(--notification-badge);
+              margin-top: 0;
+              margin-bottom: auto;
+            }
+
+            a.nav-link-selected {
+              color: var(--navbar-link-selected);
+            }
+          }
         }
         ul.hidden-menu {
           display: none;
@@ -869,10 +962,11 @@ section {
 @media only screen and (max-width: 450px) {
   ul.tab-selector-block {
     padding: 0;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
   }
   .tab-window {
-    padding: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
   .sent-feedbacks {
     width: 100% !important;
@@ -1282,12 +1376,12 @@ section.feedback-section {
       margin-bottom: 0;
       li {
         margin-bottom: 1em;
-        border-radius: 5px;
+        border-radius: 20px;
         padding: 0.5em;
         position: relative;
         z-index: 1;
         border: solid 2px transparent;
-        box-shadow: 2px 2px 2px rgba(155, 170, 182, 0.315);
+        // box-shadow: 2px 2px 2px rgba(155, 170, 182, 0.315);
         h3 {
           font-size: 1.3em;
           border-bottom: 1px solid;
@@ -1313,6 +1407,7 @@ section.feedback-section {
         margin-right: 0;
         background: var(--sent-feedback-background);
         color: var(--feedback-history-color);
+        border-bottom-right-radius: 0px;
       }
       .received-feedbacks {
         width: 80%;
@@ -1322,6 +1417,7 @@ section.feedback-section {
 
         background: var(--received-feedback-background);
         color: var(--feedback-history-color);
+        border-bottom-left-radius: 0px;
       }
     }
     form {
@@ -1474,6 +1570,9 @@ section.syllabus-section {
               border: 1px transparent solid;
               border-radius: 5px;
             }
+            button:disabled {
+              opacity: 0;
+            }
           }
         }
       }
@@ -1493,6 +1592,7 @@ section.syllabus-section {
         color: var(--syllabus-item-color);
       }
     }
+
     form {
       border-radius: 5px;
       padding: 0.5em;
@@ -1684,21 +1784,44 @@ section.payment-section {
       padding-top: 10px;
       .fee-details {
         display: flex;
+        flex-wrap: wrap;
         margin: auto;
-
+        justify-self: center;
         width: fit-content;
         height: fit-content;
         // padding: 5px;
-        border: 2px solid transparent;
-        border-radius: 5px;
-        background: var(--pyment-fee-details-background);
+
         vertical-align: middle;
-        .form-group {
+        .form-group-fee {
+          border: 2px solid transparent;
+          border-radius: 5px;
+          background: var(--pyment-fee-details-background);
           vertical-align: middle;
-          margin: auto;
+          margin: 10px;
           width: fit-content;
           height: fit-content;
+          text-align: center;
+          align-items: center;
           // padding: 5px;
+          label {
+            padding: 0;
+            height: max-content;
+            margin: auto;
+          }
+          div {
+            padding: 0;
+            background: transparent;
+            border: none;
+            font-weight: bolder;
+            padding-left: 5px;
+            width: fit-content;
+            // max-width: max-content;
+            // min-width: min-content;
+            span {
+              padding-left: 3px;
+              opacity: 0.8;
+            }
+          }
         }
       }
       ul {
@@ -1905,6 +2028,9 @@ section.register-section {
               color: var(--navbar-link-hover-color);
               background: var(--navbar-link-hover-background);
             }
+            a.nav-link-selected {
+              color: var(--navbar-link-selected);
+            }
           }
           li.nav-link-selected {
             a {
@@ -1961,7 +2087,8 @@ section.register-section {
               border-top: 1px dotted rgba(255, 255, 255, 0.1);
               padding: 0.775rem 2.4rem 0.875rem 0.5rem;
               white-space: normal;
-              button {
+              button,
+              a {
                 background: none;
                 border: none;
                 color: var(--navbar-link-color);
@@ -1971,6 +2098,9 @@ section.register-section {
               :hover {
                 color: var(--navbar-user-menu-hover-color);
                 background-color: var(--navbar-user-menu-hover-background);
+              }
+              a.nav-link-selected {
+                color: var(--navbar-link-selected);
               }
             }
           }

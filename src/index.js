@@ -35,36 +35,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-
-// let language = "English";
-
-// let urlPathContent = Api.getUrlPathContent(language);
-
-
-// if (!isAuth())
-//   ReactDOM.render(
-//     <Router>
-//       <ToastContainer></ToastContainer>
-//       <Redirect to={urlPathContent.loginPage} />
-//       <Route path={urlPathContent.loginPage} exact render={props => <LoginPage {...props} language={language} toast={toast} />} />
-//     </Router>,
-//     document.getElementById('root')
-//   )
-
-// else
-//   ReactDOM.render(
-//     <Router>
-//       <ToastContainer></ToastContainer>
-
-//       <Route path={urlPathContent.homePage} render={props => <NavbarSection  {...props} language={language} toast={toast} />} />
-
-//       <Switch>
-
-//         <Route path={urlPathContent.homePage} exact render={props => <HomePage {...props} language={language} toast={toast} />} />
-//         <Route path={urlPathContent.loginPage} exact render={props => <LoginPage {...props} language={language} toast={toast} />} />
-
-//       </Switch>
-//     </Router>,
-//     document.getElementById('root')
-//   );

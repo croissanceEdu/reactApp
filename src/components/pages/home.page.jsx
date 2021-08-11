@@ -1,4 +1,4 @@
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 import StudentHomeSection from "../sections/student-home.section";
 import { useEffect } from "react";
@@ -7,29 +7,31 @@ import AdminHomeSection from "../sections/admin-home.section";
 import { getHomeContent } from "../../helpers/content-api";
 
 const HomePage = (props) => {
+  const history = useHistory();
   useEffect(() => {
     props.setselectedPage("homePage");
   }, [props]);
   const handleSyllabusBannerClick = () => {
-    window.location = props.urlPathContent.syllabusPage;
+    history.push(props.urlPathContent.syllabusPage);
+    // window.location = props.urlPathContent.syllabusPage;
   };
   const handleFeedbackBannerClick = () => {
-    window.location = props.urlPathContent.feedbackPage;
+    history.push(props.urlPathContent.feedbackPage);
   };
   const handleJoinClassBannerClick = () => {
-    window.location = props.urlPathContent.joinClassPage;
+    history.push(props.urlPathContent.joinClassPage);
   };
   const handleProfileBannerClick = () => {
-    window.location = props.urlPathContent.profilePage;
+    history.push(props.urlPathContent.profilePage);
   };
   const handleManageBannerClick = () => {
-    window.location = props.urlPathContent.managePage;
+    history.push(props.urlPathContent.managePage);
   };
   const handleActivateAccountBannerClick = () => {
-    window.location = props.urlPathContent.activateAccountPage;
+    history.push(props.urlPathContent.activateAccountPage);
   };
   const handlePaymentBannerClick = () => {
-    window.location = props.urlPathContent.paymentPage;
+    history.push(props.urlPathContent.paymentPage);
   };
 
   if (props.userDetails) {

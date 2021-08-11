@@ -15,6 +15,7 @@ const ManagePage = (props) => {
       <ManageSection
         manageContent={getManageContent(props.language)}
         popupFunctions={props.popupFunctions}
+        onlineUsers={props.onlineUsers}
       />
     );
   else return <Redirect to={props.urlPathContent.loginPage} />;

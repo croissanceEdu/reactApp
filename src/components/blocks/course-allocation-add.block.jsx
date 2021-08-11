@@ -75,12 +75,14 @@ const CourseAllocationAddBlock = (props) => {
           userRole="teacher"
           autoLoad={true}
           handleUserSelect={handleTeacherSelect}
+          onlineUsers={props.onlineUsers}
         />
 
         <UserSelectorByRoleBlock
           userRole="student"
           autoLoad={true}
           handleUserSelect={handleStudentSelect}
+          onlineUsers={props.onlineUsers}
         />
       </div>
       <div className="form-group container">
@@ -96,7 +98,7 @@ const CourseAllocationAddBlock = (props) => {
           value={formData.courseName}
         />
       </div>
-      <div className="form-group container ">
+      <div className="form-group container row">
         <label htmlFor="inputCourse">Fee</label>
         <input
           type="text"
@@ -111,7 +113,8 @@ const CourseAllocationAddBlock = (props) => {
           value={formData.feesAmount}
         />
       </div>
-      <div className="form-group container ">
+      <div className="form-group container row">
+        <label htmlFor="inputCourse">Currency</label>
         <input
           type="text"
           className="form-control "
@@ -125,7 +128,7 @@ const CourseAllocationAddBlock = (props) => {
         />
       </div>
 
-      <div className="form-group container ">
+      {/* <div className="form-group container ">
         <label htmlFor="inputCourse">Paid Ammount</label>
         <input
           type="text"
@@ -139,7 +142,7 @@ const CourseAllocationAddBlock = (props) => {
           onBlur={handleScheduleFormAmountBlur("paidAmount")}
           value={formData.paidAmount}
         />
-      </div>
+      </div> */}
 
       <div className="form-group container">
         <textarea

@@ -58,6 +58,8 @@ const UserSelectorByRoleBlock = (props) => {
       if (selectedUser._id === item._id) {
         itemClassName = "selected-user";
       }
+
+      item.isOnline = props.onlineUsers.includes(item._id) ? true : false;
       return (
         <UserSelectorItem
           key={uuidv4()}
@@ -68,6 +70,7 @@ const UserSelectorByRoleBlock = (props) => {
       );
     });
   };
+
   useEffect(() => {
     if (props.autoLoad) loadUsers(props.userRole);
   }, [props.autoLoad]);

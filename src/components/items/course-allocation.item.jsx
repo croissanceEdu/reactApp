@@ -170,7 +170,7 @@ const CourseAllocationItem = (props) => {
             id="inputPaid"
             aria-describedby="helpId"
             placeholder="Paid Ammount"
-            readOnly={!editMode}
+            readOnly={true}
             onChange={handleFormdataNumberChange("paidAmount")}
             onBlur={handleScheduleFormAmountBlur("paidAmount")}
             value={formData.paidAmount}
