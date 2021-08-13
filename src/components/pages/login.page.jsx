@@ -1,4 +1,5 @@
 import { Redirect } from "react-router-dom";
+import { getLoginContent } from "../../helpers/content-api";
 import LoginSection from "../sections/login.section";
 
 const LoginPage = (props) => {
@@ -8,6 +9,7 @@ const LoginPage = (props) => {
       <LoginSection
         userDetails={props.userDetails}
         setUserDetails={props.setUserDetails}
+        loginContent={getLoginContent(props.language)}
       />
     );
 };

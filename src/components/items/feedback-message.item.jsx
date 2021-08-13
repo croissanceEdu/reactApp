@@ -1,4 +1,4 @@
-import { getFormattedDate } from "../../helpers/custom";
+import { getFormattedDate, customContent } from "../../helpers/custom";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import DoneIcon from "@material-ui/icons/Done";
 
@@ -9,7 +9,10 @@ const FeedbackMessageItem = (props) => {
       <p>{props.feedback.messageContent}</p>
       <div>
         <small className="mb-2 text-right ">
-          {getFormattedDate(props.feedback.createdAt)}
+          {getFormattedDate(
+            props.feedback.createdAt,
+            customContent.timeFormats.feedback
+          )}
         </small>
         {props.isSender ? (
           <small>
@@ -18,7 +21,11 @@ const FeedbackMessageItem = (props) => {
                 <>
                   {/* <span className="badge badge-success badge-pill ">R</span> */}
                   <DoneAllIcon style={{ color: "turquoise" }} />
-                  {/* <span>{getFormattedDate(props.feedback.updatedAt)}</span> */}
+                  {/* <span>{getFormattedDate(props.feedback.updatedAt,
+                              customContent.timeFormats.feedbacks.isRelative,
+                              customContent.timeFormats.feedbacks.withTime,
+                              customContent.timeFormats.feedbacks.withSecond,
+                              customContent.timeFormats.feedbacks.railwayTime)}</span> */}
                 </>
               ) : (
                 // <span className="badge badge-secondary badge-pill">D</span>

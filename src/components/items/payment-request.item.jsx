@@ -1,4 +1,4 @@
-import { getFormattedDate } from "../../helpers/custom";
+import { getFormattedDate, customContent } from "../../helpers/custom";
 
 const PaymentRequestItem = (props) => {
   return (
@@ -20,7 +20,12 @@ const PaymentRequestItem = (props) => {
           <div className="date-body">
             <div className="list-form-group">
               <p>{props.paymentContent.requestedDateContent}:</p>
-              <h4>{getFormattedDate(props.payment.createdAt)}</h4>
+              <h4>
+                {getFormattedDate(
+                  props.payment.createdAt,
+                  customContent.timeFormats.payment
+                )}
+              </h4>
             </div>
           </div>
           <div className="comment-body">

@@ -2,13 +2,13 @@ import { signout } from "../../helpers/auth";
 import Api from "../../helpers/content-api";
 import { useState } from "react";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import NavLinkItem from "../items/nav-link.item";
 // import { v4 as uuidv4 } from "uuid";
 
 const NavUserBlock = (props) => {
   const [panelClassName, setPanelClassName] = useState("hidden-menu");
-  const history = useHistory();
+  // const history = useHistory();
   const handleToggle = () => {
     setPanelClassName((prevClass) =>
       prevClass === "hidden-menu" ? "shown-menu" : "hidden-menu"
@@ -28,23 +28,23 @@ const NavUserBlock = (props) => {
     handleCloseNav();
     signout(() => {
       if (props.userDetails && false) {
-        history.push("/");
+        window.location = "/";
       } else {
-        history.push("/login");
+        window.location = "/login";
       }
     });
   };
 
-  //ChangePassword
-  const handleChangePassword = () => {
-    handleClose();
-    history.push(Api.getNavLinkPath("changePasswordPage"));
-  };
-  //Profile
-  const handleProfile = () => {
-    handleClose();
-    history.push(Api.getNavLinkPath("profilePage"));
-  };
+  // //ChangePassword
+  // const handleChangePassword = () => {
+  //   handleClose();
+  //   history.push(Api.getNavLinkPath("changePasswordPage"));
+  // };
+  // //Profile
+  // const handleProfile = () => {
+  //   handleClose();
+  //   history.push(Api.getNavLinkPath("profilePage"));
+  // };
   return (
     <div className={`nav-user-block ${panelClassName}`}>
       <div className="nav-user-div" onClick={handleToggle}>

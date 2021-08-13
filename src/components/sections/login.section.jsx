@@ -4,10 +4,11 @@ import { authenticate, isAuth } from "../../helpers/auth";
 import axios from "axios";
 import Api from "../../helpers/content-api";
 import logo from "../../assets/images/alpha-helix-logo-1069x322-quarter-128x128-15.png";
+// import { useHistory } from "react-router-dom";
 
 const LoginSection = (props) => {
   let urlPathContent = Api.getUrlPathContent();
-
+  // let history = useHistory();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -45,6 +46,7 @@ const LoginSection = (props) => {
               toast.success(`Welcome ${res.data.user.name}`);
               // props.setUserDetails(isAuth());
               window.location = urlPathContent.homePage;
+              // history.push(urlPathContent.homePage);
             } else toast.error("Couldn't login!");
             // console.log(res.data.user);
           } else {

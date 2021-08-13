@@ -463,36 +463,38 @@ const PaymentSection = (props) => {
   };
 
   const bindFeeDetails = () => {
-    return (
-      <div className="fee-details">
-        <div className="form-group-fee row  container">
-          <label>Fee:</label>
-          <div>
-            {feeDetails.feeAmount}
-            <span>{oppDetails.studentMap.feesCurrency}</span>
-          </div>
-          {/* <input
+    if (oppDetails)
+      return (
+        <div className="fee-details">
+          <div className="form-group-fee row  container">
+            <label>Fee:</label>
+            <div>
+              {feeDetails.feeAmount}
+              <span>{oppDetails.studentMap.feesCurrency}</span>
+            </div>
+            {/* <input
             type="text"
             placeholder="Fee"
             readOnly={!feeDetails.editFeeMode}
             value=
           ></input> */}
-        </div>
-        <div className="form-group-fee row container">
-          <label>Paid:</label>
-          <div>
-            {feeDetails.paidAmount}
-            <span>{oppDetails.studentMap.feesCurrency}</span>
           </div>
-          {/* <input
+          <div className="form-group-fee row container">
+            <label>Paid:</label>
+            <div>
+              {feeDetails.paidAmount}
+              <span>{oppDetails.studentMap.feesCurrency}</span>
+            </div>
+            {/* <input
             type="text"
             placeholder="Paid"
             readOnly
             value={feeDetails.paidAmount}
           ></input> */}
+          </div>
         </div>
-      </div>
-    );
+      );
+    else return null;
   };
   const bindPending = () => {
     if (!paymentPending.length) return <p className="empty-p">Empty</p>;
