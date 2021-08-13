@@ -1455,14 +1455,19 @@ section.change-password-section form {
   -webkit-box-shadow: 0px 2px 2px rgba(7, 98, 134, 0.034);
           box-shadow: 0px 2px 2px rgba(7, 98, 134, 0.034);
   text-align: center;
-  padding-left: auto;
-  padding-right: auto;
-  padding-top: 2em;
-  padding-bottom: 1em;
+  padding: 2em;
 }
 
 section.change-password-section form input {
   text-align: center;
+}
+
+section.change-password-section form .top-form-group {
+  margin-top: 2em;
+}
+
+section.change-password-section form .bottom-form-group {
+  margin-bottom: 2em;
 }
 
 section.join-class-section ul {

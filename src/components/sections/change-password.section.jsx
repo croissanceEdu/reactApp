@@ -58,7 +58,7 @@ const ChangePasswordSection = (props) => {
         className="form-signin text-center container "
         onSubmit={handleSubmit}
       >
-        <div className="form-group">
+        <div className="form-group top-form-group">
           <input
             type="password"
             id="currentPassword"
@@ -91,7 +91,10 @@ const ChangePasswordSection = (props) => {
             value={formData.confirmPassword}
           />
         </div>
-        <button className="btn btn-lg save-button" type="submit">
+        <button
+          className="btn btn-lg save-button bottom-form-group"
+          type="submit"
+        >
           Submit
         </button>
       </form>
