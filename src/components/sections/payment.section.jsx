@@ -230,6 +230,32 @@ const PaymentSection = (props) => {
     );
     console.log(props.popupFunctions.getPopupData());
   };
+  const razorPayPopupOpen = (paymentSchedule) => {
+    props.popupFunctions.showRecordPaymentPopup(
+      "Record a Payment",
+      "Record an external payment to pay " +
+        paymentSchedule.currency +
+        paymentSchedule.requestAmount,
+      "payment-popup",
+      [
+        {
+          content: "Record Pay",
+          className: "btn edit-button",
+          closeAfter: true,
+          onClickFunction: generateRecordPayment,
+          onClickArgument: paymentSchedule,
+        },
+
+        {
+          content: "cancel",
+          className: "btn cancel-button",
+          closeAfter: true,
+        },
+      ],
+      { comment: props.popupFunctions.getPopupData().comment }
+    );
+    console.log(props.popupFunctions.getPopupData());
+  };
   const approvePaymentPopupOpen = (paymentRequest) => {
     props.popupFunctions.showApprovePaymentRequestPopup(
       "Payment Request Approval",
@@ -298,8 +324,8 @@ const PaymentSection = (props) => {
           content: "RazorPay",
           className: "btn razorpay-button",
           closeAfter: false,
-          // onClickFunction: ,
-          // onClickArgument: paymentSchedule,
+          onClickFunction: razorPayPopupOpen,
+          onClickArgument: paymentSchedule,
         },
         {
           content: "cancel",

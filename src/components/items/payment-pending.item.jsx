@@ -1,4 +1,5 @@
 import { getFormattedDate, customContent } from "../../helpers/custom";
+import RazorPayPopup from "../popups/razor-pay.popup";
 
 const PaymentPendingItem = (props) => {
   return (
@@ -67,6 +68,7 @@ const PaymentPendingItem = (props) => {
                 {props.paymentContent.payContent}
               </button>
             )}
+            {props.userDetails.role === "student" && <RazorPayPopup />}
           </div>
         )}
       </div>
