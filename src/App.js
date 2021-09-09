@@ -42,6 +42,7 @@ function App() {
 
   const urlPathContent = Api.getUrlPathContent();
   const [userDetails, setUserDetails] = useState(isAuth());
+  const [userShiftId, setUserShiftId] = useState("");
   const [selectedPage, setselectedPage] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
   const [notifications, setNotifications] = useState({
@@ -51,6 +52,7 @@ function App() {
     joinClass: [],
     payment: [],
   });
+  const [hasPaymentUpdate, setHasPaymentUpdate] = useState(false)
   const [overlayClassNames, setoverlayClassNames] = useState("");
   const [popupContainerClassNames, setPopupContainerClassNames] = useState("");
   const [popupVisibility, setPopupVisibility] = useState(false);
@@ -116,11 +118,16 @@ function App() {
       }
     }
   };
-
+  const HandleUserShift = (data) => {
+    setUserShiftId(data._id);
+  };
   const HandleSetOnlineUsers = (data) => {
     let ids = data.map((el) => el._id);
     setOnlineUsers(ids);
   };
+  const handlePaymentUpdate = () => {
+    setHasPaymentUpdate(true);
+  }
   const notify = () => {
     // console.log("notify")
     if (userDetails)
@@ -134,7 +141,7 @@ function App() {
 
   useEffect(() => {
     if (userDetails) {
-      userConnected(userDetails, notify, HandleSetOnlineUsers)
+      userConnected(userDetails, notify, HandleSetOnlineUsers, HandleUserShift, handlePaymentUpdate)
     }
   }, []);
 
@@ -425,6 +432,9 @@ function App() {
               userDetails={userDetails}
               popupFunctions={popupFunctions}
               onlineUsers={onlineUsers}
+              userShiftId={userShiftId}
+              hasPaymentUpdate={hasPaymentUpdate}
+              setHasPaymentUpdate={(hasUpdate) => setHasPaymentUpdate(hasUpdate)}
             />
           )}
         />

@@ -1,5 +1,5 @@
 import { Backdrop } from "@material-ui/core";
-import { ArrowBack, ArrowLeft } from "@material-ui/icons";
+import { ArrowBack, ArrowLeft, TimerOutlined } from "@material-ui/icons";
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -93,13 +93,27 @@ const CourseAllocationItem = (props) => {
       className={props.itemClassName}
       onClick={() => {
         props.handleAllocationSelect(props.studentMap);
+
+        if (props.itemClassName !== "selected-allocation")
+          setTimeout(() => {
+            window.scrollTo({
+              top: document.getElementById(props.studentMap._id).offsetTop,
+            });
+          }, 10);
       }}
+      id={props.studentMap._id}
     >
       <div className="back-button-block text-right">
         <button
           className="btn back-button"
           onClick={() => {
-            props.handleBackButtonClick(props.studentMap);
+            props.setVisibilityclass("");
+            setTimeout(() => {
+              window.scrollTo({
+                top: document.getElementById(props.studentMap._id).offsetTop,
+              });
+              props.handleBackButtonClick(props.studentMap);
+            }, 10);
           }}
         >
           <ArrowBack />
@@ -124,7 +138,6 @@ const CourseAllocationItem = (props) => {
             type="text"
             className="form-control"
             name="inputCourse"
-            id="inputCourse"
             aria-describedby="helpId"
             placeholder="Course Name"
             readOnly={!editMode}
@@ -138,7 +151,6 @@ const CourseAllocationItem = (props) => {
             type="text"
             className="form-control  container"
             name="inputFee"
-            id="inputFee"
             aria-describedby="helpId"
             placeholder="Fee"
             readOnly={!editMode}
@@ -148,17 +160,17 @@ const CourseAllocationItem = (props) => {
           />
         </div>
         <div className="form-group container ">
-          <input
-            type="text"
+          <select
+            placeholder="Currency"
             className="form-control "
             name="inputCurrency"
-            id="inputCurrency"
             aria-describedby="helpId"
-            placeholder="Currency"
             readOnly={!editMode}
             onChange={handleFormdataChange("feesCurrency")}
             value={formData.feesCurrency}
-          />
+          >
+            {props.bindCurrencies()}
+          </select>
         </div>
 
         <div className="form-group container ">
@@ -167,7 +179,6 @@ const CourseAllocationItem = (props) => {
             type="text"
             className="form-control  container"
             name="inputPaid"
-            id="inputPaid"
             aria-describedby="helpId"
             placeholder="Paid Ammount"
             readOnly={true}
@@ -195,7 +206,15 @@ const CourseAllocationItem = (props) => {
           </button>
         ) : (
           <button
-            onClick={() => props.deleteMap(props.studentMap._id)}
+            onClick={() => {
+              props.setVisibilityclass("");
+              setTimeout(() => {
+                window.scrollTo({
+                  top: document.getElementById(props.studentMap._id).offsetTop,
+                });
+                props.deleteMap(props.studentMap._id);
+              }, 10);
+            }}
             className="delete-button"
           >
             {props.manageContent.deleteContent}

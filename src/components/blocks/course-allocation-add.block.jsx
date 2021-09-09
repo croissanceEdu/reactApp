@@ -10,7 +10,7 @@ const CourseAllocationAddBlock = (props) => {
   const [formData, setFormData] = useState({
     courseName: "",
     feesAmount: 0,
-    feesCurrency: "$",
+    feesCurrency: "INC",
     paidAmount: 0,
   });
   const handleTeacherSelect = (user) => {
@@ -59,6 +59,7 @@ const CourseAllocationAddBlock = (props) => {
           toast.success(response.data.message);
           setClassUrl("");
           props.loadStudentMap();
+          props.setSelectedTab("allocateTab");
         });
     } else {
       toast.error("please fill all fields");
@@ -115,17 +116,17 @@ const CourseAllocationAddBlock = (props) => {
       </div>
       <div className="form-group container row">
         <label htmlFor="inputCourse">Currency</label>
-        <input
-          type="text"
+        <select
+          placeholder="Currency"
           className="form-control "
           name="inputCurrency"
           id="inputCurrency"
-          aria-describedby="helpId"
-          placeholder="Currency"
           required
           onChange={handleFormdataChange("feesCurrency")}
           value={formData.feesCurrency}
-        />
+        >
+          {props.bindCurrencies()}
+        </select>
       </div>
 
       {/* <div className="form-group container ">

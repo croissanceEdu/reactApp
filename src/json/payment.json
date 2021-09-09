@@ -56,6 +56,7 @@
         "addScheduleContent": "Add",
         "editScheduleContent": "Edit",
         "deleteScheduleContent": "Delete",
+        "addPaymentRecordContent": "Add Payment History",
         "payContent": "Pay",
         "recordPaymentContent": "Record Payment",
         "approveRequestContent": "Approve Request",

@@ -8,6 +8,7 @@ const ManageAllocationListTab = (props) => {
         bindList={props.bindList}
         deleteMap={props.deleteMap}
         loadStudentMap={props.loadStudentMap}
+        bindCurrencies={props.bindCurrencies}
       />
     </div>
   );

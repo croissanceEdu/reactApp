@@ -5,6 +5,8 @@ import TabSelectorBlock from "../blocks/tab-selector.block";
 import ManageAllocationListTab from "../tabs/manage-allocation-list.tab";
 import ManageAllocationNewTab from "../tabs/manage-allocation-new.tab";
 
+const currencies = require("currencies.json");
+
 const ManageSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("allocateTab");
   const [studentMap, setStudentMap] = useState([]);
@@ -56,6 +58,15 @@ const ManageSection = (props) => {
   const bindList = (callbackBindItem) => {
     return callbackBindItem(studentMap);
   };
+  const bindCurrencies = () => {
+    return currencies.currencies.map((el) => {
+      return (
+        <option key={el.code} value={el.code}>
+          {el.code} ({el.name})
+        </option>
+      );
+    });
+  };
   const bindTabWindow = () => {
     switch (selectedTab) {
       case "allocateTab":
@@ -65,6 +76,7 @@ const ManageSection = (props) => {
             bindList={bindList}
             deleteMap={deleteMap}
             loadStudentMap={loadStudentMap}
+            bindCurrencies={bindCurrencies}
           />
         );
       case "allocationAddTab":
@@ -73,6 +85,8 @@ const ManageSection = (props) => {
             manageContent={props.manageContent}
             loadStudentMap={loadStudentMap}
             onlineUsers={props.onlineUsers}
+            bindCurrencies={bindCurrencies}
+            setSelectedTab={setSelectedTab}
           />
         );
       default:

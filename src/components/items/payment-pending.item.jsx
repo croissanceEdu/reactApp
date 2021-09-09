@@ -9,8 +9,9 @@ const PaymentPendingItem = (props) => {
         <div className="primary-details ">
           <div className="list-form-group">
             <p>{props.paymentContent.requestAmountContent}:</p>
-            <p>{props.currency}-</p>
-            <h3>{props.payment.requestAmount}</h3>
+            <h3>
+              {props.formatMoney(props.payment.requestAmount, props.currency)}
+            </h3>
           </div>
         </div>
         <div className="secondary-details">
@@ -45,19 +46,20 @@ const PaymentPendingItem = (props) => {
           </div>
         ) : (
           <div className="third-details">
-            {props.userDetails.role === "admin" && (
+            {/* {props.userDetails.role === "admin" && (
+
               <button
                 className="btn edit-button"
                 disabled={props.payment.isPaid}
                 onClick={() => {
                   props.recordPaymentPopupOpen(props.payment);
                 }}
+                disabled
               >
                 {props.paymentContent.recordPaymentContent}
               </button>
-            )}
-            {(props.userDetails.role === "student" ||
-              props.userDetails.role === "teacher") && (
+            )} */}
+            {props.userDetails.role === "teacher" && (
               <button
                 className="btn primary-button"
                 disabled={props.payment.isPaid || props.payment.isRequested}
@@ -65,10 +67,26 @@ const PaymentPendingItem = (props) => {
                   props.handlePayButtonClick(props.payment);
                 }}
               >
-                {props.paymentContent.payContent}
+                {props.paymentContent.addPaymentRecordContent}
               </button>
             )}
-            {props.userDetails.role === "student" && <RazorPayPopup />}
+            {props.userDetails.role === "student" && (
+              <RazorPayPopup
+                paymentContent={props.paymentContent}
+                paymentSchedule={props.payment}
+                razorpayPaymentSucess={props.razorpayPaymentSucess}
+              />
+            )}
+            {/* {props.userDetails.role === "student" && (
+              <form>
+                <script
+                  src="https://checkout.razorpay.com/v1/payment-button.js"
+                  data-payment_button_id="pl_Hr2skT2d9jMAaW"
+                >
+                  async >{" "}
+                </script>{" "}
+              </form>
+            )} */}
           </div>
         )}
       </div>

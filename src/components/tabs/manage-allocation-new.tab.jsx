@@ -7,6 +7,8 @@ const ManageAllocationNewTab = (props) => {
         manageContent={props.manageContent}
         loadStudentMap={props.loadStudentMap}
         onlineUsers={props.onlineUsers}
+        bindCurrencies={props.bindCurrencies}
+        setSelectedTab={props.setSelectedTab}
       />
     </div>
   );

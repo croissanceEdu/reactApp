@@ -18,6 +18,7 @@ import PaymentUpcomingTab from "../tabs/payment-upcoming.tab";
 import { compareDate, compareResult } from "../../helpers/custom";
 import PaymentRequestTab from "../tabs/payment-request.tab";
 import PaymentRequestItem from "../items/payment-request.item";
+import { manageWebSocketPayment } from "../../helpers/websocket-helper";
 
 const PaymentSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("pendingTab");
@@ -46,6 +47,16 @@ const PaymentSection = (props) => {
     paymentMethod: "",
     comment: "",
   });
+  const formatMoney = (amount, currency) => {
+    try {
+      return Intl.NumberFormat(props.language, {
+        style: "currency",
+        currency: currency,
+      }).format(amount);
+    } catch {
+      return `${amount} ${currency}`;
+    }
+  };
   const handleScheduleFormChange = (text) => (e) => {
     setScheduleFormData({ ...scheduleFormData, [text]: e.target.value });
   };
@@ -116,6 +127,7 @@ const PaymentSection = (props) => {
       .then((response) => {
         toast.success(response.data.message);
         loadTables();
+        manageWebSocketPayment(myDetails);
       })
       .catch((error) => {
         console.log(error);
@@ -133,10 +145,12 @@ const PaymentSection = (props) => {
         paymentSchedule,
         comment: "test",
         paymentMethod: "record-payment",
+        shiftId: props.userShiftId,
       })
       .then((response) => {
         toast.success(response.data.message);
         loadTables();
+        manageWebSocketPayment(myDetails);
       })
       .catch((error) => {
         console.log(error);
@@ -144,6 +158,30 @@ const PaymentSection = (props) => {
     loadTables();
   };
 
+  const razorpayPaymentSucess = (paymentSchedule, data) => {
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/payment/razorpaysuccess/`, {
+        data,
+        userId: props.userDetails._id,
+        userRole: props.userDetails.role,
+        myId: myDetails._id,
+        myRole: myDetails.role,
+        oppId: oppDetails._id,
+        paymentSchedule,
+        comment: "Razorpay",
+        paymentMethod: "Razorpay",
+        shiftId: props.userShiftId,
+      })
+      .then((response) => {
+        toast.success(response.data.message);
+        loadTables();
+        manageWebSocketPayment(myDetails);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    loadTables();
+  };
   const approveRecordPayment = (paymentRequest) => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/payment/approverecord/`, {
@@ -157,6 +195,7 @@ const PaymentSection = (props) => {
       .then((response) => {
         toast.success(response.data.message);
         loadTables();
+        manageWebSocketPayment(myDetails);
       })
       .catch((error) => {
         console.log(error);
@@ -176,6 +215,7 @@ const PaymentSection = (props) => {
       .then((response) => {
         toast.success(response.data.message);
         loadTables();
+        manageWebSocketPayment(myDetails);
       })
       .catch((error) => {
         console.log(error);
@@ -206,14 +246,13 @@ const PaymentSection = (props) => {
 
   const recordPaymentPopupOpen = (paymentSchedule) => {
     props.popupFunctions.showRecordPaymentPopup(
-      "Record a Payment",
-      "Record an external payment to pay " +
-        paymentSchedule.currency +
-        paymentSchedule.requestAmount,
+      "Save to Payment Records",
+      "Do you want to save this payment of " +
+        formatMoney(paymentSchedule.requestAmount, paymentSchedule.currency),
       "payment-popup",
       [
         {
-          content: "Record Pay",
+          content: "Save Record",
           className: "btn edit-button",
           closeAfter: true,
           onClickFunction: generateRecordPayment,
@@ -230,38 +269,12 @@ const PaymentSection = (props) => {
     );
     console.log(props.popupFunctions.getPopupData());
   };
-  const razorPayPopupOpen = (paymentSchedule) => {
-    props.popupFunctions.showRecordPaymentPopup(
-      "Record a Payment",
-      "Record an external payment to pay " +
-        paymentSchedule.currency +
-        paymentSchedule.requestAmount,
-      "payment-popup",
-      [
-        {
-          content: "Record Pay",
-          className: "btn edit-button",
-          closeAfter: true,
-          onClickFunction: generateRecordPayment,
-          onClickArgument: paymentSchedule,
-        },
 
-        {
-          content: "cancel",
-          className: "btn cancel-button",
-          closeAfter: true,
-        },
-      ],
-      { comment: props.popupFunctions.getPopupData().comment }
-    );
-    console.log(props.popupFunctions.getPopupData());
-  };
   const approvePaymentPopupOpen = (paymentRequest) => {
     props.popupFunctions.showApprovePaymentRequestPopup(
       "Payment Request Approval",
       "Please confirm if you received " +
-        paymentRequest.currency +
-        paymentRequest.paidAmount,
+        formatMoney(paymentRequest.paidAmount, paymentRequest.currency),
       "payment-popup",
       [
         {
@@ -286,8 +299,8 @@ const PaymentSection = (props) => {
     props.popupFunctions.showApprovePaymentRequestPopup(
       "Payment Request Reject",
       "Please confirm if you haven't received " +
-        paymentRequest.currency +
-        paymentRequest.paidAmount,
+        formatMoney(paymentRequest.paidAmount, paymentRequest.currency),
+
       "payment-reject-popup",
       [
         {
@@ -309,22 +322,15 @@ const PaymentSection = (props) => {
 
   const handlePayButtonClick = (paymentSchedule) => {
     props.popupFunctions.showWarningPopup(
-      "How to Pay",
-      "Choose your payment",
+      "Record Payment",
+      "Click Continue if you have received the payment",
       "payment-popup",
       [
         {
-          content: "Record Pay",
+          content: "Continue",
           className: "btn edit-button",
           closeAfter: false,
           onClickFunction: recordPaymentPopupOpen,
-          onClickArgument: paymentSchedule,
-        },
-        {
-          content: "RazorPay",
-          className: "btn razorpay-button",
-          closeAfter: false,
-          onClickFunction: razorPayPopupOpen,
           onClickArgument: paymentSchedule,
         },
         {
@@ -354,29 +360,38 @@ const PaymentSection = (props) => {
   };
 
   const loadTables = () => {
-    loadSchedules(
-      myDetails._id,
-      myDetails.role,
-      oppDetails._id,
-      oppDetails.studentMap._id
-    );
-    loadHistory(
-      myDetails._id,
-      myDetails.role,
-      oppDetails._id,
-      oppDetails.studentMap._id
-    );
-    loadRequests(
-      myDetails._id,
-      myDetails.role,
-      oppDetails._id,
-      oppDetails.studentMap._id
-    );
+    if (myDetails) {
+      loadSchedules(
+        myDetails._id,
+        myDetails.role,
+        oppDetails._id,
+        oppDetails.studentMap._id
+      );
+      loadHistory(
+        myDetails._id,
+        myDetails.role,
+        oppDetails._id,
+        oppDetails.studentMap._id
+      );
+      loadRequests(
+        myDetails._id,
+        myDetails.role,
+        oppDetails._id,
+        oppDetails.studentMap._id
+      );
+    }
   };
   const loadTablesOnUserSelect = (myId, myRole, oppoId, mapId) => {
     loadSchedules(myId, myRole, oppoId, mapId);
     loadHistory(myId, myRole, oppoId, mapId);
     loadRequests(myId, myRole, oppoId, mapId);
+  };
+
+  const updateTables = () => {
+    if (props.hasPaymentUpdate) {
+      loadTables();
+      props.setHasPaymentUpdate(false);
+    }
   };
   const loadSchedules = (myId, myRole, oppoId, mapId) => {
     axios
@@ -444,7 +459,7 @@ const PaymentSection = (props) => {
     const comment = scheduleFormData.comment;
     const warningDate = scheduleFormData.warningDate;
     const lastDate = scheduleFormData.lastDate;
-    console.log(requestAmount, studentMapID, userID, warningDate, lastDate);
+
     if (requestAmount && studentMapID && userID && warningDate && lastDate) {
       axios
         .post(`${process.env.REACT_APP_SERVER_URL}/payment/addschedule`, {
@@ -460,6 +475,7 @@ const PaymentSection = (props) => {
         .then((response) => {
           toast.success("Added successfully");
           loadTables();
+          manageWebSocketPayment(myDetails);
 
           // clearScheduleFormData();
         });
@@ -493,30 +509,31 @@ const PaymentSection = (props) => {
       return (
         <div className="fee-details">
           <div className="form-group-fee row  container">
-            <label>Fee:</label>
+            <label>Total:</label>
             <div>
-              {feeDetails.feeAmount}
-              <span>{oppDetails.studentMap.feesCurrency}</span>
+              {formatMoney(
+                feeDetails.feeAmount,
+                oppDetails.studentMap.feesCurrency
+              )}
             </div>
-            {/* <input
-            type="text"
-            placeholder="Fee"
-            readOnly={!feeDetails.editFeeMode}
-            value=
-          ></input> */}
           </div>
           <div className="form-group-fee row container">
             <label>Paid:</label>
             <div>
-              {feeDetails.paidAmount}
-              <span>{oppDetails.studentMap.feesCurrency}</span>
+              {formatMoney(
+                feeDetails.paidAmount,
+                oppDetails.studentMap.feesCurrency
+              )}
             </div>
-            {/* <input
-            type="text"
-            placeholder="Paid"
-            readOnly
-            value={feeDetails.paidAmount}
-          ></input> */}
+          </div>
+          <div className="form-group-fee row container">
+            <label>Balance:</label>
+            <div>
+              {formatMoney(
+                feeDetails.feeAmount - feeDetails.paidAmount,
+                oppDetails.studentMap.feesCurrency
+              )}
+            </div>
           </div>
         </div>
       );
@@ -534,6 +551,8 @@ const PaymentSection = (props) => {
           userDetails={props.userDetails}
           handlePayButtonClick={handlePayButtonClick}
           recordPaymentPopupOpen={recordPaymentPopupOpen}
+          razorpayPaymentSucess={razorpayPaymentSucess}
+          formatMoney={formatMoney}
         />
       );
     });
@@ -550,6 +569,8 @@ const PaymentSection = (props) => {
           userDetails={props.userDetails}
           handlePayButtonClick={handlePayButtonClick}
           recordPaymentPopupOpen={recordPaymentPopupOpen}
+          razorpayPaymentSucess={razorpayPaymentSucess}
+          formatMoney={formatMoney}
         />
       );
     });
@@ -563,6 +584,7 @@ const PaymentSection = (props) => {
           key={uuidv4()}
           paymentContent={props.paymentContent}
           currency={oppDetails.studentMap.feesCurrency}
+          formatMoney={formatMoney}
         />
       );
     });
@@ -580,6 +602,7 @@ const PaymentSection = (props) => {
           userDetails={props.userDetails}
           approvePaymentPopupOpen={approvePaymentPopupOpen}
           rejectPaymentPopupOpen={rejectPaymentPopupOpen}
+          formatMoney={formatMoney}
         />
       );
     });
@@ -595,6 +618,7 @@ const PaymentSection = (props) => {
           currency={oppDetails.studentMap.feesCurrency}
           deleteSchedule={deleteSchedule}
           userDetails={props.userDetails}
+          formatMoney={formatMoney}
         />
       );
     });
@@ -648,6 +672,8 @@ const PaymentSection = (props) => {
         return null;
     }
   };
+  updateTables();
+
   return (
     <section className="payment-section">
       <div className="navbar-spacer"></div>

@@ -9,15 +9,28 @@ const WarningPopup = (props) => {
         }
         if (itm.closeAfter) props.popupFunctions.closePopup();
       };
-      return (
-        <button
-          key={uuidv4()}
-          className={item.className}
-          onClick={() => handleButtonClick(item)}
-        >
-          {item.content}
-        </button>
-      );
+      if (item.content === "RazorPay")
+        return (
+          <form>
+            <script
+              src="https://checkout.razorpay.com/v1/payment-button.js"
+              data-payment_button_id="pl_Hr2skT2d9jMAaW"
+              async
+            >
+              {" "}
+            </script>{" "}
+          </form>
+        );
+      else
+        return (
+          <button
+            key={uuidv4()}
+            className={item.className}
+            onClick={() => handleButtonClick(item)}
+          >
+            {item.content}
+          </button>
+        );
     });
   };
   return (

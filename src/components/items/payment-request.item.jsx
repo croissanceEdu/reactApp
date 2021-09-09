@@ -8,8 +8,12 @@ const PaymentRequestItem = (props) => {
         <div className="primary-details ">
           <div className="list-form-group">
             <p>{props.paymentContent.paidAmountContent}:</p>
-            <p>{props.payment.currency}-</p>
-            <h3>{props.payment.paidAmount}</h3>
+            <h3>
+              {props.formatMoney(
+                props.payment.paidAmount,
+                props.payment.currency
+              )}
+            </h3>
           </div>
         </div>
         <div className="secondary-details">

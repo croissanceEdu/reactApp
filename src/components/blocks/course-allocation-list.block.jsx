@@ -11,11 +11,10 @@ const CourseAllocationListBlock = (props) => {
     setSelectedAllocation(slectedItem);
   };
   const handleBackButtonClick = (slectedItem) => {
-    setVisibilityclass("");
+    // setVisibilityclass("");
   };
   const handleDeleteButtonClick = (slectedItem) => {
     props.deleteMap(slectedItem);
-    setVisibilityclass("");
   };
 
   const bindItem = (itemsList) => {
@@ -35,6 +34,8 @@ const CourseAllocationListBlock = (props) => {
           handleAllocationSelect={handleAllocationSelect}
           handleBackButtonClick={handleBackButtonClick}
           itemClassName={itemClassName}
+          bindCurrencies={props.bindCurrencies}
+          setVisibilityclass={setVisibilityclass}
         />
       );
     });

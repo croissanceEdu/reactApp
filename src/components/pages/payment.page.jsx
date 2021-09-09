@@ -19,6 +19,10 @@ const PaymentPage = (props) => {
         userDetails={props.userDetails}
         popupFunctions={props.popupFunctions}
         onlineUsers={props.onlineUsers}
+        userShiftId={props.userShiftId}
+        language={props.language}
+        hasPaymentUpdate={props.hasPaymentUpdate}
+        setHasPaymentUpdate={props.setHasPaymentUpdate}
       />
     );
   else return <Redirect to={props.urlPathContent.loginPage} />;

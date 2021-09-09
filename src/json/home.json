@@ -8,21 +8,24 @@
                 "titleContent": "Syllabus",
                 "clickHereContent": "click here to view syllabus",
                 "notificationContent": "You have @number@ new chapters.",
-                "notificationSingleContent": "You have 1 new chapter."
+                "notificationSingleContent": "You have 1 new chapter.",
+                "pageName": "syllabusPage"
             },
             {
                 "name": "feedbackBanner",
                 "titleContent": "Feedback",
                 "clickHereContent": "click here to view feedbacks",
                 "notificationContent": "You have @number@ new feedbacks.",
-                "notificationSingleContent": "You have 1 new feedback."
+                "notificationSingleContent": "You have 1 new feedback.",
+                "pageName": "feedbackPage"
             },
             {
                 "name": "activateAcountBanner",
                 "titleContent": "Account Activation",
                 "clickHereContent": "click here to view pending account activation",
                 "notificationContent": "You have @number@ new activation requests.",
-                "notificationSingleContent": "You have 1 new activation request."
+                "notificationSingleContent": "You have 1 new activation request.",
+                "pageName": "activateAccountPage"
             },
             {
                 "name": "profileBanner",
@@ -33,27 +36,30 @@
             {
                 "name": "joinClassBanner",
                 "titleContent": "Join Class",
-                "clickHereContent": "click here to join online class"
+                "clickHereContent": "click here to join online class",
+                "pageName": "joinClassPage"
             },
             {
                 "name": "manageBanner",
                 "titleContent": "Manage",
-                "clickHereContent": "click here to manage users"
+                "clickHereContent": "click here to manage users",
+                "pageName": "managePage"
             },
             {
                 "name": "paymentBanner",
                 "titleContent": "Payments",
                 "clickHereContent": "click here to go to payment page",
                 "notificationContent": {
-                    "admin": "You have @number@ notification.",
-                    "teacher": "You have @number@ notification.",
-                    "student": "You have @number@ notification."
+                    "admin": "You have @number@ notifications.",
+                    "teacher": "You have @number@ notifications.",
+                    "student": "You have @number@ notifications."
                 },
                 "notificationSingleContent": {
                     "admin": "You have 1 notification.",
                     "teacher": "You have 1 notification.",
                     "student": "You have 1 notification."
-                }
+                },
+                "pageName": "paymentPage"
             }
         ]
     }

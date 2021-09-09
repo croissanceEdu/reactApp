@@ -1,75 +1,114 @@
-const loadRazorPayScript = () => {
+import logo from "../../assets/images/alpha-helix-logo-1069x322-quarter-128x128-15.png";
+
+import axios from "axios";
+
+const { toSmallestSubunit } = require("@coinify/currency");
+// toSmallestSubunit(amount, currency)
+
+const apiKey = process.env[process.env.REACT_APP_API_KEY_SELECT];
+
+function loadScript(src) {
   return new Promise((resolve) => {
     const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    document.body.appendChild(script);
+    script.src = src;
     script.onload = () => {
       resolve(true);
     };
     script.onerror = () => {
       resolve(false);
     };
+    document.body.appendChild(script);
   });
-};
-// import { Razorpay } from "https://checkout.razorpay.com/v1/checkout.js";
-
-const isDev = document.domain === "localhost";
+}
 
 const RazorPayPopup = (props) => {
-  const displayRazorPay = () => {
-    var options = {
-      key: isDev
-        ? process.env.REACT_APP_TEST_API_KEY
-        : process.env.REACT_APP_LIVE_API_KEY,
-      amount: "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      currency: "INR",
-      name: "Acme Corp",
-      description: "Test Transaction",
-      image: "https://example.com/your_logo",
-      order_id: "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
-      },
-      prefill: {
-        name: "",
-        email: "",
-        contact: "",
-      },
-      notes: {
-        address: "Razorpay Corporate Office",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-    debugger;
-    var rzp1 = new window.Razorpay(options);
-    // rzp1.on("payment.failed", function (response) {
-    //   alert(response.error.code);
-    //   alert(response.error.description);
-    //   alert(response.error.source);
-    //   alert(response.error.step);
-    //   alert(response.error.reason);
-    //   alert(response.error.metadata.order_id);
-    //   alert(response.error.metadata.payment_id);
-    // });
-    // document.getElementById("rzp-button1").onclick = function (e) {
-    //   rzp1.open();
-    //   e.preventDefault();
-    // };
-  };
+  async function displayRazorpay() {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
 
-  const showRazorPay = () => {
-    const res = loadRazorPayScript();
     if (!res) {
-      alert("Can't load Razorpay");
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
     }
-    displayRazorPay();
-  };
 
-  return <button onClick={showRazorPay}>RazorPay</button>;
+    // creating a new order
+    const result = await axios.post("http://localhost:4000/payment/order", {
+      amount: toSmallestSubunit(
+        props.paymentSchedule.requestAmount,
+        props.paymentSchedule.currency
+      ),
+      currency: props.paymentSchedule.currency,
+    });
+    // const result = { data: {} };
+
+    if (!result) {
+      alert("Server error. Are you online?");
+      return;
+    }
+
+    // Getting the order details back
+    const { amount, id: order_id, currency } = result.data;
+    // console.log(result);
+    const options = {
+      key: apiKey, // Enter the Key ID generated from the Dashboard
+      amount: amount.toString(),
+      currency: currency,
+      name: "Croissance Technologies.",
+      description: "Fee Payment",
+      image: { logo },
+      order_id: order_id,
+      handler: async function (response) {
+        const data = {
+          orderCreationId: order_id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpaySignature: response.razorpay_signature,
+        };
+        // console.log(response);
+        const result = await props.razorpayPaymentSucess(
+          props.paymentSchedule,
+          data
+        );
+        //axios.post(
+        //   "http://localhost:4000/payment/razorpaysuccess",
+        //   {
+        //     data,
+        //     userId: props.userDetails._id,
+        //     userRole: props.userDetails.role,
+        //     myId: myDetails._id,
+        //     myRole: myDetails.role,
+        //     oppId: oppDetails._id,
+        //     paymentSchedule,
+        //     comment: "test",
+        //     paymentMethod: "razorpay",
+        //   }
+        // );
+
+        // alert(result.data.msg);
+      },
+      // prefill: {
+      //   name: "Soumya Dey",
+      //   email: "SoumyaDey@example.com",
+      //   contact: "9999999999",
+      // },
+      // notes: {
+      //   address: "Croissance Technologies",
+      // },
+      // theme: {
+      //   color: "#61dafb",
+      // },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
+
+  return (
+    <button className="btn primary-button" onClick={displayRazorpay}>
+      {props.paymentContent.payContent}
+    </button>
+  );
 };
 
 export default RazorPayPopup;

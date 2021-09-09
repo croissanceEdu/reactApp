@@ -5,21 +5,26 @@ const socket = io(process.env.REACT_APP_SOCKET_SERVER_URL);
 
 
 
-export const userConnected = (user, callbackNotify, callbackSetOnlineUsers) => {
+export const userConnected = (user, callbackNotify, callbackSetOnlineUsers, callbackHandleNewShift, callbackPaymentUpdate) => {
     socket.emit('new-user-login', user);
 
+    socket.on('new-shift', data => {
+        callbackHandleNewShift(data)
+        callbackNotify();
+    })
     socket.on('status-message', data => {
-        // console.log(data)
         // console.log(data)
         callbackNotify();
     })
     socket.on('receive-notification', data => {
-        // console.log(data)
         callbackNotify();
     })
+    socket.on('update-payment', data => {
+        callbackPaymentUpdate();
+    })
+
     socket.emit('get-online-users', user);
     socket.on('online-users', data => {
-        // console.log(data)
         callbackSetOnlineUsers(data);
     })
     socket.on('new-user-login', data => {
@@ -53,5 +58,9 @@ export const manageWebSocketSendNotification = (user) => {
 
 }
 
+export const manageWebSocketPayment = (user) => {
+    socket.emit('payment-update', user);
+
+}
 
 
