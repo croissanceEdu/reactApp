@@ -224,19 +224,19 @@ const PaymentSection = (props) => {
   };
   const deleteSchedule = (id) => {
     props.popupFunctions.showWarningPopup(
-      "Delete Schedule",
-      "are you sure?",
+      props.paymentContent.popups.deleteSchedule.tiltleContent,
+      props.paymentContent.popups.deleteSchedule.descriptionContent,
       "delete-popup",
       [
         {
-          content: "delete",
+          content: props.paymentContent.popups.deleteSchedule.confirmContent,
           className: "btn delete-button",
           closeAfter: true,
           onClickFunction: confirmDeleteSchedule,
           onClickArgument: id,
         },
         {
-          content: "cancel",
+          content: props.paymentContent.popups.deleteSchedule.cancelContent,
           className: "btn cancel-button",
           closeAfter: true,
         },
@@ -246,13 +246,13 @@ const PaymentSection = (props) => {
 
   const recordPaymentPopupOpen = (paymentSchedule) => {
     props.popupFunctions.showRecordPaymentPopup(
-      "Save to Payment Records",
-      "Do you want to save this payment of " +
+      props.paymentContent.popups.recordPayment.tiltleContent,
+      props.paymentContent.popups.recordPayment.descriptionContent +
         formatMoney(paymentSchedule.requestAmount, paymentSchedule.currency),
       "payment-popup",
       [
         {
-          content: "Save Record",
+          content: props.paymentContent.popups.recordPayment.confirmContent,
           className: "btn edit-button",
           closeAfter: true,
           onClickFunction: generateRecordPayment,
@@ -260,7 +260,7 @@ const PaymentSection = (props) => {
         },
 
         {
-          content: "cancel",
+          content: props.paymentContent.popups.recordPayment.cancelContent,
           className: "btn cancel-button",
           closeAfter: true,
         },
@@ -272,13 +272,13 @@ const PaymentSection = (props) => {
 
   const approvePaymentPopupOpen = (paymentRequest) => {
     props.popupFunctions.showApprovePaymentRequestPopup(
-      "Payment Request Approval",
-      "Please confirm if you received " +
+      props.paymentContent.popups.approvePayment.tiltleContent,
+      props.paymentContent.popups.approvePayment.descriptionContent +
         formatMoney(paymentRequest.paidAmount, paymentRequest.currency),
       "payment-popup",
       [
         {
-          content: "Confirm",
+          content: props.paymentContent.popups.approvePayment.confirmContent,
           className: "btn save-button",
           closeAfter: true,
           onClickFunction: approveRecordPayment,
@@ -286,7 +286,7 @@ const PaymentSection = (props) => {
         },
 
         {
-          content: "cancel",
+          content: props.paymentContent.popups.approvePayment.cancelContent,
           className: "btn cancel-button",
           closeAfter: true,
         },
@@ -297,21 +297,21 @@ const PaymentSection = (props) => {
 
   const rejectPaymentPopupOpen = (paymentRequest) => {
     props.popupFunctions.showApprovePaymentRequestPopup(
-      "Payment Request Reject",
-      "Please confirm if you haven't received " +
+      props.paymentContent.popups.rejectPayment.tiltleContent,
+      props.paymentContent.popups.rejectPayment.descriptionContent +
         formatMoney(paymentRequest.paidAmount, paymentRequest.currency),
 
       "payment-reject-popup",
       [
         {
-          content: "Confirm",
+          content: props.paymentContent.popups.rejectPayment.confirmContent,
           className: "btn delete-button",
           closeAfter: true,
           onClickFunction: rejectRecordPayment,
           onClickArgument: paymentRequest,
         },
         {
-          content: "cancel",
+          content: props.paymentContent.popups.rejectPayment.cancelContent,
           className: "btn cancel-button",
           closeAfter: true,
         },
@@ -322,19 +322,19 @@ const PaymentSection = (props) => {
 
   const handlePayButtonClick = (paymentSchedule) => {
     props.popupFunctions.showWarningPopup(
-      "Record Payment",
-      "Click Continue if you have received the payment",
+      props.paymentContent.popups.payButtonClick.tiltleContent,
+      props.paymentContent.popups.payButtonClick.descriptionContent,
       "payment-popup",
       [
         {
-          content: "Continue",
+          content: props.paymentContent.popups.payButtonClick.confirmContent,
           className: "btn edit-button",
           closeAfter: false,
           onClickFunction: recordPaymentPopupOpen,
           onClickArgument: paymentSchedule,
         },
         {
-          content: "cancel",
+          content: props.paymentContent.popups.payButtonClick.cancelContent,
           className: "btn cancel-button",
           closeAfter: true,
         },
@@ -509,7 +509,7 @@ const PaymentSection = (props) => {
       return (
         <div className="fee-details">
           <div className="form-group-fee row  container">
-            <label>Total:</label>
+            <label>{props.paymentContent.totalContent}</label>
             <div>
               {formatMoney(
                 feeDetails.feeAmount,
@@ -518,7 +518,7 @@ const PaymentSection = (props) => {
             </div>
           </div>
           <div className="form-group-fee row container">
-            <label>Paid:</label>
+            <label>{props.paymentContent.paidContent}</label>
             <div>
               {formatMoney(
                 feeDetails.paidAmount,
@@ -527,7 +527,7 @@ const PaymentSection = (props) => {
             </div>
           </div>
           <div className="form-group-fee row container">
-            <label>Balance:</label>
+            <label>{props.paymentContent.balanceContent}</label>
             <div>
               {formatMoney(
                 feeDetails.feeAmount - feeDetails.paidAmount,

@@ -76,7 +76,8 @@
   --tab-item-color: rgb(0, 0, 0);
   --selected-tab-background: rgb(43, 46, 46);
   --selected-tab-color: rgb(240, 240, 240);
-  --notification-badge: rgb(255, 0, 0);
+  --notification-badge-bg: rgb(255, 0, 0);
+  --notification-badge-color: rgb(255, 255, 255);
   --joinclass-item-background: rgba(140, 204, 204, 0.432);
   --joinclass-button-background: rgba(86, 95, 124, 0.842);
   --joinclass-button-hover-background: linear-gradient(
@@ -111,15 +112,23 @@
   --syllabus-marker-color: rgb(212, 118, 11);
   --syllabus-item-chapter-color: rgb(28, 25, 54);
   --syllabus-item-module-color: rgb(183, 187, 129);
-  --payment-item-background: rgba(98, 89, 148, 0.842);
+  --payment-item-background: linear-gradient(
+    0deg,
+    rgba(98, 89, 148, 0.842) 0%,
+    rgba(71, 64, 116, 0.842) 5%,
+    rgba(71, 64, 116, 0.842) 95%,
+    rgba(98, 89, 148, 0.842) 100%
+  );
   --payment-item-color: rgb(255, 255, 255);
   --payment-item-label-color: rgba(218, 215, 199, 0.747);
   --pyment-fee-details-background: linear-gradient(
     0deg,
-    rgba(194, 187, 159, 0.685) 10%,
+    rgba(194, 187, 159, 0.685) 0%,
+    rgba(194, 187, 159, 0.885) 10%,
     rgba(194, 187, 159, 0.885) 90%,
     rgba(194, 187, 159, 0.685) 100%
   );
+  --pyment-fee-details-color: rgb(32, 3, 37);
   --form-background: linear-gradient(
     90deg,
     rgba(11, 109, 60, 0.5),
@@ -419,8 +428,8 @@ button:disabled {
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
-  background: var(--notification-badge);
-  color: white;
+  background: var(--notification-badge-bg);
+  color: var(--notification-badge-color);
   margin: auto;
 }
 
@@ -930,6 +939,43 @@ section {
   border-radius: 1.4rem;
 }
 
+.navbar .container-element .nav-menu-table-cell .nav-toggler-icon div {
+  position: absolute;
+  min-width: 15px;
+  height: 15px;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  background: var(--notification-badge-bg);
+  color: var(--notification-badge-color);
+  border-radius: 50%;
+  right: 0;
+  top: 0;
+  text-align: center;
+  padding: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+
+.navbar .container-element .nav-menu-table-cell .nav-toggler-icon div p {
+  font-size: 10px;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  position: absolute;
+  padding: 0;
+  padding-bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  height: -webkit-min-content;
+  height: -moz-min-content;
+  height: min-content;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+}
+
 .navbar .container-element nav {
   display: none;
   position: relative;
@@ -1004,8 +1050,8 @@ section {
 
 .navbar.nav-visible .container-element nav.nav-visible ul.nav-links li p {
   margin-left: 0.5rem;
-  color: white;
-  background: var(--notification-badge);
+  color: var(--notification-badge-color);
+  background: var(--notification-badge-bg);
   margin-top: 0;
   margin-bottom: auto;
 }
@@ -1096,8 +1142,8 @@ section {
 
 .navbar.nav-visible .container-element nav.nav-visible .nav-user-block ul.shown-menu li p {
   margin-left: 0.5rem;
-  color: white;
-  background: var(--notification-badge);
+  color: var(--notification-badge-color);
+  background: var(--notification-badge-bg);
   margin-top: 0;
   margin-bottom: auto;
 }
@@ -1873,6 +1919,22 @@ section.syllabus-section .tab-window form {
   margin: 2em;
 }
 
+section.syllabus-section .tab-window form .module-group .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+section.syllabus-section .tab-window form .module-group .container .form-control {
+  margin-right: 2px;
+}
+
+section.syllabus-section .tab-window form .module-group .container button {
+  margin-left: 2px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
 section.manage-section .tab-section .tab-window {
   padding: 2em;
   margin-top: 0;
@@ -2147,6 +2209,13 @@ section.payment-section .tab-section .tab-window .fee-details .form-group-fee di
   opacity: 0.8;
 }
 
+section.payment-section .tab-section .tab-window .fee-details .form-group-fee label,
+section.payment-section .tab-section .tab-window .fee-details .form-group-fee p,
+section.payment-section .tab-section .tab-window .fee-details .form-group-fee h3,
+section.payment-section .tab-section .tab-window .fee-details .form-group-fee div {
+  color: var(--pyment-fee-details-color) !important;
+}
+
 section.payment-section .tab-section .tab-window ul {
   display: block;
   padding: 1em;
@@ -2197,12 +2266,150 @@ section.payment-section .tab-section .tab-window ul li .list-form-group input {
 }
 
 section.payment-section .tab-section .tab-window ul li .all-details {
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 section.payment-section .tab-section .tab-window ul li .all-details .primary-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin: auto auto auto 0;
+  justify-self: start;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .primary-details .list-form-group {
+  border: 2px solid transparent;
+  border-radius: 5px;
+  background: var(--pyment-fee-details-background);
+  vertical-align: middle;
+  margin: 10px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  text-align: left;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .primary-details .list-form-group label {
+  color: var(--pyment-fee-details-color) !important;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .primary-details .list-form-group .money-amount {
+  color: var(--pyment-fee-details-color) !important;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .primary-details .input-group {
+  display: block !important;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  background: var(--pyment-fee-details-background);
+  margin: 10px;
+  width: unset;
+  height: unset;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .secondary-details {
   display: block;
-  width: 100%;
+  margin: auto;
+  -ms-grid-column-align: start;
+      justify-self: start;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .secondary-details .date-body {
+  vertical-align: middle;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .secondary-details .date-body .list-form-group {
+  vertical-align: middle;
+  margin: 0;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .secondary-details .date-body .list-form-group label {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .secondary-details .date-body .list-form-group p {
+  margin-left: 10px;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .secondary-details .date-body .list-form-group h4 {
+  vertical-align: middle;
+  margin-bottom: 0;
+  margin-left: 5px;
+  font-size: 1.3em;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .secondary-details .comment-body {
+  vertical-align: middle;
+  margin: 0;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .secondary-details .comment-body p {
+  margin-bottom: 0;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .secondary-details .comment-body input {
+  margin-top: 10px;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .third-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin: auto 10px auto auto;
+  justify-self: start;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  vertical-align: middle;
+}
+
+section.payment-section .tab-section .tab-window ul li .all-details .third-details p {
+  margin-bottom: 0;
 }
 
 section.activation-section {
@@ -2403,8 +2610,8 @@ section.register-section form button {
   .navbar.nav-visible .container-element nav.nav-visible ul.nav-links li p {
     cursor: pointer;
     margin-left: 2px;
-    color: white;
-    background: var(--notification-badge);
+    color: var(--notification-badge-color);
+    background: var(--notification-badge-bg);
     margin-top: 0;
     margin-bottom: auto;
   }

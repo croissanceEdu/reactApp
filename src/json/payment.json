@@ -57,10 +57,51 @@
         "editScheduleContent": "Edit",
         "deleteScheduleContent": "Delete",
         "addPaymentRecordContent": "Add Payment History",
-        "payContent": "Pay",
+        "payContent": "Pay Now",
         "recordPaymentContent": "Record Payment",
         "approveRequestContent": "Approve Request",
         "approveContent": "Approve",
-        "cancelContent": "Cancel"
+        "cancelContent": "Cancel",
+        "totalContent": "Total:",
+        "paidContent": "Paid:",
+        "balanceContent": "Balance:",
+        "razorpay": {
+            "networkErrorMessageContent": "Razorpay failed to load. Are you online?",
+            "serverErrorMessageContent": "Server error. Are you online?",
+            "nameContent": "Croissance Technologies.",
+            "descriptionContent": "Fee Payment"
+        },
+        "popups": {
+            "deleteSchedule": {
+                "tiltleContent": "Delete Schedule",
+                "descriptionContent": "Are you sure?",
+                "confirmContent": "Confirm",
+                "cancelContent": "Cancel"
+            },
+            "recordPayment": {
+                "tiltleContent": "Save to Payment Records",
+                "descriptionContent": "Do you want to save this payment of ",
+                "confirmContent": "Add Record",
+                "cancelContent": "Cancel"
+            },
+            "approvePayment": {
+                "tiltleContent": "Payment Request Approval",
+                "descriptionContent": "Please confirm if you received ",
+                "confirmContent": "Confirm",
+                "cancelContent": "Cancel"
+            },
+            "rejectPayment": {
+                "tiltleContent": "Payment Request Reject",
+                "descriptionContent": "Please confirm if you haven't received ",
+                "confirmContent": "Confirm",
+                "cancelContent": "Cancel"
+            },
+            "payButtonClick": {
+                "tiltleContent": "Record Payment",
+                "descriptionContent": "Click Continue if you have received the payment",
+                "confirmContent": "Continue",
+                "cancelContent": "Cancel"
+            }
+        }
     }
 ]

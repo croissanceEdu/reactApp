@@ -14,6 +14,7 @@ import { manageWebSocketSendNotification } from "../../helpers/websocket-helper"
 const SyllabusSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("syllabusListTab");
   const [syllabuses, setSyllabuses] = useState([]);
+
   const [myDetails, setMyDetails] = useState(
     props.userDetails.role !== "admin" ? props.userDetails : {}
   );
@@ -52,13 +53,13 @@ const SyllabusSection = (props) => {
     if (paidAmount >= feeAmount) paidChapter = totalChapter;
     else paidChapter = (totalChapter * paidAmount) / feeAmount;
     let moduleName = "";
-
     let i = 0;
     return syllabuses.map((item) => {
       i++;
       let isModuleChange = true;
-      if (moduleName !== item.moduleName) moduleName = item.moduleName;
-      else isModuleChange = false;
+      if (moduleName !== item.moduleName) {
+        moduleName = item.moduleName;
+      } else isModuleChange = false;
       return (
         <React.Fragment key={uuidv4()}>
           {isModuleChange && <h3 className="syllabus-module">{moduleName}</h3>}
@@ -210,6 +211,7 @@ const SyllabusSection = (props) => {
             bindSyllabuses={bindSyllabuses}
             handleAddNewSyllabus={handleAddNewSyllabus}
             syllabusContent={props.syllabusContent}
+            modules={[...new Set(syllabuses.map((item) => item.moduleName))]}
           />
         );
       default:

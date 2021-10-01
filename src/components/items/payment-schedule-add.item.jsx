@@ -11,14 +11,13 @@ const PaymentScheduleAddItem = (props) => {
       >
         <div className="all-details">
           <div className="primary-details ">
-            <div className="list-form-group">
-              <label htmlFor="warningDate">
-                {props.paymentContent.requestAmountContent}:
+            <div className="list-form-group input-group">
+              <label htmlFor="requestAmount">
+                {props.paymentContent.requestAmountContent}({props.currency}):
               </label>
-              <p>{props.currency}-</p>
               <input
                 type="text"
-                className=""
+                className="money-amount"
                 id="requestAmount"
                 placeholder={props.paymentContent.requestAmountContent}
                 onChange={props.handleScheduleFormAmountChange("requestAmount")}

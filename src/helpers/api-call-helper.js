@@ -1,4 +1,7 @@
+// import { manageWebSocketFeedback } from "./websocket-helper";
+
 const { default: axios } = require("axios");
+
 
 
 export const loadNotifications = (_id, role, setNotifications, updateProfilePicture) => {
@@ -11,6 +14,9 @@ export const loadNotifications = (_id, role, setNotifications, updateProfilePict
             // console.log(response.data)
             setNotifications(response.data.notifications)
             updateProfilePicture(response.data.imagePath);
+            // if (response.data.flags.hasFeedbackUpodate) {
+            //     manageWebSocketFeedback({ _id, role })
+            // }
         })
         .catch((error) => {
             console.log(error);

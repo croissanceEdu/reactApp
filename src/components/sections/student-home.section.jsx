@@ -35,14 +35,14 @@ const StudentHomeSection = (props) => {
             userDetails={props.userDetails}
             profilePicture={props.profilePicture}
           />
-          {/* <HomeTileBanner
+          <HomeTileBanner
             displayContent={props.homeContent.banners.find(
               (el) => el.name === "paymentBanner"
             )}
             handleBannerClick={props.handlePaymentBannerClick}
             userRole={props.userDetails.role}
             notifications={props.notifications.payment}
-          /> */}
+          />
         </div>
       </div>
     </section>

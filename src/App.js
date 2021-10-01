@@ -53,6 +53,7 @@ function App() {
     payment: [],
   });
   const [hasPaymentUpdate, setHasPaymentUpdate] = useState(false)
+  const [hasFeedbackUpdate, setHasFeedbackUpdate] = useState(false)
   const [overlayClassNames, setoverlayClassNames] = useState("");
   const [popupContainerClassNames, setPopupContainerClassNames] = useState("");
   const [popupVisibility, setPopupVisibility] = useState(false);
@@ -71,7 +72,6 @@ function App() {
     isNavMenuOpen: false,
   });
   const [onlineUsers, setOnlineUsers] = useState([]);
-
   const setNavVisible = (visiblity) => {
     if (visiblity) {
       setoverlayClassNames("overlay-visible");
@@ -128,6 +128,9 @@ function App() {
   const handlePaymentUpdate = () => {
     setHasPaymentUpdate(true);
   }
+  const handleFeedbackUpdate = () => {
+    setHasFeedbackUpdate(true);
+  }
   const notify = () => {
     // console.log("notify")
     if (userDetails)
@@ -141,7 +144,7 @@ function App() {
 
   useEffect(() => {
     if (userDetails) {
-      userConnected(userDetails, notify, HandleSetOnlineUsers, HandleUserShift, handlePaymentUpdate)
+      userConnected(userDetails, notify, HandleSetOnlineUsers, HandleUserShift, handlePaymentUpdate, handleFeedbackUpdate)
     }
   }, []);
 
@@ -379,6 +382,8 @@ function App() {
               notify={notify}
               userDetails={userDetails}
               onlineUsers={onlineUsers}
+              hasFeedbackUpdate={hasFeedbackUpdate}
+              setHasFeedbackUpdate={(hasUpdate) => setHasFeedbackUpdate(hasUpdate)}
             />
           )}
         />

@@ -7,6 +7,7 @@ const SyllabusEditTab = (props) => {
       <SyllabusAddBlock
         handleAddNewSyllabus={props.handleAddNewSyllabus}
         syllabusContent={props.syllabusContent}
+        modules={props.modules}
       />
     </div>
   );

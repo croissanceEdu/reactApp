@@ -11,7 +11,10 @@ import FeedbackReceivedTab from "../tabs/feedback-received.tab";
 import FeedbackSentTab from "../tabs/feedback-sent.tab";
 import FeedbackMessageItem from "../items/feedback-message.item";
 import { Add } from "@material-ui/icons";
-import { manageWebSocketSendNotification } from "../../helpers/websocket-helper";
+import {
+  manageWebSocketSendNotification,
+  manageWebSocketFeedback,
+} from "../../helpers/websocket-helper";
 
 const FeedbackSection = (props) => {
   const [selectedTab, setSelectedTab] = useState("historyTab");
@@ -19,7 +22,7 @@ const FeedbackSection = (props) => {
   const [oppDetails, setOppDetails] = useState({ studentMap: {} });
   const [receivedFeedback, setReceivedFeedback] = useState([]);
   const [sentFeedback, setSentFeedback] = useState([]);
-  const [mixedFeedback, setMixedFeedback] = useState();
+  // const [mixedFeedback, setMixedFeedback] = useState();
   const [formData, setFormData] = useState({ title: "", content: "" });
   //submit to backend
   const handleSubmit = (e) => {
@@ -72,7 +75,14 @@ const FeedbackSection = (props) => {
       })
       .then((response) => {
         setReceivedFeedback(response.data.newFeedback);
-        props.notify(); //commented for socket test
+
+        if (response.data.flags.hasFeedbackUpodate) {
+          manageWebSocketFeedback({
+            ...myDetails,
+            conectedUsers: [oppDetails._id],
+          });
+          props.notify(); //commented for socket test
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -145,6 +155,12 @@ const FeedbackSection = (props) => {
   //   }
   // };
   // // autoRefresh();
+  const updateTables = () => {
+    if (props.hasFeedbackUpdate) {
+      handleRefresh();
+      props.setHasFeedbackUpdate(false);
+    }
+  };
 
   const handleUserSelect = (user) => {
     setOppDetails(user);
@@ -191,6 +207,7 @@ const FeedbackSection = (props) => {
         return null;
     }
   };
+  updateTables();
   return (
     <section className="feedback-section">
       <div className="navbar-spacer"></div>

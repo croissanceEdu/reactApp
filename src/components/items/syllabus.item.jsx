@@ -48,7 +48,8 @@ const SyllabusItem = (props) => {
                 className="delete-button"
                 disabled
                 onClick={() => {
-                  props.deleteSyllabus(props.syllabus._id);
+                  alert("Not Allowed");
+                  // props.deleteSyllabus(props.syllabus._id);
                 }}
               >
                 {props.syllabusContent.deleteContent}

@@ -6,8 +6,8 @@ const PaymentScheduleItem = (props) => {
       <div className="all-details">
         <div className="primary-details ">
           <div className=" list-form-group">
-            <p>{props.paymentContent.requestAmountContent}:</p>
-            <h3>
+            {/* <p>{props.paymentContent.requestAmountContent}:</p> */}
+            <h3 className="money-amount">
               {props.formatMoney(props.payment.requestAmount, props.currency)}
             </h3>
           </div>

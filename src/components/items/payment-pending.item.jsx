@@ -7,16 +7,16 @@ const PaymentPendingItem = (props) => {
       {" "}
       <div className="all-details">
         <div className="primary-details ">
-          <div className="list-form-group">
-            <p>{props.paymentContent.requestAmountContent}:</p>
-            <h3>
+          <div className="list-form-group ">
+            {/* <p>{props.paymentContent.requestAmountContent}:</p> */}
+            <h3 className="money-amount">
               {props.formatMoney(props.payment.requestAmount, props.currency)}
             </h3>
           </div>
         </div>
         <div className="secondary-details">
           <div className="date-body">
-            {" "}
+            {/* {" "}
             <div className="list-form-group">
               <p>{props.paymentContent.warningDateContent}:</p>
               <h4>
@@ -25,7 +25,7 @@ const PaymentPendingItem = (props) => {
                   customContent.timeFormats.payment
                 )}
               </h4>
-            </div>{" "}
+            </div>{" "} */}
             <div className="list-form-group">
               <p>{props.paymentContent.lastDateContent}:</p>
               <h4>

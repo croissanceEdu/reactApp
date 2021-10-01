@@ -13,7 +13,7 @@ const ProfileBasicBlock = (props) => {
     dateOfBirth: new Date(),
     contactNumber: "",
     fullAddress: "",
-    gender: "",
+    gender: "male",
     qualification: "",
   });
   useEffect(() => {

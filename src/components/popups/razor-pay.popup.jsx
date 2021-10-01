@@ -28,22 +28,25 @@ const RazorPayPopup = (props) => {
     );
 
     if (!res) {
-      alert("Razorpay SDK failed to load. Are you online?");
+      alert(props.paymentContent.razorpay.networkErrorMessageContent);
       return;
     }
 
     // creating a new order
-    const result = await axios.post("http://localhost:4000/payment/order", {
-      amount: toSmallestSubunit(
-        props.paymentSchedule.requestAmount,
-        props.paymentSchedule.currency
-      ),
-      currency: props.paymentSchedule.currency,
-    });
+    const result = await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/payment/order/`,
+      {
+        amount: toSmallestSubunit(
+          props.paymentSchedule.requestAmount,
+          props.paymentSchedule.currency
+        ),
+        currency: props.paymentSchedule.currency,
+      }
+    );
     // const result = { data: {} };
 
     if (!result) {
-      alert("Server error. Are you online?");
+      alert(props.paymentContent.razorpay.serverErrorMessageContent);
       return;
     }
 
@@ -54,8 +57,8 @@ const RazorPayPopup = (props) => {
       key: apiKey, // Enter the Key ID generated from the Dashboard
       amount: amount.toString(),
       currency: currency,
-      name: "Croissance Technologies.",
-      description: "Fee Payment",
+      name: props.paymentContent.razorpay.nameContent,
+      description: props.paymentContent.razorpay.descriptionContent,
       image: { logo },
       order_id: order_id,
       handler: async function (response) {

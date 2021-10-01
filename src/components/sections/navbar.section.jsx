@@ -21,6 +21,7 @@ const NavbarSection = (props) => {
             setoverlayClassNames={props.setoverlayClassNames}
             setNavVisible={props.setNavVisible}
             navStyles={props.navStyles}
+            notifications={props.notifications}
           />
           <nav className={props.navStyles.navClassNames}>
             <NavLinksBlock

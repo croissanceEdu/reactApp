@@ -36,7 +36,6 @@ const WarningPopup = (props) => {
   return (
     <div className={`popup-window ${props.popupContainerClassNames}`}>
       <div
-        onCli
         onClick={props.popupFunctions.closePopup}
         className="dummy-div"
       ></div>

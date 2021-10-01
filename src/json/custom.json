@@ -53,6 +53,13 @@
                 "withSecond": false,
                 "railwayTime": false,
                 "weekRelative": false
+            },
+            "paymentHistory": {
+                "isRelative": true,
+                "withTime": true,
+                "withSecond": false,
+                "railwayTime": false,
+                "weekRelative": false
             }
         }
     }
