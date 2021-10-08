@@ -10,7 +10,7 @@ const CourseAllocationAddBlock = (props) => {
   const [formData, setFormData] = useState({
     courseName: "",
     feesAmount: 0,
-    feesCurrency: "INC",
+    feesCurrency: "INR",
     paidAmount: 0,
   });
   const handleTeacherSelect = (user) => {
@@ -62,7 +62,7 @@ const CourseAllocationAddBlock = (props) => {
           props.setSelectedTab("allocateTab");
         });
     } else {
-      toast.error("please fill all fields");
+      toast.error(props.manageContent.alertMessages.fillAllFieldContent);
     }
   };
   return (
@@ -87,35 +87,40 @@ const CourseAllocationAddBlock = (props) => {
         />
       </div>
       <div className="form-group container">
+        <label htmlFor="inputCourse">
+          {props.manageContent.courseNameContent}
+        </label>
         <input
           type="text"
           className="form-control"
           name="inputCourse"
           id="inputCourse"
           aria-describedby="helpId"
-          placeholder="Course Name"
+          placeholder={props.manageContent.courseNameContent}
           required
           onChange={handleFormdataChange("courseName")}
           value={formData.courseName}
         />
       </div>
-      <div className="form-group container row">
-        <label htmlFor="inputCourse">Fee</label>
+      <div className="form-group container ">
+        <label htmlFor="inputFee">{props.manageContent.feeContent}</label>
         <input
           type="text"
           className="form-control  container"
           name="inputFee"
           id="inputFee"
           aria-describedby="helpId"
-          placeholder="Fee"
+          placeholder={props.manageContent.feeContent}
           required
           onChange={handleFormdataNumberChange("feesAmount")}
           onBlur={handleScheduleFormAmountBlur("feesAmount")}
           value={formData.feesAmount}
         />
       </div>
-      <div className="form-group container row">
-        <label htmlFor="inputCourse">Currency</label>
+      <div className="form-group container ">
+        <label htmlFor="inputCurrency">
+          {props.manageContent.currencyContent}
+        </label>
         <select
           placeholder="Currency"
           className="form-control "
@@ -130,14 +135,14 @@ const CourseAllocationAddBlock = (props) => {
       </div>
 
       {/* <div className="form-group container ">
-        <label htmlFor="inputCourse">Paid Ammount</label>
+        <label htmlFor="inputPaid">{props.manageContent.paidAmountContent}</label>
         <input
           type="text"
           className="form-control  container"
           name="inputPaid"
           id="inputPaid"
           aria-describedby="helpId"
-          placeholder="Paid Ammount"
+          placeholder={props.manageContent.paidAmountContent}
           required
           onChange={handleFormdataNumberChange("paidAmount")}
           onBlur={handleScheduleFormAmountBlur("paidAmount")}
@@ -146,8 +151,11 @@ const CourseAllocationAddBlock = (props) => {
       </div> */}
 
       <div className="form-group container">
+        <label htmlFor="classLink">
+          {props.manageContent.classLinkContent}
+        </label>
         <textarea
-          placeholder="class Link"
+          placeholder={props.manageContent.classLinkContent}
           className="form-control "
           name="classLink"
           id="classLink"
@@ -158,7 +166,7 @@ const CourseAllocationAddBlock = (props) => {
       </div>
       <div className="form-group  container text-center justify-content-center">
         <button type="submit" className="btn save-button">
-          Save
+          {props.manageContent.saveContent}
         </button>
       </div>
     </form>

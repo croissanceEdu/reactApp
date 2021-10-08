@@ -20,7 +20,7 @@ const FeedbackAddBlock = (props) => {
             className="form-control"
             name="titleName"
             id="titleName"
-            placeholder="Title"
+            placeholder={props.feedbackContent.titleContent}
             required
             onChange={handleChange("title")}
             value={props.formData.title}
@@ -29,7 +29,7 @@ const FeedbackAddBlock = (props) => {
       </div>
       <div className="form-group  p-2 m-2">
         <textarea
-          placeholder="Message"
+          placeholder={props.feedbackContent.MessageContent}
           className="form-control container"
           name="messageContent"
           id="messageContent"
@@ -43,7 +43,7 @@ const FeedbackAddBlock = (props) => {
       <div className="form-group row button-submit-div">
         <div className="offset-sm-2 ">
           <button type="submit" className="btn primary-button ">
-            Send
+            {props.feedbackContent.sendFeedbackContent}
           </button>
         </div>
       </div>

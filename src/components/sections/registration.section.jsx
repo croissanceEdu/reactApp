@@ -51,10 +51,12 @@ const RegistrationSection = (props) => {
             else console.log(err);
           });
       } else {
-        toast.error("Passwords don't match");
+        toast.error(
+          props.registerContent.alertMessages.passwordNotMatchContent
+        );
       }
     } else {
-      toast.error("please fill all fields");
+      toast.error(props.registerContent.alertMessages.fillAllFieldContent);
     }
   };
   return (
@@ -139,7 +141,7 @@ const RegistrationSection = (props) => {
           {props.registerContent.commonWarningContent}
         </blockquote>
         <p className="mt-5 mb-3 text-muted text-center">
-          &copy; Croissance Edu
+          &copy; {props.registerContent.footerContent}
         </p>
       </form>
     </section>

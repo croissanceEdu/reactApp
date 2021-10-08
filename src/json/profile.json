@@ -21,15 +21,38 @@
                 ]
             }
         ],
+        "genderOptions": [
+            {
+                "value": "male",
+                "content": "Male"
+            },
+            {
+                "value": "female",
+                "content": "Female"
+            }
+        ],
         "titleContent": "Profile",
         "nameContent": "Name",
         "emailContent": "Email Address",
+        "dobContent": "Date of birth",
+        "selectDobContent": "Select Date of birth",
+        "contactContent": "Contact",
+        "fullAddressContent": "Full Address",
+        "genderContent": "Gender",
+        "qualificationContent": "Qualification",
         "saveContent": "Save",
         "editContent": "Edit",
         "cancelContent": "Cancel",
         "changeContent": "Change",
         "viewContent": "View",
+        "canNotChangeContent": "Can not change",
         "removeContent": "Remove",
-        "addYourImageContent": "Add your Image"
+        "addYourImageContent": "Add your Image",
+        "alertMessages": {
+            "fillAllFieldContent": "Please fill all fields",
+            "serverDataNotavailableMessageContent": "Something went wrong",
+            "serverNotRespondMessageContent": "Something went wrong!",
+            "notAllowedMessageContent": "Not Allowed"
+        }
     }
 ]

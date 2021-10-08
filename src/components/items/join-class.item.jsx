@@ -23,7 +23,7 @@ const JoinClassItem = (props) => {
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     document.execCommand("copy");
-    // toast.success("Link copied");
+    // toast.success(props.joinClassContent.alertMessages.linkCopiedContent);
     copyText.setSelectionRange(0, 0);
   };
   const handleGoto = () => {
@@ -56,7 +56,7 @@ const JoinClassItem = (props) => {
           props.loadClasses();
         });
     } else {
-      toast.error("please fill all fields");
+      toast.error(props.joinClassContent.alertMessages.fillAllFieldContent);
     }
   };
 
@@ -108,7 +108,7 @@ const JoinClassItem = (props) => {
             </button>
           </div>
         ) : (
-          <div>No classes available now</div>
+          <div>{props.joinClassContent.noClassAvailableContent}</div>
         )}
       </div>
       {isAuth().role === "teacher" && editMode ? (

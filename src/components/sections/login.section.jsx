@@ -43,22 +43,36 @@ const LoginSection = (props) => {
             // if (props.userDetails) history.push(urlPathContent.homePage);
             // else history.push(urlPathContent.homePage);
             if (isAuth()) {
-              toast.success(`Welcome ${res.data.user.name}`);
+              toast.success(
+                props.loginContent.alertMessages.loginSuccessMessageContent.replace(
+                  "@name@",
+                  res.data.user.name
+                )
+              );
               // props.setUserDetails(isAuth());
               window.location = urlPathContent.homePage;
               // history.push(urlPathContent.homePage);
-            } else toast.error("Couldn't login!");
+            } else
+              toast.error(
+                props.loginContent.alertMessages.loginFailedMessageContent
+              );
             // console.log(res.data.user);
           } else {
-            toast.error("Something went wrong");
+            toast.error(
+              props.loginContent.alertMessages
+                .serverDataNotavailableMessageContent
+            );
           }
         })
         .catch((err) => {
-          if (err.response) toast.error(err.response.data.error);
-          else toast.error("Something went wrong");
+          if (err.response) toast.error(err.response.data.error + "hi");
+          else
+            toast.error(
+              props.loginContent.alertMessages.serverNotRespondMessageContent
+            );
         });
     } else {
-      toast.error("please fill all fields");
+      toast.error(props.loginContent.alertMessages.fillAllFieldContent);
     }
   };
 
@@ -67,11 +81,16 @@ const LoginSection = (props) => {
       <form className="form-signin text-center   " onSubmit={handleSubmit}>
         <div className="text-center mb-4">
           <img className="mb-4" src={logo} alt="" width="72" height="72" />
-          <h1 className="h3 mb-3 font-weight-normal"> Please Signin</h1>
+          <h1 className="h3 mb-3 font-weight-normal">
+            {props.loginContent.titleContent}
+          </h1>
           <p>
-            Signin with your registered email address
+            {props.loginContent.instructionContent}
             <br />
-            <a href={urlPathContent.registerPage}>or click here to register.</a>
+            <a href={urlPathContent.registerPage}>
+              {" "}
+              {props.loginContent.clickHereContent}
+            </a>
           </p>
         </div>
 
@@ -81,7 +100,7 @@ const LoginSection = (props) => {
             type="email"
             id="inputEmail"
             className="form-control"
-            placeholder="Email address"
+            placeholder={props.loginContent.emailContent}
             required
             autoFocus
             onChange={handleChange("email")}
@@ -94,7 +113,7 @@ const LoginSection = (props) => {
             type="password"
             id="inputPassword"
             className="form-control"
-            placeholder="Password"
+            placeholder={props.loginContent.passwordContent}
             required
             onChange={handleChange("password")}
             value={formData.password}
@@ -109,10 +128,10 @@ const LoginSection = (props) => {
           className="btn btn-lg btn-primary btn-block container"
           type="submit"
         >
-          Sign in
+          {props.loginContent.loginContent}
         </button>
         <p className="mt-5 mb-3 text-muted text-center">
-          &copy; Croissance Edu
+          &copy; {props.loginContent.footerContent}
         </p>
       </form>
     </section>

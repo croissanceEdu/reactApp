@@ -61,6 +61,16 @@
                 "railwayTime": false,
                 "weekRelative": false
             }
+        },
+        "userSelector": {
+            "selectUserContent": "--Select User--",
+            "selectTeacherContent": "--Select Teacher--",
+            "selectStudentContent": "--Select Student--",
+            "selectTeacherStudentContent": "--Select Teacher-Student--"
+        },
+        "footer": {
+            "copyrightContent": "Copyright",
+            "organizationContent": "2020 CROISSANCE TECHNOLOGIES"
         }
     }
 ]

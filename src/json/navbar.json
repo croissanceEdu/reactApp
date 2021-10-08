@@ -4,12 +4,12 @@
         "navLogo": {
             "logoContent": "CROISSANCE EDU",
             "logoUrl": {
-                "urlPathName": "croissanceWebSite",
+                "urlPathName": "homePage",
                 "external": false,
                 "newTab": false
             },
             "titleUrl": {
-                "urlPathName": "croissanceEduWebSite",
+                "urlPathName": "homePage",
                 "external": false,
                 "newTab": false
             }

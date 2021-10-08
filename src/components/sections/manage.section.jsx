@@ -36,19 +36,19 @@ const ManageSection = (props) => {
   };
   const deleteMap = (id) => {
     props.popupFunctions.showWarningPopup(
-      "Delete Allocation",
-      "are you sure?",
+      props.manageContent.popups.deleteAllocation.tiltleContent,
+      props.manageContent.popups.deleteAllocation.descriptionContent,
       "delete-popup",
       [
         {
-          content: "delete",
+          content: props.manageContent.popups.deleteAllocation.confirmContent,
           className: "btn delete-button",
           closeAfter: true,
           onClickFunction: confirmDeleteMap,
           onClickArgument: id,
         },
         {
-          content: "cancel",
+          content: props.manageContent.popups.deleteAllocation.cancelContent,
           className: "btn cancel-button",
           closeAfter: true,
         },
@@ -102,7 +102,7 @@ const ManageSection = (props) => {
           selectedTab={selectedTab}
           setSelectedTab={setSelectedTab}
           isAvailable={true}
-          unAvailableMessage="no Access"
+          unAvailableMessage={props.manageContent.tabsUnavailableContent}
         />
         {bindTabWindow()}
       </div>

@@ -13,7 +13,7 @@ const ProfileBasicBlock = (props) => {
     dateOfBirth: new Date(),
     contactNumber: "",
     fullAddress: "",
-    gender: "male",
+    gender: props.profileContent.genderOptions[0].value,
     qualification: "",
   });
   useEffect(() => {
@@ -36,10 +36,18 @@ const ProfileBasicBlock = (props) => {
             gender: res.data.userProfile.gender,
             qualification: res.data.userProfile.qualification,
           });
+        else
+          toast.error(
+            props.profileContent.alertMessages
+              .serverDataNotavailableMessageContent
+          );
       })
       .catch((err) => {
         if (err.response) toast.error(err.response.data.error);
-        else toast.error("Something went wrong!");
+        else
+          toast.error(
+            props.profileContent.alertMessages.serverNotRespondMessageContent
+          );
       });
   };
 
@@ -76,9 +84,12 @@ const ProfileBasicBlock = (props) => {
           toast.success(res.data.message);
         })
         .catch((err) => {
-          toast.error("something went wrong");
+          toast.error(
+            props.profileContent.alertMessages.serverNotRespondMessageContent
+          );
         });
-    } else toast.warning("Enter All Details");
+    } else
+      toast.warning(props.profileContent.alertMessages.fillAllFieldContent);
     setEditMode(false);
   };
   //handle input changes
@@ -100,49 +111,57 @@ const ProfileBasicBlock = (props) => {
             editMode ? "cancel-button" : "edit-button"
           }`}
         >
-          {editMode ? "CANCEL" : "EDIT"}
+          {editMode
+            ? props.profileContent.cancelContent
+            : props.profileContent.editContent}
         </button>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group container">
-          <label htmlFor="inputUserName">Name</label>
+          <label htmlFor="inputUserName">
+            {props.profileContent.nameContent}
+          </label>
           <input
             type="text"
             className="form-control"
             id="inputUserName"
             aria-describedby="helpId"
-            placeholder="Name"
+            placeholder={props.profileContent.nameContent}
             onChange={handleChange("name")}
             value={formData.name}
             readOnly
           />
           {editMode && (
             <small id="helpId" className="form-text text-muted">
-              Can not change
+              {props.profileContent.canNotChangeContent}
             </small>
           )}
         </div>
         <div className="form-group container">
-          <label htmlFor="inputUserEmail">EMAIL</label>
+          <label htmlFor="inputUserEmail">
+            {props.profileContent.emailContent}
+          </label>
           <input
             type="text"
             className="form-control"
             id="inputUserEmail"
             aria-describedby="helpId"
-            placeholder="EMAIL"
+            placeholder={props.profileContent.emailContent}
             onChange={handleChange("email")}
             value={formData.email}
             readOnly
           />
           {editMode && (
             <small id="helpId" className="form-text text-muted">
-              Can not change
+              {props.profileContent.canNotChangeContent}
             </small>
           )}
         </div>
 
         <div className="form-group container">
-          <label htmlFor="inputGender">Gender</label>
+          <label htmlFor="inputGender">
+            {props.profileContent.genderContent}
+          </label>
           <select
             className="form-control"
             id="inputGender"
@@ -151,41 +170,48 @@ const ProfileBasicBlock = (props) => {
             readOnly={!editMode}
             disabled={!editMode}
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            {props.profileContent.genderOptions.map((item) => (
+              <option value={item.value}>{item.content}</option>
+            ))}
           </select>
         </div>
 
         <div className="form-group container">
-          <label htmlFor="inputDateOfBirth">Date of birth</label>
+          <label htmlFor="inputDateOfBirth">
+            {props.profileContent.dobContent}
+          </label>
           <DatePicker
             // dateFormat="dd/MM//yyyy"
             selected={formData.dateOfBirth}
             onChange={(date) => setDateOfBirth(date)}
-            placeholderText="Select Date of birth"
+            placeholderText={props.profileContent.selectDobContent}
             readOnly={!editMode}
             className="form-control"
           />
         </div>
         <div className="form-group container">
-          <label htmlFor="inputContactNumber">Contact Number</label>
+          <label htmlFor="inputContactNumber">
+            {props.profileContent.contactContent}
+          </label>
           <input
             type="text"
             className="form-control"
             id="inputContactNumber"
             aria-describedby="helpId"
-            placeholder="Contact Number"
+            placeholder={props.profileContent.contactContent}
             onChange={handleChange("contactNumber")}
             value={formData.contactNumber}
             readOnly={!editMode}
           />
         </div>
         <div className="form-group container">
-          <label htmlFor="inputAddress">Address</label>
+          <label htmlFor="inputAddress">
+            {props.profileContent.fullAddressContent}
+          </label>
           <textarea
             className="form-control"
             id="inputAddress"
-            placeholder="Address"
+            placeholder={props.profileContent.fullAddressContent}
             rows="3"
             value={formData.fullAddress}
             onChange={handleChange("fullAddress")}
@@ -193,11 +219,13 @@ const ProfileBasicBlock = (props) => {
           ></textarea>
         </div>
         <div className="form-group container">
-          <label htmlFor="inputQualification">Qualification</label>
+          <label htmlFor="inputQualification">
+            {props.profileContent.qualificationContent}
+          </label>
           <textarea
             className="form-control"
             id="inputQualification"
-            placeholder="Qualification"
+            placeholder={props.profileContent.qualificationContent}
             rows="2"
             value={formData.qualification}
             onChange={handleChange("qualification")}
@@ -210,7 +238,7 @@ const ProfileBasicBlock = (props) => {
           type="submit"
           className="btn save-button button-save-profile"
         >
-          SAVE
+          {props.profileContent.saveContent}
         </button>
       </form>
     </div>

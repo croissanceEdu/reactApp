@@ -44,6 +44,7 @@
                 ]
             }
         ],
+        "tabsUnavailableContent": "Select one from the list",
         "requestAmountContent": "Amount",
         "paidAmountContent": "Amount",
         "warningDateContent": "Warning Date",

@@ -2,10 +2,10 @@ const WelcomeBanner = (props) => {
   return (
     <>
       <div className="title-banner">
-        <h3 className="croissance-title">CROISSANCE EDU</h3>
+        <h3 className="croissance-title">{props.homeContent.titleContent}</h3>
         <div className="lead">
           <p>
-            <strong>We welcome your kid to the world of programming</strong>
+            <strong>{props.homeContent.introContent}</strong>
           </p>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { customContent } from "../../helpers/custom";
 
 const UserSelectorByRoleBlock = (props) => {
   const [userOptions, setUserOptions] = useState([]);
@@ -36,17 +37,18 @@ const UserSelectorByRoleBlock = (props) => {
       });
     switch (role) {
       case "admin":
-        setSelectorTitle("--Select Teacher-Student--");
+        setSelectorTitle(
+          customContent.userSelector.selectTeacherStudentContent
+        );
         break;
       case "teacher":
-        setSelectorTitle("--Select Teacher--");
+        setSelectorTitle(customContent.userSelector.selectTeacherContent);
         break;
       case "student":
-        setSelectorTitle("--Select Student--");
+        setSelectorTitle(customContent.userSelector.selectStudentContent);
         break;
-
       default:
-        setSelectorTitle("--Select User--");
+        setSelectorTitle(customContent.userSelector.selectUserContent);
         break;
     }
   };

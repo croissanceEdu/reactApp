@@ -1,13 +1,26 @@
 [
     {
-        "language":"English",
-        "tabWindows":[
-            {"name":"joinClassTab","content":"Join Class","availableFor":["teacher","student"]}
+        "language": "English",
+        "tabWindows": [
+            {
+                "name": "joinClassTab",
+                "content": "Join Class",
+                "availableFor": [
+                    "teacher",
+                    "student"
+                ]
+            }
         ],
-        "copyContent":"Copy",
-        "gotoContent":"Goto",
-        "editContent":"Edit",
-        "saveContent":"Save",
-        "cancelContent":"Cancel"
+        "copyContent": "Copy",
+        "gotoContent": "Goto",
+        "editContent": "Edit",
+        "saveContent": "Save",
+        "cancelContent": "Cancel",
+        "listEmptyContent": "No classes are available now",
+        "noClassAvailableContent": "No classes are available now",
+        "alertMessages": {
+            "fillAllFieldContent": "Please fill all fields",
+            "linkCopiedContent": "Link Copied"
+        }
     }
 ]

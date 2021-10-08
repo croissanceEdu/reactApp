@@ -7,7 +7,7 @@ const SyllabusItem = (props) => {
             <h3>{props.syllabus.chapterName}</h3>
             {props.syllabus.isNewStatus ? (
               <small className="badge badge-dark badge-pill text-white">
-                New
+                {props.syllabusContent.newContent}
               </small>
             ) : null}
           </div>
@@ -25,7 +25,10 @@ const SyllabusItem = (props) => {
                     value={props.syllabus.teacherComplete}
                     readOnly
                   />
-                  <label htmlFor="teacherComplete">Teacher</label>
+                  <label htmlFor="teacherComplete">
+                    {" "}
+                    {props.syllabusContent.teacherContent}
+                  </label>
                 </div>
                 <div>
                   <input
@@ -36,7 +39,10 @@ const SyllabusItem = (props) => {
                     value={props.syllabus.studentComplete}
                     readOnly
                   />
-                  <label htmlFor="studentComplete">Student</label>
+                  <label htmlFor="studentComplete">
+                    {" "}
+                    {props.syllabusContent.studentContent}
+                  </label>
                 </div>
               </>
             )}
@@ -48,7 +54,9 @@ const SyllabusItem = (props) => {
                 className="delete-button"
                 disabled
                 onClick={() => {
-                  alert("Not Allowed");
+                  alert(
+                    props.syllabusContent.alertMessages.notAllowedMessageContent
+                  );
                   // props.deleteSyllabus(props.syllabus._id);
                 }}
               >

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { Refresh } from "@material-ui/icons";
+import { customContent } from "../../helpers/custom";
 
 const UserSelectorBlock = (props, ref) => {
   const [userOptions, setUserOptions] = useState([]);
@@ -42,17 +43,19 @@ const UserSelectorBlock = (props, ref) => {
       });
     switch (role) {
       case "admin":
-        setSelectorTitle("--Select Teacher-Student--");
+        setSelectorTitle(
+          customContent.userSelector.selectTeacherStudentContent
+        );
         break;
       case "teacher":
-        setSelectorTitle("--Select Student--");
+        setSelectorTitle(customContent.userSelector.selectStudentContent);
         break;
       case "student":
-        setSelectorTitle("--SelectTeacher--");
+        setSelectorTitle(customContent.userSelector.selectTeacherContent);
         break;
 
       default:
-        setSelectorTitle("--Select User--");
+        setSelectorTitle(customContent.userSelector.selectUserContent);
         break;
     }
   };

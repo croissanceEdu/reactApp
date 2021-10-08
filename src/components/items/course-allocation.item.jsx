@@ -67,7 +67,7 @@ const CourseAllocationItem = (props) => {
           props.loadStudentMap();
         });
     } else {
-      toast.error("please fill all fields");
+      toast.error(props.manageContent.alertMessages.fillAllFieldContent);
     }
   };
   const handleSubmit = (e) => {
@@ -134,25 +134,28 @@ const CourseAllocationItem = (props) => {
       </div>
       <div className="for-test">
         <div className="form-group container">
+          <label htmlFor="inputCourse">
+            {props.manageContent.courseNameContent}
+          </label>
           <input
             type="text"
             className="form-control"
             name="inputCourse"
             aria-describedby="helpId"
-            placeholder="Course Name"
+            placeholder={props.manageContent.courseNameContent}
             readOnly={!editMode}
             onChange={handleFormdataChange("courseName")}
             value={formData.courseName}
           />
         </div>
         <div className="form-group container ">
-          <label htmlFor="inputCourse">Fee</label>
+          <label htmlFor="inputFee">{props.manageContent.feeContent}</label>
           <input
             type="text"
             className="form-control  container"
             name="inputFee"
             aria-describedby="helpId"
-            placeholder="Fee"
+            placeholder={props.manageContent.feeContent}
             readOnly={!editMode}
             onChange={handleFormdataNumberChange("feesAmount")}
             onBlur={handleScheduleFormAmountBlur("feesAmount")}
@@ -160,8 +163,11 @@ const CourseAllocationItem = (props) => {
           />
         </div>
         <div className="form-group container ">
+          <label htmlFor="inputCurrency">
+            {props.manageContent.currencyContent}
+          </label>
           <select
-            placeholder="Currency"
+            placeholder={props.manageContent.currencyContent}
             className="form-control "
             name="inputCurrency"
             aria-describedby="helpId"
@@ -174,13 +180,15 @@ const CourseAllocationItem = (props) => {
         </div>
 
         <div className="form-group container ">
-          <label htmlFor="inputCourse">Paid Ammount</label>
+          <label htmlFor="inputPaid">
+            {props.manageContent.paidAmountContent}
+          </label>
           <input
             type="text"
             className="form-control  container"
             name="inputPaid"
             aria-describedby="helpId"
-            placeholder="Paid Ammount"
+            placeholder={props.manageContent.paidAmountContent}
             readOnly={true}
             onChange={handleFormdataNumberChange("paidAmount")}
             onBlur={handleScheduleFormAmountBlur("paidAmount")}
@@ -189,7 +197,9 @@ const CourseAllocationItem = (props) => {
         </div>
       </div>
       <div className="form-group container ">
-        <label htmlFor="inputClassLink">Class Link</label>{" "}
+        <label htmlFor="inputClassLink">
+          {props.manageContent.classLinkContent}
+        </label>
         <textarea
           rows={1}
           id="inputClassLink"

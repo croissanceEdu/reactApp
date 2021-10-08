@@ -703,7 +703,7 @@ const PaymentSection = (props) => {
           selectedTab={selectedTab}
           setSelectedTab={setSelectedTab}
           isAvailable={oppDetails}
-          unAvailableMessage="Select one from the list"
+          unAvailableMessage={props.paymentContent.tabsUnavailableContent}
         />
         {bindTabWindow()}
       </div>

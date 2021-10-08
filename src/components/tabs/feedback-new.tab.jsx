@@ -7,6 +7,7 @@ const FeedbackNewTab = (props) => {
         handleSubmit={props.handleSubmit}
         formData={props.formData}
         setFormData={props.setFormData}
+        feedbackContent={props.feedbackContent}
       />
     </div>
   );

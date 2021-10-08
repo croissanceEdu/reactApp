@@ -33,7 +33,10 @@ const SyllabusSection = (props) => {
           setSyllabuses(response.data.syllabus);
           props.notify(); //commented for socket test
         } else {
-          toast.error("Something went wrong");
+          toast.error(
+            props.syllabusContent.alertMessages
+              .serverDataNotavailableMessageContent
+          );
         }
       })
       .catch((error) => {
@@ -41,7 +44,10 @@ const SyllabusSection = (props) => {
       });
   };
   const bindSyllabuses = (editMode) => {
-    if (!syllabuses.length) return <p className="empty-p">Empty</p>;
+    if (!syllabuses.length)
+      return (
+        <p className="empty-p">{props.syllabusContent.listEmptyContent}</p>
+      );
     let totalChapter = syllabuses.length;
     let paidChapter = 6.9;
     let feeAmount = oppDetails.studentMap.feesAmount
@@ -143,19 +149,19 @@ const SyllabusSection = (props) => {
   };
   const deleteSyllabus = (id) => {
     props.popupFunctions.showWarningPopup(
-      `Delete Chapter`,
-      "are you sure?",
+      props.syllabusContent.popups.deleteChapter.tiltleContent,
+      props.syllabusContent.popups.deleteChapter.descriptionContent,
       "delete-popup",
       [
         {
-          content: "delete",
+          content: props.syllabusContent.popups.deleteChapter.confirmContent,
           className: "btn delete-button",
           closeAfter: true,
           onClickFunction: confirmDeleteSyllabus,
           onClickArgument: id,
         },
         {
-          content: "cancel",
+          content: props.syllabusContent.popups.deleteChapter.cancelContent,
           className: "btn cancel-button",
           closeAfter: true,
         },
@@ -182,7 +188,9 @@ const SyllabusSection = (props) => {
           studentMapID,
         })
         .then((response) => {
-          toast.success("Submitted successfully");
+          toast.success(
+            props.syllabusContent.alertMessages.chapterAddSuccessMessageContent
+          );
           callback();
           bindTable(
             myDetails._id,
@@ -193,7 +201,7 @@ const SyllabusSection = (props) => {
           manageWebSocketSendNotification(myDetails);
         });
     } else {
-      toast.error("please fill all fields");
+      toast.error(props.syllabusContent.alertMessages.fillAllFieldContent);
     }
   };
   const bindTabWindow = () => {
@@ -249,7 +257,7 @@ const SyllabusSection = (props) => {
           selectedTab={selectedTab}
           setSelectedTab={setSelectedTab}
           isAvailable={oppDetails}
-          unAvailableMessage="Select one from the list"
+          unAvailableMessage={props.syllabusContent.tabsUnavailableContent}
         />
         {bindTabWindow()}
       </div>

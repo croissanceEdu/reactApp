@@ -4,11 +4,12 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import TeacherStudentSelectorItem from "../items/teacher-student-selector.item";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { manageWebSocketGetOnlineUsers } from "../../helpers/websocket-helper";
+// import { manageWebSocketGetOnlineUsers } from "../../helpers/websocket-helper";
+import { customContent } from "../../helpers/custom";
 
 const TeacherStudentSelectorBlock = (props, ref) => {
   const [userOptions, setUserOptions] = useState([]);
-  const [onlineUsers, setOnlineUsers] = useState([]);
+  // const [onlineUsers, setOnlineUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
   const [selectorTitle, setSelectorTitle] = useState("");
   const [visibilityclass, setVisibilityclass] = useState("");
@@ -39,17 +40,19 @@ const TeacherStudentSelectorBlock = (props, ref) => {
       });
     switch (role) {
       case "admin":
-        setSelectorTitle("--Select Teacher-Student--");
+        setSelectorTitle(
+          customContent.userSelector.selectTeacherStudentContent
+        );
         break;
       case "teacher":
-        setSelectorTitle("--Select Student--");
+        setSelectorTitle(customContent.userSelector.selectStudentContent);
         break;
       case "student":
-        setSelectorTitle("--SelectTeacher--");
+        setSelectorTitle(customContent.userSelector.selectTeacherContent);
         break;
 
       default:
-        setSelectorTitle("--Select User--");
+        setSelectorTitle(customContent.userSelector.selectUserContent);
         break;
     }
   };

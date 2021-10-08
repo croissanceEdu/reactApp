@@ -1,13 +1,45 @@
 [
     {
-        "language":"English",
-        "tabWindows":[
-            {"name":"allocateTab","content":"Course Allocation","availableFor":["admin"]},
-            {"name":"allocationAddTab","content":"New","availableFor":["admin"]}
+        "language": "English",
+        "tabWindows": [
+            {
+                "name": "allocateTab",
+                "content": "Course Allocation",
+                "availableFor": [
+                    "admin"
+                ]
+            },
+            {
+                "name": "allocationAddTab",
+                "content": "New",
+                "availableFor": [
+                    "admin"
+                ]
+            }
         ],
-        "editContent":"Edit",
-        "saveContent":"Save",
-        "deleteContent":"Delete",
-        "cancelContent":"Cancel"
+        "editContent": "Edit",
+        "saveContent": "Save",
+        "deleteContent": "Delete",
+        "cancelContent": "Cancel",
+        "tabsUnavailableContent": "No Access",
+        "courseNameContent": "Course Name",
+        "feeContent": "Fee",
+        "currencyContent": "currencyContent",
+        "paidAmountContent": "Paid Amount",
+        "classLinkContent": "Class Link",
+        "popups": {
+            "deleteAllocation": {
+                "tiltleContent": "Delete Allocation",
+                "descriptionContent": "Are you sure?",
+                "confirmContent": "Delete",
+                "cancelContent": "Cancel"
+            }
+        },
+        "alertMessages": {
+            "fillAllFieldContent": "Please fill all fields",
+            "serverDataNotavailableMessageContent": "Something went wrong",
+            "serverNotRespondMessageContent": "Something went wrong!",
+            "notAllowedMessageContent": "Not Allowed"
+        }
     }
 ]

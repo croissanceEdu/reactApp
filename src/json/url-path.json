@@ -11,6 +11,6 @@
     "managePage": "/manage/",
     "activateAccountPage": "/activate/",
     "paymentPage": "/payment/",
-    "croissanceWebSite": "/",
-    "croissanceEduWebSite": "/"
+    "croissanceWebSite": "http://croissance.uk/",
+    "croissanceEduWebSite": "http://croissance.uk/Croissanceedu.html"
 }

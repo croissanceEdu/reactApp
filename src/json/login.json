@@ -1,15 +1,19 @@
 [
     {
-        "language":"English",      
-
-        "titleContent":"Please Login",
-    
-        "emailContent":"Email Address",
-        "passwordContent":"Password",
-     
-        "instructionContent":"Signin with your registered email address",
-        "clickHereContent":"or click here to register.",
-        "loginContent":"Login"
-
+        "language": "English",
+        "titleContent": "Please Login",
+        "emailContent": "Email Address",
+        "passwordContent": "Password",
+        "instructionContent": "Signin with your registered email address",
+        "clickHereContent": "or click here to register.",
+        "loginContent": "Login",
+        "footerContent": "Croissance Edu",
+        "alertMessages": {
+            "fillAllFieldContent": "Please fill all fields",
+            "loginFailedMessageContent": "Couldn't login!",
+            "loginSuccessMessageContent": "Welcome @name@,",
+            "serverDataNotavailableMessageContent": "Something went wrong",
+            "serverNotRespondMessageContent": "Something went wrong"
+        }
     }
 ]

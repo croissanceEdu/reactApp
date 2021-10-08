@@ -1,8 +1,13 @@
+import { customContent } from "../../helpers/custom";
+
 const FooterSection = (props) => {
   return (
     <footer className="" id="footer1-32">
       <div className="">
-        <p className="">Copyright &copy; 2020 CROISSANCE TECHNOLOGIES</p>
+        <p className="">
+          {customContent.footer.copyrightContent}&copy;
+          {customContent.footer.organizationContent}
+        </p>
       </div>
     </footer>
   );

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
-import { isAuth } from "../../helpers/auth";
+// import { isAuth } from "../../helpers/auth";
 import TabSelectorBlock from "../blocks/tab-selector.block";
 import UserSelectorBlock from "../blocks/user-selector.block";
 import FeedbackNewTab from "../tabs/feedback-new.tab";
@@ -108,7 +108,9 @@ const FeedbackSection = (props) => {
   };
   const bindHistory = () => {
     if (!(sentFeedback.length || receivedFeedback.length))
-      return <p className="empty-p">Empty</p>;
+      return (
+        <p className="empty-p">{props.feedbackContent.listEmptyContent}</p>
+      );
     return sentFeedback
       .concat(receivedFeedback)
       .sort((a, b) => (a._id > b._id ? -1 : b._id > a._id ? 1 : 0))
@@ -123,7 +125,10 @@ const FeedbackSection = (props) => {
       });
   };
   const bindSent = () => {
-    if (!sentFeedback.length) return <p className="empty-p">Empty</p>;
+    if (!sentFeedback.length)
+      return (
+        <p className="empty-p">{props.feedbackContent.listEmptyContent}</p>
+      );
     return sentFeedback.map((item) => {
       return (
         <FeedbackMessageItem feedback={item} key={uuidv4()} isSender={true} />
@@ -131,7 +136,10 @@ const FeedbackSection = (props) => {
     });
   };
   const bindReceived = () => {
-    if (!receivedFeedback.length) return <p className="empty-p">Empty</p>;
+    if (!receivedFeedback.length)
+      return (
+        <p className="empty-p">{props.feedbackContent.listEmptyContent}</p>
+      );
     return receivedFeedback.map((item) => {
       return (
         <FeedbackMessageItem feedback={item} key={uuidv4()} isSender={false} />
@@ -226,8 +234,8 @@ const FeedbackSection = (props) => {
           tabWindows={props.feedbackContent.tabWindows}
           selectedTab={selectedTab}
           setSelectedTab={setSelectedTab}
-          isAvailable={oppDetails}
-          unAvailableMessage="Select one from the list"
+          isAvailable={oppDetails._id}
+          unAvailableMessage={props.feedbackContent.tabsUnavailableContent}
         />
         {bindTabWindow()}
         {oppDetails._id && selectedTab !== "newFeedbackTab" && (

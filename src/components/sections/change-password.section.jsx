@@ -19,7 +19,7 @@ const ChangePasswordSection = (props) => {
   //submit to backend
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     if (
       formData.currentPassword &&
       formData.newPassword &&
@@ -44,16 +44,20 @@ const ChangePasswordSection = (props) => {
             toast.error(err.response.data.error);
           });
       } else {
-        toast.error("Password doesn't match");
+        toast.error(
+          props.changePasswordContent.alertMessages.passwordNotMatchContent
+        );
       }
     } else {
-      toast.error("please fill all fields");
+      toast.error(
+        props.changePasswordContent.alertMessages.fillAllFieldContent
+      );
     }
   };
   return (
     <section className="change-password-section container">
       <div className="navbar-spacer"></div>
-      <h2>Change Password </h2>
+      <h2>{props.changePasswordContent.titleContent}</h2>
       <form
         className="form-signin text-center container "
         onSubmit={handleSubmit}
@@ -63,7 +67,7 @@ const ChangePasswordSection = (props) => {
             type="password"
             id="currentPassword"
             className="form-control "
-            placeholder="Current Password"
+            placeholder={props.changePasswordContent.currentPasswordContent}
             required
             onChange={handleChange("currentPassword")}
             value={formData.currentPassword}
@@ -74,7 +78,7 @@ const ChangePasswordSection = (props) => {
             type="password"
             id="newPassword"
             className="form-control "
-            placeholder="New Password"
+            placeholder={props.changePasswordContent.newPasswordContent}
             required
             onChange={handleChange("newPassword")}
             value={formData.newPassword}
@@ -85,7 +89,7 @@ const ChangePasswordSection = (props) => {
             type="password"
             id="confirmPassword"
             className="form-control "
-            placeholder="Confirm Password"
+            placeholder={props.changePasswordContent.confirmPasswordContent}
             required
             onChange={handleChange("confirmPassword")}
             value={formData.confirmPassword}
@@ -95,7 +99,7 @@ const ChangePasswordSection = (props) => {
           className="btn btn-lg save-button bottom-form-group"
           type="submit"
         >
-          Submit
+          {props.changePasswordContent.submitContent}
         </button>
       </form>
     </section>

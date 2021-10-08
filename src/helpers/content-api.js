@@ -12,6 +12,7 @@ let profileContent = require('../json/profile.json');
 let homeContent = require('../json/home.json');
 let paymentContent = require('../json/payment.json');
 let customContent = require('../json/custom.json');
+let changePasswordContent = require('../json/change-password.json');
 
 let Api = {
     getUrlPathContent() {
@@ -58,6 +59,9 @@ let Api = {
     },
     getCustomContent(language = 'English') {
         return customContent.filter(obj => obj.language === language)[0];
+    },
+    getChangePasswordContent(language = 'English') {
+        return changePasswordContent.filter(obj => obj.language === language)[0];
     },
 
 

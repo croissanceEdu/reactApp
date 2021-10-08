@@ -10,6 +10,11 @@
         "clickHereContent": "Click here to login.",
         "registerAsStudentContent": "Register as Student",
         "registerAsTeacherContent": "Register as Teacher",
-        "commonWarningContent": "Name & Email address can not change later"
+        "commonWarningContent": "Name & Email address can not change later",
+        "footerContent": "Croissance Edu",
+        "alertMessages": {
+            "passwordNotMatchContent": "Passwords don't match",
+            "fillAllFieldContent": "Please fill all fields"
+        }
     }
 ]

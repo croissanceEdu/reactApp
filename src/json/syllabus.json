@@ -20,6 +20,7 @@
                 ]
             }
         ],
+        "tabsUnavailableContent": "Select one from the list",
         "titleContent": "Syllabus",
         "checkCompleteContent": "Complete",
         "uncheckCompleteContent": "unCheck",
@@ -27,6 +28,25 @@
         "deleteContent": "Delete",
         "chapterContent": "Chapter",
         "moduleContent": "Module",
-        "addContent": "Add"
+        "addContent": "Add",
+        "listEmptyContent": "Empty",
+        "newContent": "New",
+        "teacherContent": "Teacher",
+        "studentContent": "Student",
+        "alertMessages": {
+            "fillAllFieldContent": "Please fill all fields",
+            "chapterAddSuccessMessageContent": "Chapter Added",
+            "serverDataNotavailableMessageContent": "Something went wrong",
+            "serverNotRespondMessageContent": "Something went wrong!",
+            "notAllowedMessageContent": "Not Allowed!"
+        },
+        "popups": {
+            "deleteChapter": {
+                "tiltleContent": "Delete Chapter",
+                "descriptionContent": "Are you sure?",
+                "confirmContent": "Delete",
+                "cancelContent": "Cancel"
+            }
+        }
     }
 ]

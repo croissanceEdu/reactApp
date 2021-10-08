@@ -34,6 +34,18 @@
                     "student"
                 ]
             }
-        ]
+        ],
+        "sendFeedbackContent": "Send",
+        "tabsUnavailableContent": "Select one from the list",
+        "listEmptyContent": "Empty",
+        "titleContent": "Title",
+        "MessageContent": "Message",
+        "alertMessages": {
+            "fillAllFieldContent": "Please fill all fields",
+            "feedbackSendSuccessMessageContent": "Submitted successfully",
+            "serverDataNotavailableMessageContent": "Something went wrong",
+            "serverNotRespondMessageContent": "Something went wrong!",
+            "notAllowedMessageContent": "Not Allowed"
+        }
     }
 ]
